@@ -5,6 +5,7 @@ const messageRoute = require("./Routes/messagesRoutes");
 const ordersRoute = require("./Routes/ordersRoutes");
 
 const app = express();
+app.use(express.json());
 
 // Routes
 app.use("/api/users", usersRoute);

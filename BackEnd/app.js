@@ -10,7 +10,7 @@ app.use(express.json());
 // Routes
 app.use("/api/users", usersRoute);
 app.use("/api/products", productsRoute);
-// app.use("/api/orders", ordersRoute);
+app.use("/api/orders", ordersRoute);
 // app.use("/api/messages", messageRoute);
 
 module.exports = app;

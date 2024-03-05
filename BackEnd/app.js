@@ -3,9 +3,12 @@ const usersRoute = require("./Routes/userRoute");
 const productsRoute = require("./Routes/productsRoute");
 const messageRoute = require("./Routes/messagesRoutes");
 const ordersRoute = require("./Routes/ordersRoutes");
+const cors = require("cors");
 
 const app = express();
 app.use(express.json());
+
+app.use("cors");
 
 // Routes
 app.use("/api/users", usersRoute);

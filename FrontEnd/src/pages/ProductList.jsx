@@ -2,8 +2,9 @@ import PriceFilter from "../ui/PriceFilter";
 
 function ProductList() {
   return (
-    <div>
-      <PriceFilter />
+    <div className="">
+      <div></div>
+      <div></div>
     </div>
   );
 }

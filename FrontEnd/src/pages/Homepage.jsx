@@ -5,10 +5,19 @@ function Homepage() {
   return (
     <div>
       <Carousel />
-      <div className="flex justify-around">
-        <ShowProduct name={"mens fashion"} />
-        <ShowProduct name={"Eletronics"} />
-        <ShowProduct name={"accessories"} />
+      <div className="flex flex-wrap justify-center sm:justify-around">
+        <ShowProduct
+          name={"mens fashion"}
+          image={"../src/data/pexels-porapak-apichodilok-346748.jpg"}
+        />
+        <ShowProduct
+          name={"Eletronics"}
+          image={"../src/data/pexels-porapak-apichodilok-346748.jpg"}
+        />
+        <ShowProduct
+          name={"accessories"}
+          image={"../src/data/pexels-porapak-apichodilok-346748.jpg"}
+        />
       </div>
     </div>
   );

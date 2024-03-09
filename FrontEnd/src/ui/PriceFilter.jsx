@@ -1,47 +1,22 @@
-import { useState } from "react";
-
-function PriceFilter() {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(10000);
-
-  const handlePriceChange = (event) => {
-    const { name, value } = event.target;
-    if (name === "minPrice") {
-      setMinPrice(value);
-    } else if (name === "maxPrice") {
-      setMaxPrice(value);
-    }
+function PriceFilter({ onPriceChange }) {
+  const handlePriceChange = (e) => {
+    const selectedPrice = e.target.value;
+    onPriceChange(selectedPrice);
   };
 
   return (
-    <div className="flex items-center space-x-2">
-      <label htmlFor="minPrice">Min Price:</label>
-      <input
-        type="range"
-        name="minPrice"
-        id="minPrice"
-        min="0"
-        max="10000"
-        step="1"
-        value={minPrice}
+    <div className="mb-4">
+      <label className="block mb-2 mt-32 ml-7">Price Filter:</label>
+      <select
         onChange={handlePriceChange}
-        className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-      />
-      <span className="text-lg font-medium">${minPrice}</span>
-
-      <label htmlFor="maxPrice">Max Price:</label>
-      <input
-        type="range"
-        name="maxPrice"
-        id="maxPrice"
-        min="0"
-        max="10000"
-        step="1"
-        value={maxPrice}
-        onChange={handlePriceChange}
-        className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-      />
-      <span className="text-lg font-medium">${maxPrice}</span>
+        className="border rounded-md py-1 px-2 ml-7"
+      >
+        <option value="">All</option>
+        <option value="0-50">$0 - $50</option>
+        <option value="51-100">$51 - $100</option>
+        <option value="101-200">$101 - $200</option>
+        {/* Add more options as needed */}
+      </select>
     </div>
   );
 }

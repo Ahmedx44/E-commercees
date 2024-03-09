@@ -2,7 +2,7 @@ import { Carousel } from "flowbite-react";
 
 function CarouselSlide() {
   return (
-    <div className="h-80 sm:h-144 xl:h-160 2xl:h-192">
+    <div className="h-80 sm:h-144 xl:h-160 2xl:h-192 width">
       <Carousel slideInterval={5000}>
         <img
           src="../src/data/pexels-porapak-apichodilok-346748.jpg"

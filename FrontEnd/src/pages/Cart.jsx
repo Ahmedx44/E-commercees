@@ -1,75 +1,62 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+} from "./../store";
 
 const Cart = () => {
-  const cart = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setCartItems(cart);
-  }, [cart]);
-
-  const [cartItems, setCartItems] = useState([]);
-
-  const handleRemoveFromCart = (id) => {
-    setCartItems((prevCart) => prevCart.filter((item) => item._id !== id));
-    dispatch({ type: "REMOVE_FROM_CART", payload: id });
-  };
-
-  const handleQuantityChange = (itemId, quantity) => {
-    setCartItems((prevCart) =>
-      prevCart.map((item) =>
-        item._id === itemId ? { ...item, quantity } : item
-      )
-    );
-    dispatch({ type: "UPDATE_QUANTITY", payload: { id: itemId, quantity } });
+  const handleAddToCart = (product) => {
+    if (product) {
+      // Ensure product has an id property
+      if (!product.id) {
+        console.error("Product is missing an id property");
+        return;
+      }
+      dispatch(addToCart(product));
+    }
   };
 
   return (
-    <div className="mt-32">
-      <table className="w-full">
-        <thead>
+    <div className="mt-96 bg-gray-100 p-8">
+      <table className="w-full table-auto text-center bg-white rounded-lg overflow-hidden">
+        <thead className="bg-gray-200">
           <tr>
             <th className="px-4 py-2">Name</th>
             <th className="px-4 py-2">Price</th>
             <th className="px-4 py-2">Quantity</th>
-            <th className="px-4 py-2">Total Price</th>
             <th className="px-4 py-2">Remove</th>
           </tr>
         </thead>
         <tbody>
           {cartItems.map((item, index) => (
-            <tr
-              key={item._id}
-              className={`${index % 2 === 0 ? "bg-gray-100" : ""}`}
-            >
-              <td className="px-4 py-2">{item.name}</td>
-              <td className="px-4 py-2">${item.price}</td>
-              <td className="px-4 py-2">
+            <tr key={item.id} className={index % 2 === 0 ? "bg-gray-100" : ""}>
+              <td className="border px-4 py-2">{item.name}</td>
+              <td className="border px-4 py-2">${item.price}</td>
+              <td className="border px-4 py-2">
                 <button
-                  onClick={() =>
-                    handleQuantityChange(item._id, item.quantity - 1)
-                  }
-                  className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
+                  onClick={() => dispatch(decreaseQuantity(item.id))}
+                  className="bg-blue-500 text-white py-1 px-2 rounded"
                 >
                   -
                 </button>
-                <span>{item.quantity}</span>
+                <span className="mx-2">{item.quantity}</span>
                 <button
-                  onClick={() =>
-                    handleQuantityChange(item._id, item.quantity + 1)
-                  }
-                  className="bg-blue-500 text-white px-2 py-1 rounded ml-2"
+                  onClick={() => dispatch(increaseQuantity(item.id))}
+                  className="bg-blue-500 text-white py-1 px-2 rounded"
                 >
                   +
                 </button>
               </td>
-              <td className="px-4 py-2">${item.price * item.quantity}</td>
-              <td className="px-4 py-2">
+              <td className="border px-4 py-2">
                 <button
-                  onClick={() => handleRemoveFromCart(item._id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
+                  onClick={() => dispatch(removeFromCart(item.id))}
+                  className="bg-red-500 text-white py-1 px-2 rounded"
                 >
                   Remove
                 </button>
@@ -78,20 +65,19 @@ const Cart = () => {
           ))}
         </tbody>
       </table>
-      <div className="text-right">
-        <p>
-          Total Price: $
-          {cartItems.reduce(
-            (total, item) => total + item.price * item.quantity,
-            0
-          )}
-        </p>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded">
-          Process to Checkout
-        </button>
+      <div className="mt-4">
+        Total Price: $
+        {cartItems.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        )}
       </div>
+      <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
+        Proceed to Checkout
+      </button>
     </div>
   );
 };
 
+// Export the Cart component as the default export
 export default Cart;

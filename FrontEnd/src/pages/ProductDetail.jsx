@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { addToCart } from "./../store";
 import axios from "axios";
-
-let uniqueId = 0;
-
-function generateUniqueId() {
-  uniqueId += 1;
-  return uniqueId;
-}
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,8 +29,8 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      const productToAdd = { ...product, _id: generateUniqueId(), quantity: 1 };
-      dispatch({ type: "ADD_TO_CART", payload: productToAdd });
+      console.log("Adding to cart:", product); // Add this line
+      dispatch(addToCart(product));
     }
   };
 
@@ -49,7 +41,7 @@ const ProductDetail = () => {
         <p>Home</p>
       </div>
       <div>
-        <div className=" w-2/4 h-96 red relative top-9 left-96 flex justify-between justify-center rounded-lg">
+        <div className="w-2/4 h-96 red relative top-9 left-96 flex justify-between justify-center rounded-lg">
           <div className="flex items-center ">
             {product && (
               <>
@@ -58,7 +50,7 @@ const ProductDetail = () => {
                   alt=""
                   className="w-96 h-96 object-cover object-center mr-9 p-7"
                 />
-                <div className=" text-white bold text-5xl">
+                <div className="text-white bold text-5xl">
                   <h2 className="text-3xl font-bold p-5">{product.name}</h2>
                   <p className="p-5 text-2xl">{product.description}</p>
                   <p className="p-5 text-3xl">${product.price}</p>

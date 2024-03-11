@@ -65,8 +65,8 @@ function Header() {
               </Link>
             </NavbarLink>
             <NavbarLink href="#" className="text-2xl font-bold">
-              <Link to="contact" className="hover:text-red-500">
-                Contact
+              <Link to="cart" className="hover:text-red-500">
+                cart
               </Link>
             </NavbarLink>
           </NavbarCollapse>

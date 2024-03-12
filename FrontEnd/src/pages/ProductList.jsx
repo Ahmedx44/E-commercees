@@ -23,7 +23,7 @@ function ProductList() {
 
   return (
     <div className="flex h-screen">
-      <div className="w-1/4 bg-gray-200 overflow-y-auto">
+      <div className="w-1/4  overflow-y-auto">
         <div className="p-4">
           <PriceFilter />
           <CategoryFilter />

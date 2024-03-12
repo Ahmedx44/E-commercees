@@ -22,15 +22,15 @@ function ProductList() {
   }, []);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen mt-16">
       <div className="w-1/4  overflow-y-auto">
-        <div className="p-4">
+        <div className="p-4 mt-20">
           <PriceFilter />
           <CategoryFilter />
           <RatingFilter />
         </div>
       </div>
-      <div className="w-3/4 overflow-y-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="w-3/4 overflow-y-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-20">
         {Array.isArray(products) &&
           products.map((product) => (
             <ProductCard key={product._id} product={product} />

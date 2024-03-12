@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <div className="border-t">
+    <div className="border-t ">
       <nav className="text-3xl fixed w-full z-10 top-0 left-0 font-bold">
         <Navbar fluid rounded>
           <NavbarBrand href="https://flowbite-react.com">
@@ -22,17 +22,11 @@ function Header() {
               Ecommerce
             </span>
           </NavbarBrand>
-          <div className="flex md:order-2 pt-6">
+          <div className="flex md:order-2 pt-16">
             <Dropdown
               arrowIcon={false}
               inline
-              label={
-                <Avatar
-                  alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                  rounded
-                />
-              }
+              label={<Avatar alt="User settings" img="" rounded />}
             >
               <DropdownHeader>
                 <span className="block text-sm">Bonnie Green</span>
@@ -49,23 +43,38 @@ function Header() {
             <NavbarToggle />
           </div>
           <NavbarCollapse>
-            <NavbarLink href="#" className="text-2xl font-bold">
-              <Link to="homepage" className="hover:text-sky-700">
+            <NavbarLink
+              href="#"
+              className="text-2xl font-bold hover:text-gray-500"
+            >
+              <Link
+                to="homepage"
+                className="hover:text-gray-500 transition duration-300 delay-100"
+              >
                 Home
               </Link>
             </NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold">
-              <Link to="ProductList" className="hover:text-violet-600">
+            <NavbarLink href="#" className="text-2xl font-bold ">
+              <Link
+                to="ProductList"
+                className="hover:text-gray-500 transition duration-300 delay-100"
+              >
                 Shop
               </Link>
             </NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold">
-              <Link to="contact" className="hover:text-orange-500">
+            <NavbarLink href="#" className="text-2xl font-bold ">
+              <Link
+                to="contact"
+                className="hover:text-gray-500 transition duration-300 delay-100"
+              >
                 Contact
               </Link>
             </NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold">
-              <Link to="cart" className="hover:text-red-500">
+            <NavbarLink href="#" className="text-2xl font-bold ">
+              <Link
+                to="cart"
+                className="hover:text-gray-500 transition duration-300 delay-100"
+              >
                 cart
               </Link>
             </NavbarLink>

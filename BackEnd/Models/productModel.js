@@ -19,6 +19,7 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   image: [],
+  rating: Number,
   //   retailerId: {
   //     type: mongoose.Schema.Types.ObjectId,
   //     ref: "User",

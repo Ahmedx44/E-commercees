@@ -10,6 +10,7 @@ const colors = {
   white: "bg-white text-slate-950 hover:bg-red-300 hover:shadow-lg-light",
   gray: "bg-gray-200 text-slate-900 hover:bg-gray-300 hover:shadow-lg-light",
   red: "bg-red-500 text-white hover:bg-red-600 hover:shadow-lg-light",
+  black: "bg-black text-white hover:bg-gray-700 hover:shadow-lg-light",
   // Add more colors here as needed
 };
 

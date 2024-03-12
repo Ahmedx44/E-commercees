@@ -5,11 +5,13 @@ function PriceFilter({ onPriceChange }) {
   };
 
   return (
-    <div className="mb-4">
-      <label className="block mb-2 mt-32 ml-7">Price Filter:</label>
+    <div className="mb-4 flex">
+      <label className="block mb-2 mt-0 mt-32 ml-7 font-bold">
+        Price Filter:
+      </label>
       <select
         onChange={handlePriceChange}
-        className="border rounded-md py-1 px-2 ml-7"
+        className="border rounded-md h-[30px] ml-7 bg-black text-white font-semibold mt-0"
       >
         <option value="">All</option>
         <option value="0-50">$0 - $50</option>

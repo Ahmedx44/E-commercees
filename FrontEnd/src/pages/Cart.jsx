@@ -42,19 +42,21 @@ const Cart = () => {
           <tbody>
             {cartItems.map((item) => (
               <tr key={item.id} className={item.id % 2 === 0 ? "" : ""}>
-                <td className="px-4 py-10 border-b">{item.name}</td>
+                <td className="px-4 py-10 border-b font-bold text-left">
+                  {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+                </td>
                 <td className="px-4 py-2 border-b">${item.price}</td>
                 <td className="px-4 py-2 border-b">
                   <button
                     onClick={() => dispatch(decreaseQuantity(item.id))}
-                    className="bg-blue-500 text-white py-1 px-2 rounded"
+                    className="bg-black text-white py-1 px-2 rounded"
                   >
                     -
                   </button>
                   <span className="mx-2">{item.quantity}</span>
                   <button
                     onClick={() => dispatch(increaseQuantity(item.id))}
-                    className="bg-blue-500 text-white py-1 px-2 rounded"
+                    className="bg-black text-white py-1 px-2 rounded"
                   >
                     +
                   </button>
@@ -62,7 +64,7 @@ const Cart = () => {
                 <td className="px-4 py-2 border-b">
                   <button
                     onClick={() => dispatch(removeFromCart(item.id))}
-                    className="bg-red-500 text-white py-1 px-2 rounded"
+                    className="bg-black text-white py-1 px-2 rounded-lg hover:bg-slate-700"
                   >
                     Remove
                   </button>
@@ -73,7 +75,7 @@ const Cart = () => {
         </table>
         <div className="mt-4 grid grid-cols-1 mr-10 gap-4">
           <div className="col-start-2">
-            <div className="mr-4">
+            <div className="mr-4 font-bold">
               Total Price:{" "}
               <span className="font-bold text-red-500">
                 $
@@ -85,7 +87,7 @@ const Cart = () => {
             </div>
             <div className="mt-4">
               <Button
-                color="red"
+                color="black"
                 className="text-white"
                 name="Proceed to Checkout"
               >

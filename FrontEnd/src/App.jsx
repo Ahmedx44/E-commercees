@@ -7,6 +7,7 @@ import ProductList from "./pages/ProductList";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart"; // Import the Cart component
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>
+      <Toaster />
     </BrowserRouter>
   );
 }

@@ -11,6 +11,7 @@ import {
   NavbarToggle,
 } from "flowbite-react";
 import { Link } from "react-router-dom";
+import CartIcon from "./../ui/CartIcon";
 
 function Header() {
   return (
@@ -23,6 +24,10 @@ function Header() {
             </span>
           </NavbarBrand>
           <div className="flex md:order-2 pt-16">
+            <div className="mr-4">
+              <CartIcon />
+            </div>
+
             <Dropdown
               arrowIcon={false}
               inline
@@ -70,14 +75,7 @@ function Header() {
                 Contact
               </Link>
             </NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold ">
-              <Link
-                to="cart"
-                className="hover:text-gray-500 transition duration-300 delay-100"
-              >
-                cart
-              </Link>
-            </NavbarLink>
+            <NavbarLink href="#" className="text-2xl font-bold "></NavbarLink>
           </NavbarCollapse>
         </Navbar>
       </nav>

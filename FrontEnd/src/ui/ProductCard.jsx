@@ -12,16 +12,18 @@ import { FaCartArrowDown } from "react-icons/fa6";
 import { Rating } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "./../store";
-import { useToast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export function ProductCard({ product }) {
   const dispatch = useDispatch();
-  const toast = useToast();
 
   const handleAddToCart = () => {
     dispatch(addToCart(product));
-    toast.success("Product added to cart!");
+    toast.success("Product added to cart!", {
+      duration: 2000,
+    });
   };
+
   return (
     <Card className="w-96 h-13 border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300">
       <CardHeader shadow={false} floated={false} className="h-64">
@@ -41,7 +43,7 @@ export function ProductCard({ product }) {
               {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
             </Typography>
           </Link>
-          <Typography color="blue-gray" className=" text-xl font-bold ">
+          <Typography color="blue-gray" className="text-xl font-bold">
             ${product.price}
           </Typography>
         </div>

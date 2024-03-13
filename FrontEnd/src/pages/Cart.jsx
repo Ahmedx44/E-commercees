@@ -8,6 +8,9 @@ import {
 } from "./../store";
 import Button from "../ui/Button";
 import { MdDelete } from "react-icons/md";
+import { toast } from "react-hot-toast";
+
+import { Table } from "flowbite-react"; // Import toast from react-hot-toast
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -15,7 +18,6 @@ const Cart = () => {
 
   const handleAddToCart = (product) => {
     if (product) {
-      // Ensure product has an id property
       if (!product.id) {
         console.error("Product is missing an id property");
         return;
@@ -24,14 +26,20 @@ const Cart = () => {
     }
   };
 
+  const handleRemoveFromCart = (itemId, itemName) => {
+    dispatch(removeFromCart(itemId));
+    // Display toast message when item is removed
+    toast.success(`${itemName} has been removed from the cart`);
+  };
+
   return (
     <>
       <div className="bg-black p-20 mt-24 text-center text-white font-bold">
         <h1 className="text-4xl font-bold text-white ">Cart</h1>
         <p>Home | Cart</p>
       </div>
-      <div className="mt-28 p-8">
-        <table className="w-9/12 table-auto  text-black text-center bg-white rounded-lg overflow-hidden border-collapse mx-auto">
+      <div className="mt-28 p-8 w-3/4 mx-auto bg-white rounded-md shadow-md">
+        <Table className="text-xl">
           <thead>
             <tr>
               <th className="px-4 py-10">Name</th>
@@ -66,7 +74,7 @@ const Cart = () => {
                 </td>
                 <td className="px-4 py-2 border-b">
                   <button
-                    onClick={() => dispatch(removeFromCart(item.id))}
+                    onClick={() => handleRemoveFromCart(item.id, item.name)}
                     className="bg-black text-white py-1 px-2 rounded-lg hover:bg-slate-700"
                   >
                     <MdDelete />
@@ -75,7 +83,7 @@ const Cart = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
         <div className="mt-4 grid grid-cols-1 mr-10 gap-4">
           <div className="col-start-2">
             <div className="mr-4 font-bold text-black">

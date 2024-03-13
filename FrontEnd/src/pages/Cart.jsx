@@ -7,6 +7,7 @@ import {
   decreaseQuantity,
 } from "./../store";
 import Button from "../ui/Button";
+import { MdDelete } from "react-icons/md";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -25,12 +26,12 @@ const Cart = () => {
 
   return (
     <>
-      <div className="bg-slate-300 p-9 mt-24 text-center">
-        <h1 className="text-4xl font-bold">Cart</h1>
+      <div className="bg-black p-20 mt-24 text-center text-white font-bold">
+        <h1 className="text-4xl font-bold text-white ">Cart</h1>
         <p>Home | Cart</p>
       </div>
       <div className="mt-28 p-8">
-        <table className="w-9/12 table-auto text-center bg-white rounded-lg overflow-hidden border-collapse mx-auto">
+        <table className="w-9/12 table-auto  text-black text-center bg-white rounded-lg overflow-hidden border-collapse mx-auto">
           <thead>
             <tr>
               <th className="px-4 py-10">Name</th>
@@ -42,10 +43,12 @@ const Cart = () => {
           <tbody>
             {cartItems.map((item) => (
               <tr key={item.id} className={item.id % 2 === 0 ? "" : ""}>
-                <td className="px-4 py-10 border-b font-bold text-left">
+                <td className="px-4 py-10 border-b font-bold text-left text-black">
                   {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
                 </td>
-                <td className="px-4 py-2 border-b">${item.price}</td>
+                <td className="px-4 py-2 border-b font-semibold">
+                  ${item.price}
+                </td>
                 <td className="px-4 py-2 border-b">
                   <button
                     onClick={() => dispatch(decreaseQuantity(item.id))}
@@ -66,7 +69,7 @@ const Cart = () => {
                     onClick={() => dispatch(removeFromCart(item.id))}
                     className="bg-black text-white py-1 px-2 rounded-lg hover:bg-slate-700"
                   >
-                    Remove
+                    <MdDelete />
                   </button>
                 </td>
               </tr>
@@ -75,7 +78,7 @@ const Cart = () => {
         </table>
         <div className="mt-4 grid grid-cols-1 mr-10 gap-4">
           <div className="col-start-2">
-            <div className="mr-4 font-bold">
+            <div className="mr-4 font-bold text-black">
               Total Price:{" "}
               <span className="font-bold text-red-500">
                 $

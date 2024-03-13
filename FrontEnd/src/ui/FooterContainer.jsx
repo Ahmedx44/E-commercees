@@ -11,8 +11,8 @@ import {
 
 function FooterContainer() {
   return (
-    <Footer container>
-      <div className="w-full mt-40">
+    <Footer container className="mt-16">
+      <div className="w-full ">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>
             <Footer.Brand

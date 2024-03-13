@@ -1,3 +1,5 @@
+import React from "react";
+
 function RatingFilter({ onRatingChange }) {
   const handleRatingChange = (e) => {
     const selectedRating = e.target.value;
@@ -5,13 +7,15 @@ function RatingFilter({ onRatingChange }) {
   };
 
   return (
-    <div className="mb-4">
-      <label className="block mb-2 ml-7">Rating Filter:</label>
+    <div className="flex items-center mb-4">
+      <label className="block mr-2">Rating Filter:</label>
       <select
         onChange={handleRatingChange}
-        className="border rounded-md py-1 px-2 ml-7"
+        className="border rounded-md py-1 px-2 bg-black text-white"
       >
-        <option value="">All</option>
+        <option value="" className="text-white">
+          All
+        </option>
         <option value="5">5 stars</option>
         <option value="4">4 stars</option>
         <option value="3">3 stars</option>

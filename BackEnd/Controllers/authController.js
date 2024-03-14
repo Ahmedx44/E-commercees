@@ -4,12 +4,12 @@ const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const User = require("./../Models/userModel");
 
-const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
+const signToken = (id, role) => {
+  return jwt.sign({ id, role }, process.env.JWT_SECRET);
 };
 
 const createSendToken = (user, statusCode, res) => {
-  const token = signToken(user._id);
+  const token = signToken(user._id, user.role);
   const cookieOption = {
     expire: new Date(Date.now() + process.env.JWT_COOKIR_EXPIRE),
     httpOnly: true,
@@ -40,38 +40,24 @@ exports.signup = catchAsync(async (req, res, next) => {
   next();
 });
 
-// exports.login = catchAsync(async (req, res, next) => {
-//   const { email, password } = req.body;
-
-//   //check if the user insert password and email
-//   if (!email || !password) {
-//     return next(new AppError("please provide email and passworrrd"));
-//   }
-
-//   //Check if user exists
-//   const user = await User.findOne({ email }).select("+password");
-
-//   if (!user || !(await User.correctPassword(password, user.password))) {
-//     return next(new AppError("Incorrect email and password", 400));
-//   }
-//   createSendToken(User, 200, "user login", res);
-// });
-
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  //check if the user insert password and email
+  // Check if the user inserted password and email
   if (!email || !password) {
-    return next(new AppError("please provide email and passworrrd"));
+    return next(new AppError("Please provide email and password"));
   }
 
-  //Check if user exists
+  // Check if user exists
   const user = await User.findOne({ email }).select("+password");
 
-  if (!user || !(await User.correctPassword(password, user.password))) {
-    return next(new AppError("Incorrect email and password", 400));
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return next(new AppError("Incorrect email or password", 400));
   }
-  createSendToken(User, 200, "user login", res);
+
+  createSendToken(user, 200, res); // Pass user, not User
+
+  next();
 });
 
 exports.protect = catchAsync(async (req, res, next) => {

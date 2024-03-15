@@ -14,12 +14,12 @@ const colors = {
   // Add more colors here as needed
 };
 
-function Button({ name, size = "large", color = "white" }) {
+function Button({ name, size = "large", color = "black" }) {
   const sizeClass = sizes[size];
   const colorClass = colors[color];
 
   return (
-    <button className={`rounded-lg ${sizeClass} ${colorClass}`}>{name}</button>
+    <button className={`rounded-lg ${sizeClass} ${colorClass} `}>{name}</button>
   );
 }
 

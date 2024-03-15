@@ -1,7 +1,5 @@
-// App.jsx
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./ui/AppLayout";
 import Homepage from "./pages/Homepage";
@@ -9,13 +7,13 @@ import ProductList from "./pages/ProductList";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
-import Login from "./pages/Login"; // Import the Login component
-import SignUp from "./pages/SignUp"; // Import the SignUp component
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 import { Toaster } from "react-hot-toast";
 import Admin from "./pages/Admin";
 import Retailer from "./pages/Retailer";
 import Assistance from "./pages/Assistance";
-import PrivateRoute from "./PrivateRoute"; // Import the PrivateRoute component
+import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
   return (
@@ -23,6 +21,15 @@ const App = () => {
       <GlobalStyles />
       <Router>
         <Routes>
+          <Route path="/" element={<AppLayout />}>
+            {/* Set the Homepage route as the index route */}
+            <Route index path="/homepage" element={<Homepage />} />
+            <Route path="/productlist" element={<ProductList />} />
+            <Route path="/productdetail/:id" element={<ProductDetail />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
+          </Route>
+
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
 
@@ -42,14 +49,6 @@ const App = () => {
             element={<PrivateRoute roles={["customerAssistance"]} />}
           >
             <Route path="" element={<Assistance />} />
-          </Route>
-
-          <Route path="/" element={<AppLayout />}>
-            <Route index path="homepage" element={<Homepage />} />
-            <Route path="productlist" element={<ProductList />} />
-            <Route path="productdetail/:id" element={<ProductDetail />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="cart" element={<Cart />} />
           </Route>
         </Routes>
       </Router>

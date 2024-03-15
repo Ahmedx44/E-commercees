@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { Button, Label, TextInput } from "flowbite-react";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +25,7 @@ function Login() {
       handleRedirect(role);
       toast.success(`succesfully Loged in`);
     } catch (err) {
-      setError(err.response.data.message);
+      toast.error("failed to login");
     }
   };
 
@@ -82,14 +81,16 @@ function Login() {
           />
         </div>
         <div className="flex items-center gap-2">
-          <Label htmlFor="remember">
+          <Label htmlFor="remember" className="text-xl">
             Do you want to{" "}
-            <Link to="signup" className="text-bg">
-              Sign in
+            <Link to="/signup" className="text-green-600">
+              Sign up
             </Link>
           </Label>
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="bg-black">
+          Login
+        </Button>
       </form>
     </div>
   );

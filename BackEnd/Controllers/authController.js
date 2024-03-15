@@ -4,12 +4,12 @@ const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const User = require("./../Models/userModel");
 
-const signToken = (id, role) => {
-  return jwt.sign({ id, role }, process.env.JWT_SECRET);
+const signToken = (id, role, userName) => {
+  return jwt.sign({ id, role, userName }, process.env.JWT_SECRET);
 };
 
 const createSendToken = (user, statusCode, res) => {
-  const token = signToken(user._id, user.role);
+  const token = signToken(user._id, user.role, user.userName);
   const cookieOption = {
     expire: new Date(Date.now() + process.env.JWT_COOKIR_EXPIRE),
     httpOnly: true,
@@ -29,15 +29,14 @@ const createSendToken = (user, statusCode, res) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
-    name: req.body.name,
+    userName: req.body.userName,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role,
+    phoneNumber: req.body.phoneNumber,
   });
-  createSendToken(newUser, 200, res);
-
-  next();
+  createSendToken(newUser, 200, res); // Pass newUser, not User
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -59,6 +58,22 @@ exports.login = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+// exports.logout = (req, res) => {
+//   res.cookie("jwt", "loggedout", {
+//     expires: new Date(Date.now() + 10 * 1000),
+//     httpOnly: true,
+//   });
+//   res.status(200).json({ status: "success" });
+// };
+
+exports.logout = (req, res) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: "success" });
+};
 
 exports.protect = catchAsync(async (req, res, next) => {
   let token;

@@ -3,7 +3,7 @@ const validator = require("validator"); //npm install validator
 const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema({
-  name: {
+  userName: {
     type: String,
     required: [true, "name is required"],
   },
@@ -38,6 +38,12 @@ const userSchema = mongoose.Schema({
     },
   },
   passwordChangedAt: Date,
+  phoneNumber: {
+    type: String,
+    minlength: 10,
+    validator: [validator.isMobilePhone, "please provide valid phone number"],
+    required: [true, "please provide phone number"],
+  },
 });
 
 userSchema.pre("save", function (next) {

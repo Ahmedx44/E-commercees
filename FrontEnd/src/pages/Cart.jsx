@@ -9,8 +9,8 @@ import {
 import Button from "../ui/Button";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-hot-toast";
-
-import { Table } from "flowbite-react"; // Import toast from react-hot-toast
+import { Table } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -97,13 +97,15 @@ const Cart = () => {
               </span>
             </div>
             <div className="mt-4">
-              <Button
-                color="black"
-                className="text-white"
-                name="Proceed to Checkout"
-              >
-                Proceed to Checkout
-              </Button>
+              <Link to="/payment">
+                <Button
+                  color="black"
+                  className="text-white"
+                  name="Proceed to Checkout"
+                >
+                  Proceed to Checkout
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

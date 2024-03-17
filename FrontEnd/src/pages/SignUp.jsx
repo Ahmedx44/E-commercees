@@ -8,6 +8,8 @@ function SignUp() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
@@ -22,6 +24,8 @@ function SignUp() {
       await axios.post("http://127.0.0.1:3000/api/users/register", {
         userName: userName.trim(), // trim whitespace from userName
         email,
+        firstName,
+        lastName,
         password,
         passwordConfirm,
         phoneNumber: phoneNumber.trim(), // trim whitespace from phoneNumber
@@ -36,7 +40,7 @@ function SignUp() {
     }
   };
   return (
-    <div className="flex justify-center items-center h-screen ">
+    <div className="flex justify-center items-center h-screen">
       <form
         className="max-w-md w-full p-6 bg-white rounded-lg shadow-md"
         onSubmit={handleSubmit}
@@ -58,9 +62,41 @@ function SignUp() {
           />
         </div>
         <div className="mb-4">
-          <Label htmlFor="email1" value="Email" className="text-xl font-bold" />
+          <Label
+            htmlFor="First Name"
+            value="First Name"
+            className="text-xl font-bold"
+          />
           <TextInput
-            id="email1"
+            id="firstName"
+            type="name"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+            className="text-xl font-bold"
+          />
+        </div>
+        <div className="mb-4">
+          <Label
+            htmlFor="email"
+            value="Last Name"
+            className="text-xl font-bold"
+          />
+          <TextInput
+            id="lastName"
+            type="name"
+            placeholder="name@flowbite.com"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+            className="text-xl font-bold"
+          />
+        </div>
+        <div className="mb-4">
+          <Label htmlFor="email" value="Email" className="text-xl font-bold" />
+          <TextInput
+            id="email"
             type="email"
             placeholder="name@flowbite.com"
             value={email}
@@ -71,12 +107,12 @@ function SignUp() {
         </div>
         <div className="mb-4">
           <Label
-            htmlFor="password1"
+            htmlFor="password"
             value="Password"
             className="text-xl font-bold"
           />
           <TextInput
-            id="password1"
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

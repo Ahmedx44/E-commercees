@@ -1,5 +1,3 @@
-// store.js
-
 import { createStore, combineReducers } from "redux";
 
 // Actions
@@ -28,9 +26,13 @@ const initialState = {
   items: localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
+  totalAmount: 0,
 };
 
 const cartReducer = (state = initialState, action) => {
+  let updatedItems;
+  let newTotalAmount;
+
   switch (action.type) {
     case "ADD_TO_CART":
       const existingProductIndex = state.items.findIndex(
@@ -39,33 +41,43 @@ const cartReducer = (state = initialState, action) => {
 
       if (existingProductIndex !== -1) {
         // Product already exists in the cart, increase its quantity
-        const updatedItems = [...state.items];
+        updatedItems = [...state.items];
         updatedItems[existingProductIndex].quantity++;
-        return {
-          ...state,
-          items: updatedItems,
-        };
       } else {
         // Product does not exist in the cart, add it with quantity 1
-        return {
-          ...state,
-          items: [...state.items, { ...action.payload, quantity: 1 }],
-        };
+        updatedItems = [...state.items, { ...action.payload, quantity: 1 }];
       }
+
+      // Calculate the new total amount
+      newTotalAmount = updatedItems.reduce((total, item) => {
+        return total + item.quantity * item.price;
+      }, 0);
+
+      return {
+        ...state,
+        items: updatedItems,
+        totalAmount: newTotalAmount,
+      };
 
     case "REMOVE_FROM_CART":
       const indexToRemove = state.items.findIndex(
         (item) => item.id === action.payload
       );
       if (indexToRemove !== -1) {
-        const updatedItems = [...state.items];
+        updatedItems = [...state.items];
         updatedItems.splice(indexToRemove, 1); // Remove one item at indexToRemove
-        return {
-          ...state,
-          items: updatedItems,
-        };
       }
-      return state;
+
+      // Calculate the new total amount
+      newTotalAmount = updatedItems.reduce((total, item) => {
+        return total + item.quantity * item.price;
+      }, 0);
+
+      return {
+        ...state,
+        items: updatedItems,
+        totalAmount: newTotalAmount,
+      };
 
     case "INCREASE_QUANTITY":
       const productIndex = state.items.findIndex(
@@ -73,13 +85,20 @@ const cartReducer = (state = initialState, action) => {
       );
 
       if (productIndex !== -1) {
-        const updatedItems = [...state.items];
+        updatedItems = [...state.items];
         updatedItems[productIndex].quantity++; // Increase quantity of the specific product
-        return {
-          ...state,
-          items: updatedItems,
-        };
       }
+
+      // Calculate the new total amount
+      newTotalAmount = updatedItems.reduce((total, item) => {
+        return total + item.quantity * item.price;
+      }, 0);
+
+      return {
+        ...state,
+        items: updatedItems,
+        totalAmount: newTotalAmount,
+      };
 
     case "DECREASE_QUANTITY":
       return {

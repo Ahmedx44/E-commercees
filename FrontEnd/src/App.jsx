@@ -14,6 +14,7 @@ import Admin from "./pages/Admin";
 import Retailer from "./pages/Retailer";
 import Assistance from "./pages/Assistance";
 import PrivateRoute from "./PrivateRoute";
+import Payment from "./pages/Payment";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/productdetail/:id" element={<ProductDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/payment" element={<Payment />} />
           </Route>
 
           <Route path="/login" element={<Login />} />

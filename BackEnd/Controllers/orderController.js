@@ -3,16 +3,19 @@ const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 
 exports.createOrder = catchAsync(async (req, res, next) => {
-  const order = Order.create(req.body);
-
-  if (!order) {
-    next(new AppError("no order created", 400));
+  try {
+    const { userId, products, totalAmount } = req.body;
+    const order = new Order({
+      userId,
+      products,
+      totalAmount,
+    });
+    await order.save();
+    res.status(201).json({ message: "Order created successfully", order });
+  } catch (error) {
+    console.error("Error creating order:", error);
+    res.status(500).json({ message: "Failed to create order" });
   }
-
-  res.status(200).json({
-    status: "success",
-    data: order,
-  });
 });
 
 exports.getAllOrders = catchAsync(async (req, res, next) => {

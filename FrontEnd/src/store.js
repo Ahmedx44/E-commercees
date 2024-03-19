@@ -21,6 +21,10 @@ export const decreaseQuantity = (productId) => ({
   payload: productId,
 });
 
+export const clearCart = () => ({
+  type: "CLEAR_CART",
+});
+
 // Reducer
 const initialState = {
   items: localStorage.getItem("cart")
@@ -40,15 +44,12 @@ const cartReducer = (state = initialState, action) => {
       );
 
       if (existingProductIndex !== -1) {
-        // Product already exists in the cart, increase its quantity
         updatedItems = [...state.items];
         updatedItems[existingProductIndex].quantity++;
       } else {
-        // Product does not exist in the cart, add it with quantity 1
         updatedItems = [...state.items, { ...action.payload, quantity: 1 }];
       }
 
-      // Calculate the new total amount
       newTotalAmount = updatedItems.reduce((total, item) => {
         return total + item.quantity * item.price;
       }, 0);
@@ -65,10 +66,9 @@ const cartReducer = (state = initialState, action) => {
       );
       if (indexToRemove !== -1) {
         updatedItems = [...state.items];
-        updatedItems.splice(indexToRemove, 1); // Remove one item at indexToRemove
+        updatedItems.splice(indexToRemove, 1);
       }
 
-      // Calculate the new total amount
       newTotalAmount = updatedItems.reduce((total, item) => {
         return total + item.quantity * item.price;
       }, 0);
@@ -86,10 +86,9 @@ const cartReducer = (state = initialState, action) => {
 
       if (productIndex !== -1) {
         updatedItems = [...state.items];
-        updatedItems[productIndex].quantity++; // Increase quantity of the specific product
+        updatedItems[productIndex].quantity++;
       }
 
-      // Calculate the new total amount
       newTotalAmount = updatedItems.reduce((total, item) => {
         return total + item.quantity * item.price;
       }, 0);
@@ -108,6 +107,13 @@ const cartReducer = (state = initialState, action) => {
             ? { ...item, quantity: item.quantity - 1 }
             : item
         ),
+      };
+
+    case "CLEAR_CART":
+      return {
+        ...state,
+        items: [],
+        totalAmount: 0,
       };
 
     default:

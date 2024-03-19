@@ -97,7 +97,7 @@ const Cart = () => {
               </span>
             </div>
             <div className="mt-4">
-              <Link to="/payment">
+              <Link to="/pay">
                 <Button
                   color="black"
                   className="text-white"

@@ -29,7 +29,8 @@ const App = () => {
             <Route path="/productdetail/:id" element={<ProductDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/payment" element={<Payment />} />
+            <Route path="/pay" element={<Payment />} />{" "}
+            {/* Update route to "/pay" */}
           </Route>
 
           <Route path="/login" element={<Login />} />
@@ -47,7 +48,7 @@ const App = () => {
           </Route>
 
           <Route
-            path="assistance"
+            path="/assistance"
             element={<PrivateRoute roles={["customerAssistance"]} />}
           >
             <Route path="" element={<Assistance />} />

@@ -12,4 +12,5 @@ router
   .patch(orderController.updateOrder)
   .delete(orderController.deleteOrder);
 
+router.route("/orderHistory/:id", orderController.getOrdersByUserId);
 module.exports = router;

@@ -50,7 +50,7 @@ const Cart = () => {
           </thead>
           <tbody>
             {cartItems.map((item) => (
-              <tr key={item.id} className={item.id % 2 === 0 ? "" : ""}>
+              <tr key={item.id}>
                 <td className="px-4 py-10 border-b font-bold text-left text-black">
                   {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
                 </td>

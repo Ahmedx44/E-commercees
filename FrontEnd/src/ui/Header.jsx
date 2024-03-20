@@ -120,6 +120,14 @@ function Header() {
                 Contact
               </Link>
             </NavbarLink>
+            <NavbarLink href="#" className="text-2xl font-bold ">
+              <Link
+                to="history"
+                className="hover:text-gray-500 transition duration-300 delay-100"
+              >
+                Order History
+              </Link>
+            </NavbarLink>
             <NavbarLink href="#" className="text-2xl font-bold "></NavbarLink>
           </NavbarCollapse>
         </Navbar>

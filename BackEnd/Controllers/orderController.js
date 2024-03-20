@@ -75,3 +75,17 @@ exports.deleteOrder = catchAsync(async (req, res, next) => {
     status: "success",
   });
 });
+
+exports.getAllOrdersByUser = catchAsync(async (req, res, next) => {
+  const userId = req.params.userId;
+
+  const orders = await Order.find({ userId });
+
+  res.status(200).json({
+    status: "success",
+    results: orders.length,
+    data: {
+      orders,
+    },
+  });
+});

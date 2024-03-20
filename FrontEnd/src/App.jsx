@@ -15,6 +15,7 @@ import Retailer from "./pages/Retailer";
 import Assistance from "./pages/Assistance";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "./pages/Payment";
+import History from "./pages/History";
 
 const App = () => {
   return (
@@ -29,8 +30,8 @@ const App = () => {
             <Route path="/productdetail/:id" element={<ProductDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/pay" element={<Payment />} />{" "}
-            {/* Update route to "/pay" */}
+            <Route path="/pay" element={<Payment />} />
+            <Route path="/history" element={<History />} />
           </Route>
 
           <Route path="/login" element={<Login />} />

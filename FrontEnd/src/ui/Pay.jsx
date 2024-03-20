@@ -10,7 +10,7 @@ function Pay({ cartTotalAmount, orderDetails }) {
   return (
     <div className="">
       <form
-        id="payForm"
+        id="payForm" // Add the id attribute
         method="POST"
         action="https://api.chapa.co/v1/hosted/pay"
       >
@@ -21,11 +21,11 @@ function Pay({ cartTotalAmount, orderDetails }) {
         <input type="hidden" name="email" value={email} />
         <input type="hidden" name="first_name" value={fname} />
         <input type="hidden" name="last_name" value={lname} />
-        <input type="hidden" name="title" value="Let us do this" />
+        <input type="hidden" name="title" value="Let us do this " />
         <input
           type="hidden"
           name="description"
-          value="Paying with Confidence with cha"
+          value="Paying with Confidence with chapa"
         />
         <input
           type="hidden"
@@ -42,7 +42,7 @@ function Pay({ cartTotalAmount, orderDetails }) {
           name="return_url"
           value="http://localhost:5173/cart"
         />
-        <input type="hidden" name="meta[title]" value="test" />
+        <input type="hidden" name="meta[Ecommerce]" value="test" />
 
         <button
           type="submit"

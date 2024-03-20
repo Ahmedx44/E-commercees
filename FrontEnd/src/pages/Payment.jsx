@@ -57,8 +57,11 @@ function Payment() {
       // Clear the cart after creating the order
       dispatch(clearCart());
 
-      // Redirect to the cart page after order creation
-      window.location.href = "/cart";
+      // Find the Pay component's form and submit it
+      const payForm = document.getElementById("payForm");
+      if (payForm) {
+        payForm.submit();
+      }
     } catch (error) {
       console.error("Error creating order:", error);
       toast.error("Failed to create order. Please try again.");
@@ -120,11 +123,12 @@ function Payment() {
           <Checkbox id="remember" />
           <Label htmlFor="remember">Remember me</Label>
         </div>
-        <Pay
-          cartTotalAmount={cartTotalAmount}
-          orderDetails={{ fname, lname, email, amount: cartTotalAmount }}
-          onClick={handlePayNow} // Add the onClick event
-        />
+        <button onClick={handlePayNow}>
+          <Pay
+            cartTotalAmount={cartTotalAmount}
+            orderDetails={{ fname, lname, email, amount: cartTotalAmount }}
+          />
+        </button>
       </form>
     </div>
   );

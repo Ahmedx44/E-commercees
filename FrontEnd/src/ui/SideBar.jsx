@@ -28,40 +28,35 @@ import {
 function SideBar() {
   return (
     <Sidebar aria-label="Default sidebar example" className="w-full h-screen ">
-      <Sidebar.Items className="mt-52 flex flex-col gap-20">
+      <Sidebar.Items className="mt-52 ">
         <Sidebar.ItemGroup>
           <Link to="dashboard">
-            <Sidebar.Item icon={HiChartPie} className="text-3xl">
+            <Sidebar.Item icon={HiChartPie} className="text-4xl my-3 mx-2 ">
               Dasboard
             </Sidebar.Item>
           </Link>
           <Link to="products">
-            <Sidebar.Item icon={HiViewBoards} className="text-3xl">
+            <Sidebar.Item icon={HiViewBoards} className="text-4xl my-3 mx-2">
               Product
             </Sidebar.Item>
           </Link>
           <Link to="users">
-            <Sidebar.Item icon={HiUser} label="3" className="text-3xl">
+            <Sidebar.Item icon={HiUser} className="text-4xl my-3 mx-2">
               User
             </Sidebar.Item>
           </Link>
           <Link to="orders">
-            <Sidebar.Item icon={HiShoppingBag} className="text-3xl">
+            <Sidebar.Item icon={HiShoppingBag} className="text-4xl my-3 mx-2">
               Orders
             </Sidebar.Item>
           </Link>
           <Link to="retailers">
-            <Sidebar.Item icon={HiShoppingBag} className="text-3xl">
+            <Sidebar.Item icon={HiShoppingBag} className="text-4xl my-3 mx-2">
               Reatilers
             </Sidebar.Item>
           </Link>
-          <Link to="reviews">
-            <Sidebar.Item icon={HiArrowSmRight} className="text-3xl">
-              Reviews
-            </Sidebar.Item>
-          </Link>
           <Link>
-            <Sidebar.Item icon={HiTable} className="text-3xl">
+            <Sidebar.Item icon={HiTable} className="text-4xl my-3 mx-2">
               Logout
             </Sidebar.Item>
           </Link>

@@ -30,18 +30,6 @@ exports.getAllOrders = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getOrdersByUserId = catchAsync(async (req, res, next) => {
-  const orders = await Order.find({ user: req.params.userId });
-
-  res.status(200).json({
-    status: "success",
-    results: orders.length,
-    data: {
-      orders,
-    },
-  });
-});
-
 // Update an order by ID (Admin only)
 exports.updateOrder = catchAsync(async (req, res, next) => {
   const { status } = req.body;
@@ -77,9 +65,11 @@ exports.deleteOrder = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllOrdersByUser = catchAsync(async (req, res, next) => {
-  const userId = req.params.userId;
+  const orders = await Order.find({ userId: req.params.id });
 
-  const orders = await Order.find({ userId });
+  if (!orders) {
+    return next(new AppError("No orders found for this user", 404));
+  }
 
   res.status(200).json({
     status: "success",

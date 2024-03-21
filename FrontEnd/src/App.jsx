@@ -16,6 +16,12 @@ import Assistance from "./pages/Assistance";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "./pages/Payment";
 import History from "./pages/History";
+import Dashboard from "./pages/Dashboard";
+import Orders from "./pages/Orders";
+import Products from "./pages/Product";
+import Retailers from "./pages/Retailers";
+import Reviews from "./pages/Reviews";
+import Users from "./pages/Users";
 
 const App = () => {
   return (
@@ -24,7 +30,6 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<AppLayout />}>
-            {/* Set the Homepage route as the index route */}
             <Route index path="/homepage" element={<Homepage />} />
             <Route path="/productlist" element={<ProductList />} />
             <Route path="/productdetail/:id" element={<ProductDetail />} />
@@ -38,7 +43,14 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
 
           <Route path="/admin" element={<PrivateRoute roles={["admin"]} />}>
-            <Route path="" element={<Admin />} />
+            <Route path="" element={<Admin />}>
+              <Route index path="dashboard" element={<Dashboard />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="products" element={<Products />} />
+              <Route path="users" element={<Users />} />
+              <Route path="retailers" element={<Retailers />} />
+              <Route path="reviews" element={<Reviews />} />
+            </Route>
           </Route>
 
           <Route

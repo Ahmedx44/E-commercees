@@ -1,15 +1,25 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 
 function History() {
   const [orders, setOrders] = useState([]);
-  const token = localStorage.getItem("token"); // Assuming you're storing the token in localStorage
+  const [user, setUser] = useState("");
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUser(decodedToken.id);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:3000/api/orders/65e613ab522e82182a1fb30f`,
+          `http://127.0.0.1:3000/api/orders/orderHistory/${user}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -22,8 +32,11 @@ function History() {
       }
     };
 
-    fetchOrders();
-  }, [token]);
+    if (user) {
+      // Ensure user is set before fetching orders
+      fetchOrders();
+    }
+  }, [token, user]);
 
   return (
     <div className="flex justify-center items-center h-full pt-52">

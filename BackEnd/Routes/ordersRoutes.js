@@ -8,9 +8,10 @@ router.route("/").get(orderController.getAllOrders);
 router.route("/createOrder").post(orderController.createOrder);
 router
   .route("/:id")
-  .get(orderController.getOrdersByUserId)
+  .get(orderController.getAllOrdersByUser)
   .patch(orderController.updateOrder)
   .delete(orderController.deleteOrder);
 
-router.route("/orderHistory/:id", orderController.getOrdersByUserId);
+router.route("/orderHistory/:id").get(orderController.getAllOrdersByUser);
+
 module.exports = router;

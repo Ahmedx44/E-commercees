@@ -28,7 +28,6 @@ function Header() {
       const decodedToken = jwtDecode(token);
       setRole(decodedToken.role);
       setUser(decodedToken.userName);
-      console.log(decodedToken);
     }
   }, []);
 
@@ -77,6 +76,15 @@ function Header() {
                   </span>
                 </DropdownHeader>
                 <DropdownItem>Settings</DropdownItem>
+                <DropdownItem>
+                  {" "}
+                  <Link
+                    to="history"
+                    className="hover:text-gray-500 transition duration-300 delay-100"
+                  >
+                    Order History
+                  </Link>
+                </DropdownItem>
                 <DropdownDivider />
                 <DropdownItem onClick={(e) => handleLogout(e)}>
                   Log out
@@ -120,14 +128,7 @@ function Header() {
                 Contact
               </Link>
             </NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold ">
-              <Link
-                to="history"
-                className="hover:text-gray-500 transition duration-300 delay-100"
-              >
-                Order History
-              </Link>
-            </NavbarLink>
+            <NavbarLink href="#" className="text-2xl font-bold "></NavbarLink>
             <NavbarLink href="#" className="text-2xl font-bold "></NavbarLink>
           </NavbarCollapse>
         </Navbar>

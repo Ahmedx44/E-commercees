@@ -1,11 +1,5 @@
-import Title from "../ui/Title";
-
 function Retailers() {
-  return (
-    <div>
-      <Title name="Retailers" />
-    </div>
-  );
+  return <div>Retailer</div>;
 }
 
 export default Retailers;

@@ -6,8 +6,8 @@ import { SiCashapp } from "react-icons/si";
 
 function Dashboard() {
   return (
-    <div>
-      <div className="pt-10 mx-10 font-bold text-5xl">
+    <div className="bg-slate-100 h-screen rounded-lg">
+      <div className="pt-10 mx-10 font-bold text-5xl ">
         <h1>Dashboard</h1>
       </div>
       <div className="flex  justify-around">

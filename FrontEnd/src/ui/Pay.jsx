@@ -1,21 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 function Pay({ cartTotalAmount, orderDetails }) {
-  const CHAPA_PUBLIC_KEY = "CHAPUBK_TEST-qkKsCk8GpfdV7qDzpfrPIGljiulyOvKE";
+  const CHAPA_PUBLIC_KEY = "CHAPUBK_TEST-PGENqDhxY2ix9f1MvrbJkCOXH6tqkl6D";
   const CHAPA_SECRET_KEY = "CHASECK_TEST-mYpavLWzzLvrfEhy1JNYPr8L3oSMaNXR";
-  const tx = Date.now();
 
   const { fname, lname, email } = orderDetails;
+
+  const generateUniqueTxRef = () => {
+    const tx = Date.now() + Math.random(); // Introduce randomness
+    return `AHMED-tx-${tx}787s`;
+  };
+
+  const [tx_ref, setTxRef] = useState(generateUniqueTxRef());
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTxRef(generateUniqueTxRef()); // Regenerate tx_ref after a delay
+    }, 1000); // Adjust the delay as needed
+    return () => clearTimeout(timer);
+  }, [cartTotalAmount, orderDetails]); // Ensure tx_ref is regenerated when cartTotalAmount or orderDetails change
+
   return (
     <div className="">
       <form
-        id="payForm" // Add the id attribute
+        id="payForm"
         method="POST"
         action="https://api.chapa.co/v1/hosted/pay"
       >
         <input type="hidden" name="public_key" value={CHAPA_PUBLIC_KEY} />
-        <input type="hidden" name="tx_ref" value={`negade-tx-${tx}`} />
+        <input type="hidden" name="tx_ref" value={tx_ref} />
         <input type="hidden" name="amount" value={cartTotalAmount} />
         <input type="hidden" name="currency" value="ETB" />
         <input type="hidden" name="email" value={email} />

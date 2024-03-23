@@ -11,7 +11,6 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { Toaster } from "react-hot-toast";
 import Admin from "./pages/Admin";
-import Retailer from "./pages/Retailer";
 import Assistance from "./pages/Assistance";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "./pages/Payment";
@@ -19,9 +18,10 @@ import History from "./pages/History";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
 import Products from "./pages/Product";
-import Retailers from "./pages/Retailers";
 import Reviews from "./pages/Reviews";
 import Users from "./pages/Users";
+import AdminRetailers from "./pages/AdminRetailers";
+import Retailers from "./pages/Retailers";
 
 const App = () => {
   return (
@@ -48,7 +48,7 @@ const App = () => {
               <Route path="orders" element={<Orders />} />
               <Route path="products" element={<Products />} />
               <Route path="users" element={<Users />} />
-              <Route path="retailers" element={<Retailers />} />
+              <Route path="retailers" element={<AdminRetailers />} />
               <Route path="reviews" element={<Reviews />} />
             </Route>
           </Route>
@@ -57,7 +57,7 @@ const App = () => {
             path="/retailer"
             element={<PrivateRoute roles={["retailer"]} />}
           >
-            <Route path="" element={<Retailer />} />
+            <Route path="" element={<Retailers />} />
           </Route>
 
           <Route

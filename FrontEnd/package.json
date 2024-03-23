@@ -15,6 +15,7 @@
     "@material-tailwind/react": "^2.1.9",
     "@mui/icons-material": "^5.15.12",
     "@mui/material": "^5.15.12",
+    "@mui/x-charts": "^7.0.0",
     "axios": "^1.6.7",
     "flowbite-react": "^0.7.3",
     "jwt-decode": "^4.0.0",

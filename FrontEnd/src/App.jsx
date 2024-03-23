@@ -17,11 +17,12 @@ import Payment from "./pages/Payment";
 import History from "./pages/History";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
-import Products from "./pages/Product";
+import Product from "./pages/Product";
 import Reviews from "./pages/Reviews";
 import Users from "./pages/Users";
 import AdminRetailers from "./pages/AdminRetailers";
 import Retailers from "./pages/Retailers";
+import UserEdit from "./pages/UserEdit";
 
 const App = () => {
   return (
@@ -46,10 +47,11 @@ const App = () => {
             <Route path="" element={<Admin />}>
               <Route index path="dashboard" element={<Dashboard />} />
               <Route path="orders" element={<Orders />} />
-              <Route path="products" element={<Products />} />
+              <Route path="products" element={<Product />} />
               <Route path="users" element={<Users />} />
               <Route path="retailers" element={<AdminRetailers />} />
               <Route path="reviews" element={<Reviews />} />
+              <Route path="useredit" element={<UserEdit />} />
             </Route>
           </Route>
 

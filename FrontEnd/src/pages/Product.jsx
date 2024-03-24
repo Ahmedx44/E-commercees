@@ -1,13 +1,14 @@
+import React, { useState, useEffect } from "react";
 import { Table } from "flowbite-react";
-import { toast } from "react-hot-toast";
-import Title from "../ui/Title";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { Dropdown } from "flowbite-react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Title from "../ui/Title";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,10 +27,14 @@ function Products() {
     product.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const handleViewClick = (productId) => {
+    // Redirect to admin product detail page
+    navigate(`/admin/productdetail-admin/${productId}`);
+  };
+
   return (
     <div className="bg-slate-200 h-full ">
       <Title name={"Product"} />
-
       <div className="m-24 px-10 py-10 pb-10 mb-10 bg-slate-100 h-screen shadow-lg rounded-2xl overflow-x-auto">
         <input
           type="text"
@@ -38,7 +43,6 @@ function Products() {
           onChange={(e) => setSearch(e.target.value)}
           className="border-2 border-slate-300 p-2 rounded-lg mb-4"
         />
-
         <Table hoverable>
           <Table.Head className=" font-bolder text-lg text-slate-700">
             <Table.HeadCell>Name</Table.HeadCell>
@@ -56,7 +60,9 @@ function Products() {
                 <Table.Cell>{product.rating}</Table.Cell>
                 <Table.Cell>
                   <Dropdown label="Action" dismissOnClick={false}>
-                    <Dropdown.Item>Edit</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleViewClick(product._id)}>
+                      View
+                    </Dropdown.Item>
                     <Dropdown.Item>Delete</Dropdown.Item>
                   </Dropdown>
                 </Table.Cell>

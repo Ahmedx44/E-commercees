@@ -14,7 +14,10 @@ function Users() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:3000/api/users");
-        setUsers(response.data.data.users);
+        const usersWithRoleCustomer = response.data.data.users.filter(
+          (user) => user.role === "customer"
+        );
+        setUsers(usersWithRoleCustomer);
       } catch (error) {
         console.error("Error fetching products:", error);
       }

@@ -30,7 +30,7 @@ function SideBar() {
           </Link>
           <Link to="users">
             <Sidebar.Item icon={HiUser} className="text-3xl my-5 mx-2">
-              User
+              Customers
             </Sidebar.Item>
           </Link>
           <Link to="orders">

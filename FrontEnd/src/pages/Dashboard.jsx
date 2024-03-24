@@ -8,7 +8,7 @@ import BasicPie from "../ui/BasicPie";
 
 function Dashboard() {
   return (
-    <div className="bg-slate-200 h-screen rounded-lg">
+    <div className="bg-slate-200 h-full rounded-lg">
       <Title name={"Dashboard"} />
       <div className="pt-10 mx-10 font-bold text-5xl "></div>
       <div className="flex  justify-around">
@@ -17,8 +17,22 @@ function Dashboard() {
         <SmallCard name="Total Users" icon={<FaRegUser />} />
         <SmallCard name="Total Revenue" icon={<SiCashapp />} />
       </div>
-      <div className="m-10 p-10 bg-white shadow-lg rounded-lg ">
-        <BasicPie />
+      <div className="m-10 p-10  grid grid-cols-2 gap-10">
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" />
       </div>
     </div>
   );

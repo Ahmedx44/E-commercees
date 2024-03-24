@@ -23,6 +23,7 @@ import Users from "./pages/Users";
 import AdminRetailers from "./pages/AdminRetailers";
 import Retailers from "./pages/Retailers";
 import UserEdit from "./pages/UserEdit";
+import AdminProductDetail from "./pages/AdminProductDetail";
 
 const App = () => {
   return (
@@ -52,6 +53,10 @@ const App = () => {
               <Route path="retailers" element={<AdminRetailers />} />
               <Route path="reviews" element={<Reviews />} />
               <Route path="useredit" element={<UserEdit />} />
+              <Route
+                path="productdetail-admin/:id"
+                element={<AdminProductDetail />}
+              />
             </Route>
           </Route>
 

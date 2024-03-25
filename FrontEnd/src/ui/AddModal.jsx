@@ -21,21 +21,13 @@ const AddModel = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", image);
-    formData.append("upload_preset", "your-preset-name");
-    const result = await Cloudinary.v2.uploader.upload(formData);
     const newProduct = {
       name,
       description,
       price: parseFloat(price),
       quantity: parseInt(quantity),
       category,
-      image: {
-        public_id: result.public_id,
-        url: result.secure_url,
-      },
+      image,
     };
     await axios.post("/api/products", newProduct);
     closeModal();
@@ -104,4 +96,4 @@ const AddModel = () => {
   );
 };
 
-export default A
+export default AddModel;

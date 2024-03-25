@@ -1,17 +1,32 @@
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const Product = require("./../Models/productModel");
+const cloudinary = require("./../utils/cloudinary");
 
 exports.addProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.create(req.body);
+  // const product = await Product.create(req.body);
+  const { name, description, price, quantity, category, image } = req.body;
+  const result = await cloudinary.uploader.upload(image, { folder: products });
 
   if (!product) {
     next(new AppError("no data entered"));
   }
 
-  res.status(200).json({
-    status: "succes",
-    data: product,
+  const product = await Product.create({
+    name,
+    description,
+    price,
+    quantity,
+    category,
+    image: {
+      public_id: result.public_id,
+      url: result.secure_url,
+    },
+  });
+
+  res.status(201).json({
+    status: "success",
+    product,
   });
 });
 

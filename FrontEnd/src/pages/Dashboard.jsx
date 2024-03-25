@@ -20,19 +20,6 @@ function Dashboard() {
       <div className="m-10 p-10  grid grid-cols-2 gap-10">
         <BasicPie className="col-span-1" />
         <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
-        <BasicPie className="col-span-1" />
       </div>
     </div>
   );

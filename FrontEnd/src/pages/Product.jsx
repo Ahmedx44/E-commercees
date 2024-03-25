@@ -4,10 +4,13 @@ import { Dropdown } from "flowbite-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Title from "../ui/Title";
+import Modal from "react-modal"; // Import Modal component
+import AddModal from "./../ui/AddModal"; // Import AddModal component
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // State to control Add Modal visibility
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,17 +35,30 @@ function Products() {
     navigate(`/admin/productdetail-admin/${productId}`);
   };
 
+  const handleAddProductClick = () => {
+    setIsAddModalOpen(true); // Open the Add Modal when "Add Product" button is clicked
+  };
+
   return (
     <div className="bg-slate-200 h-full ">
       <Title name={"Product"} />
       <div className="m-24 px-10 py-10 pb-10 mb-10 bg-slate-100 h-screen shadow-lg rounded-2xl overflow-x-auto">
-        <input
-          type="text"
-          placeholder="Search by name"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="border-2 border-slate-300 p-2 rounded-lg mb-4"
-        />
+        <div className="flex justify-between">
+          <input
+            type="text"
+            placeholder="Search by name"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border-2 border-slate-300 p-2 rounded-lg mb-4"
+          />
+          <button
+            className="bg-slate-600 p-1 rounded-lg  text-white px-5 h-14"
+            onClick={handleAddProductClick}
+          >
+            Add Product
+          </button>
+        </div>
+
         <Table hoverable>
           <Table.Head className=" font-bolder text-lg text-slate-700">
             <Table.HeadCell>Name</Table.HeadCell>
@@ -71,6 +87,14 @@ function Products() {
           </Table.Body>
         </Table>
       </div>
+
+      {/* Add Modal */}
+      <Modal
+        isOpen={isAddModalOpen}
+        onRequestClose={() => setIsAddModalOpen(false)}
+      >
+        <AddModal closeModal={() => setIsAddModalOpen(false)} />
+      </Modal>
     </div>
   );
 }

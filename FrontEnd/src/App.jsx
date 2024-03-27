@@ -32,7 +32,7 @@ const App = () => {
       <GlobalStyles />
       <Router>
         <Routes>
-          <Route path="/" element={<AppLayout />}>
+          <Route path="" element={<AppLayout />}>
             <Route index path="/homepage" element={<Homepage />} />
             <Route path="/productlist" element={<ProductList />} />
             <Route path="/productdetail/:id" element={<ProductDetail />} />

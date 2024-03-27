@@ -6,7 +6,7 @@ const { route } = require("./userRoute");
 const router = express.Router();
 
 router.route("/").get(productController.getAllProducts);
-router.route("/addProduct").post(productController.addProduct);
+router.route("/addProduct").post(productController.createProduct);
 router
   .route("/:id")
   .delete(productController.deleteProduct)

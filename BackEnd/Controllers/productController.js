@@ -1,34 +1,40 @@
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const Product = require("./../Models/productModel");
-const cloudinary = require("./../utils/cloudinary");
 
-exports.addProduct = catchAsync(async (req, res, next) => {
-  // const product = await Product.create(req.body);
-  const { name, description, price, quantity, category, image } = req.body;
-  const result = await cloudinary.uploader.upload(image, { folder: products });
+const cloudinary = require("cloudinary");
 
-  if (!product) {
-    next(new AppError("no data entered"));
+exports.createProduct = async (req, res, next) => {
+  try {
+    // Destructure the required fields from the request body
+    const { name, description, price, quantity, category, image } = req.body;
+
+    // Upload the image to Cloudinary and get the URL
+    const uploadedImage = await cloudinary.uploader.upload(image, {
+      upload_preset: "ecommerce",
+    });
+
+    // Create a new product instance with the details
+    const newProduct = new Product({
+      name,
+      description,
+      price,
+      quantity,
+      category,
+      image: uploadedImage.secure_url, // Store the secure URL of the image
+    });
+
+    // Save the product to the database
+    const savedProduct = await newProduct.save();
+
+    // Respond with the saved product
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-
-  const product = await Product.create({
-    name,
-    description,
-    price,
-    quantity,
-    category,
-    image: {
-      public_id: result.public_id,
-      url: result.secure_url,
-    },
-  });
-
-  res.status(201).json({
-    status: "success",
-    product,
-  });
-});
+};
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
   const product = await Product.find();

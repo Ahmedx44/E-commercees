@@ -28,7 +28,7 @@ export function ProductCard({ product }) {
     <Card className="w-96 h-13 border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300">
       <CardHeader shadow={false} floated={false} className="h-64">
         <img
-          src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80"
+          src={product.image}
           alt="card-image"
           className="h-full w-full object-cover"
         />

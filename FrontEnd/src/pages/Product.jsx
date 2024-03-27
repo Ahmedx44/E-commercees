@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Table } from "flowbite-react";
 import { Dropdown } from "flowbite-react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Title from "../ui/Title";
-import Modal from "react-modal"; // Import Modal component
-import AddModal from "./../ui/AddModal"; // Import AddModal component
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // State to control Add Modal visibility
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,9 +32,9 @@ function Products() {
     // Redirect to admin product detail page
     navigate(`/admin/productdetail-admin/${productId}`);
   };
-
-  const handleAddProductClick = () => {
-    setIsAddModalOpen(true); // Open the Add Modal when "Add Product" button is clicked
+  const handleaddProduct = () => {
+    // Redirect to admin product detail page
+    navigate(`/admin/addproduct`);
   };
 
   return (
@@ -51,9 +49,10 @@ function Products() {
             onChange={(e) => setSearch(e.target.value)}
             className="border-2 border-slate-300 p-2 rounded-lg mb-4"
           />
+
           <button
             className="bg-slate-600 p-1 rounded-lg  text-white px-5 h-14"
-            onClick={handleAddProductClick}
+            onClick={handleaddProduct}
           >
             Add Product
           </button>
@@ -87,14 +86,6 @@ function Products() {
           </Table.Body>
         </Table>
       </div>
-
-      {/* Add Modal */}
-      <Modal
-        isOpen={isAddModalOpen}
-        onRequestClose={() => setIsAddModalOpen(false)}
-      >
-        <AddModal closeModal={() => setIsAddModalOpen(false)} />
-      </Modal>
     </div>
   );
 }

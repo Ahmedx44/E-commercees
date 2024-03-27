@@ -25,6 +25,7 @@ import Retailers from "./pages/Retailers";
 import UserEdit from "./pages/UserEdit";
 import AdminProductDetail from "./pages/AdminProductDetail";
 import AddProduct from "./pages/AddProduct";
+import AddRetailer from "./pages/AddRetailer";
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
               <Route path="reviews" element={<Reviews />} />
               <Route path="useredit" element={<UserEdit />} />
               <Route path="addproduct" element={<AddProduct />} />
+              <Route path="addretailer" element={<AddRetailer />} />
               <Route
                 path="productdetail-admin/:id"
                 element={<AdminProductDetail />}
@@ -67,6 +69,14 @@ const App = () => {
             element={<PrivateRoute roles={["retailer"]} />}
           >
             <Route path="" element={<Retailers />} />
+            <Route index path="dashboard" />
+            <Route path="orders" />
+            <Route path="products" />
+            <Route path="users" />
+            <Route path="retailers" />
+            <Route path="reviews" />
+            <Route path="useredit" />
+            <Route path="addproduct" />
           </Route>
 
           <Route

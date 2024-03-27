@@ -24,10 +24,10 @@ const userSchema = mongoose.Schema({
   },
   sex: {
     type: String,
-    required: [true, "sex is required"],
+    // required: [true, "sex is required"],
     enum: ["male", "female"],
   },
-  photo: String,
+  image: String,
   role: {
     type: String,
     enum: ["admin", "customer", "retailer", "customer assitance"],
@@ -35,13 +35,13 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Please provide a password"],
+    // required: [true, "Please provide a password"],
     minlength: 8,
     select: false,
   },
   passwordConfirm: {
     type: String,
-    required: [true, "Please confirm your password"],
+    // required: [true, "Please confirm your password"],
     validate: {
       // This only works on CREATE and SAVE!!!
       validator: function (el) {

@@ -16,11 +16,11 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import Button from "./../ui/Button";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 function Header() {
   const [role, setRole] = useState(null);
   const [user, setUser] = useState(null);
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,6 +28,8 @@ function Header() {
       const decodedToken = jwtDecode(token);
       setRole(decodedToken.role);
       setUser(decodedToken.userName);
+      setImage(decodedToken.image);
+      console.log(decodedToken);
     }
   }, []);
 
@@ -67,7 +69,7 @@ function Header() {
               <Dropdown
                 arrowIcon={false}
                 inline
-                label={<Avatar alt="User settings" img="" rounded />}
+                label={<Avatar alt="User settings" img={image} rounded />}
               >
                 <DropdownHeader>
                   <span className="block text-sm">welcome</span>

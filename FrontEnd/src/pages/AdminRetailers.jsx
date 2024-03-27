@@ -2,13 +2,15 @@ import { Table } from "flowbite-react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Dropdown } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Title from "../ui/Title";
 import toast from "react-hot-toast";
 
 function Retailers() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -29,7 +31,10 @@ function Retailers() {
   const filteredUsers = users.filter((user) =>
     user.userName.toLowerCase().includes(search.toLowerCase())
   );
-
+  const handleAddRetailer = () => {
+    // Redirect to admin product detail page
+    navigate(`/admin/addretailer`);
+  };
   return (
     <div className="bg-slate-200 h-full">
       <Title name={"User"} />
@@ -42,6 +47,12 @@ function Retailers() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <button
+          className="bg-slate-600 p-1 rounded-lg  text-white px-5 h-14"
+          onClick={handleAddRetailer}
+        >
+          Add Retailer
+        </button>
 
         <Table hoverable>
           <Table.Head className=" font-bold text-lg">

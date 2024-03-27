@@ -3,10 +3,11 @@ const crypto = require("crypto");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const User = require("./../Models/userModel");
+const cloudinary = require("cloudinary");
 
-const signToken = (id, role, userName, firstName, lastName, email) => {
+const signToken = (id, role, userName, firstName, lastName, email, image) => {
   return jwt.sign(
-    { id, role, userName, firstName, lastName, email },
+    { id, role, userName, firstName, lastName, email, image },
     process.env.JWT_SECRET
   );
 };
@@ -18,7 +19,8 @@ const createSendToken = (user, statusCode, res) => {
     user.userName,
     user.firstName,
     user.lastName,
-    user.email
+    user.email,
+    user.image
   );
   const cookieOption = {
     expire: new Date(Date.now() + process.env.JWT_COOKIR_EXPIRE),
@@ -47,6 +49,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role,
     phoneNumber: req.body.phoneNumber,
+    image: req.body.image,
   });
   createSendToken(newUser, 200, res); // Pass newUser, not User
 });

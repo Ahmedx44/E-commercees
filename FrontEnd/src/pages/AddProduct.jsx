@@ -110,7 +110,6 @@ function AddProduct() {
               src={image}
               alt="product image"
               className="object-cover object-center w-full h-full"
-              loading="lazy"
             />
           ) : (
             <p>Image Preview will appear here</p>

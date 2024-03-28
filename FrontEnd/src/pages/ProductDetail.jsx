@@ -91,7 +91,7 @@ const ProductDetail = () => {
                   </div>
                   <button
                     onClick={handleAddToCart}
-                    className="text-4xl p-4 bg-blue-700 text-black rounded-xl transition duration-300 delay-100 hover:bg-blue-800 mt-10"
+                    className="text-4xl p-4 bg-gray-800 text-black rounded-xl transition duration-300 delay-100 mt-10 hover:bg-gray-700 text-white"
                   >
                     Add to Cart
                   </button>

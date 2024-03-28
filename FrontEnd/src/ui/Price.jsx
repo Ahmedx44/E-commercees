@@ -16,7 +16,7 @@ function Price() {
           aria-label="Small"
           valueLabelDisplay="auto"
           min={1}
-          max={10000}
+          max={100000}
           step={10}
           onChange={(e) => setValue(e.target.value)}
         />

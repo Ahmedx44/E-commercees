@@ -124,7 +124,7 @@ function Header() {
             </NavbarLink>
             <NavbarLink href="#" className="text-2xl font-bold ">
               <Link
-                to="contact"
+                to="about"
                 className="hover:text-gray-500 transition duration-300 delay-100"
               >
                 Contact

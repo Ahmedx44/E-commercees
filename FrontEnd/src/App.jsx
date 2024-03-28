@@ -5,7 +5,7 @@ import AppLayout from "./ui/AppLayout";
 import Homepage from "./pages/Homepage";
 import ProductList from "./pages/ProductList";
 import ProductDetail from "./pages/ProductDetail";
-import Contact from "./pages/Contact";
+import About from "./pages/About";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -37,7 +37,7 @@ const App = () => {
             <Route index path="/homepage" element={<Homepage />} />
             <Route path="/productlist" element={<ProductList />} />
             <Route path="/productdetail/:id" element={<ProductDetail />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/About" element={<About />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/pay" element={<Payment />} />
             <Route path="/history" element={<History />} />

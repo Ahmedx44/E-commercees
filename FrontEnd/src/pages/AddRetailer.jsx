@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Title from "../ui/Title";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const AddRetailer = () => {
   const [userName, setUserName] = useState("");
@@ -49,9 +50,20 @@ const AddRetailer = () => {
           image,
         }
       );
-      console.log(result);
+      toast.success("Retailer added successfully!");
+      // Clear input fields after successful creation
+      setUserName("");
+      setFirstName("");
+      setlastName("");
+      setEmail("");
+      setSex("");
+      setPassword("");
+      setpasswordConfirm("");
+      setPhoneNumber("");
+      setImage("");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to add retailer.");
     }
   };
 

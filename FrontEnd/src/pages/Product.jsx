@@ -4,10 +4,12 @@ import { Dropdown } from "flowbite-react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Title from "../ui/Title";
+import Spinner from "../ui/Spinner"; // Assuming you have a Spinner component
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
 
   const navigate = useNavigate();
 
@@ -16,6 +18,7 @@ function Products() {
       try {
         const response = await axios.get("http://127.0.0.1:3000/api/products");
         setProducts(response.data.data);
+        setLoading(false); // Set loading to false after fetching
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -58,33 +61,41 @@ function Products() {
           </button>
         </div>
 
-        <Table hoverable>
-          <Table.Head className=" font-bolder text-lg text-slate-700">
-            <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Price</Table.HeadCell>
-            <Table.HeadCell>Stock</Table.HeadCell>
-            <Table.HeadCell>Rating</Table.HeadCell>
-            <Table.HeadCell>Action</Table.HeadCell>
-          </Table.Head>
-          <Table.Body className="divide-y">
-            {filteredProducts.map((product) => (
-              <Table.Row key={product._id} className="font-bold  text-lg">
-                <Table.Cell>{product.name}</Table.Cell>
-                <Table.Cell>{product.price}</Table.Cell>
-                <Table.Cell>{product.quantity}</Table.Cell>
-                <Table.Cell>{product.rating}</Table.Cell>
-                <Table.Cell>
-                  <Dropdown label="Action" dismissOnClick={false}>
-                    <Dropdown.Item onClick={() => handleViewClick(product._id)}>
-                      View
-                    </Dropdown.Item>
-                    <Dropdown.Item>Delete</Dropdown.Item>
-                  </Dropdown>
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
+        {loading ? (
+          <div className="flex justify-center items-center h-full">
+            <Spinner />
+          </div>
+        ) : (
+          <Table hoverable>
+            <Table.Head className=" font-bolder text-lg text-slate-700">
+              <Table.HeadCell>Name</Table.HeadCell>
+              <Table.HeadCell>Price</Table.HeadCell>
+              <Table.HeadCell>Stock</Table.HeadCell>
+              <Table.HeadCell>Rating</Table.HeadCell>
+              <Table.HeadCell>Action</Table.HeadCell>
+            </Table.Head>
+            <Table.Body className="divide-y">
+              {filteredProducts.map((product) => (
+                <Table.Row key={product._id} className="font-bold  text-lg">
+                  <Table.Cell>{product.name}</Table.Cell>
+                  <Table.Cell>{product.price}</Table.Cell>
+                  <Table.Cell>{product.quantity}</Table.Cell>
+                  <Table.Cell>{product.rating}</Table.Cell>
+                  <Table.Cell>
+                    <Dropdown label="Action" dismissOnClick={false}>
+                      <Dropdown.Item
+                        onClick={() => handleViewClick(product._id)}
+                      >
+                        View
+                      </Dropdown.Item>
+                      <Dropdown.Item>Delete</Dropdown.Item>
+                    </Dropdown>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
+        )}
       </div>
     </div>
   );

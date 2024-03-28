@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Title from "./../ui/Title";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function AddProduct() {
   const [image, setImage] = useState("");
@@ -35,9 +36,17 @@ function AddProduct() {
           image,
         }
       );
-      console.log(result.data);
+      toast.success("Product created successfully!");
+      // Clear input fields after successful creation
+      setName("");
+      setDescription("");
+      setPrice("");
+      setQuantity("");
+      setCategory("");
+      setImage("");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to create product.");
     }
   };
 
@@ -46,7 +55,6 @@ function AddProduct() {
     setFile(file);
     previewFile(file);
   };
-
   return (
     <div className="">
       <Title name={"Add Product"} />

@@ -12,7 +12,7 @@ import {
   Rating,
   Button,
 } from "@material-tailwind/react";
-import Tabs from "./../ui/Tabs";
+import Tabss from "../ui/Tabs";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -52,38 +52,46 @@ const ProductDetail = () => {
       </div>
 
       <div className="mb-30">
-        <div className="w-3/4 width bg-black rounded-lg relative top-9 left-96 flex justify-between justify-center rounded-lg">
+        <div className="w-3/4 width  rounded-lg relative top-9 left-96 flex justify-between justify-center rounded-lg">
           <div className="flex items-center ">
             {product && (
               <>
                 <img
-                  src="../src/data/pexels-porapak-apichodilok-346748.jpg"
+                  src={product.image}
                   alt=""
-                  className="w-96 heightimg object-cover object-center mr-9 p-7 rounded-xl pl-24"
+                  className="w-96 heightimg object-center mr-9 p-7  pl-24"
                 />
-                <div className="text-white bold text-5xl">
+                <div className="text-black bold text-5xl">
                   <h2 className="text-5xl font-bold p-5">
                     {product.name.charAt(0).toUpperCase() +
                       product.name.slice(1)}
                   </h2>
                   <p className="text-xl pl-6">By: Ahmed</p>
-                  <Typography
-                    component="legend"
-                    className="font-bold pl-5 pt-10 text-5xl"
-                  >
-                    Rating
-                  </Typography>
-                  <Rating
-                    name="read-only"
-                    value={product.rating}
-                    readOnly
-                    className="p-5 text-5xl "
-                  />
-                  <p className="p-5 text-3xl">${product.price}</p>
 
+                  <div className="flex">
+                    <Rating
+                      name="read-only"
+                      value={product.rating}
+                      readOnly
+                      className="pl-5"
+                    />
+                    <p className="text-xl p-5 mt-2 font-bold">
+                      (2 Customer reviewed)
+                    </p>
+                  </div>
+                  <div className="flex text-2xl gap-2 ml-5">
+                    <p className="font-bold">Price: </p>
+                    <p className="l-10 text-red-500 font-bold">
+                      ${product.price}
+                    </p>
+                  </div>
+                  <div className=" flex gap-2 text-2xl font-bold ml-5 mt-5">
+                    <p className="font-bold">Available:</p>
+                    <p className="text-red-500">{product.quantity}</p>
+                  </div>
                   <button
                     onClick={handleAddToCart}
-                    className="text-4xl p-4 bg-white text-black rounded-xl transition duration-300 delay-100 hover:bg-gray-500 hover:text-white "
+                    className="text-4xl p-4 bg-blue-700 text-black rounded-xl transition duration-300 delay-100 hover:bg-blue-800 mt-10"
                   >
                     Add to Cart
                   </button>
@@ -93,7 +101,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <Tabs product={product} />
+      <Tabss product={product} />
     </>
   );
 };

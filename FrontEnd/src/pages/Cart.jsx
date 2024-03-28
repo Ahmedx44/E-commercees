@@ -64,7 +64,7 @@ const Cart = () => {
                   >
                     -
                   </button>
-                  <span className="mx-2">{item.quantity}</span>
+                  <span className="mx-2 text-red">{item.quantity}</span>
                   <button
                     onClick={() => dispatch(increaseQuantity(item.id))}
                     className="bg-black text-white py-1 px-2 rounded"

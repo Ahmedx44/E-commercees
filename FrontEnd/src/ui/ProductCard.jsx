@@ -27,11 +27,7 @@ export function ProductCard({ product }) {
   return (
     <Card className="w-96 h-13 border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300">
       <CardHeader shadow={false} floated={false} className="h-64">
-        <img
-          src={product.image}
-          alt="card-image"
-          className="h-full w-full object-cover"
-        />
+        <img src={product.image} alt="card-image" className="h-full w-full " />
       </CardHeader>
       <CardBody className="px-6 py-4">
         <div className="mb-2 flex items-center justify-between">
@@ -48,14 +44,14 @@ export function ProductCard({ product }) {
           </Typography>
         </div>
         <Typography
-          variant="small"
+          variant="big"
           color="gray"
           className="font-normal opacity-75"
         ></Typography>
         <Typography component="legend" className="font-bold">
           Rating
         </Typography>
-        <Rating name="read-only" value={product.rating} readOnly />
+        <Rating name="disabled" value={product.rating} disabled />
       </CardBody>
       <CardFooter className="pt-0">
         <Button

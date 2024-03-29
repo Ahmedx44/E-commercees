@@ -37,13 +37,23 @@ exports.createProduct = async (req, res, next) => {
 };
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
-  const product = await Product.find();
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 3;
+  const skip = (page - 1) * limit;
+
+  const products = await Product.find().skip(skip).limit(limit).exec();
+
+  const totalCount = await Product.countDocuments();
 
   res.status(200).json({
     status: "success",
-    number: product.length,
+    number: products.length,
     requestAt: req.requestTime,
-    data: product,
+    total: totalCount,
+    limit: limit,
+    currentPage: page,
+    totalPages: Math.ceil(totalCount / limit),
+    data: products,
   });
 });
 

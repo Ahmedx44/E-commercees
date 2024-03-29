@@ -1,27 +1,37 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Catgory from "../ui/Catgory";
 import Price from "../ui/Price";
 import ProductCard from "../ui/ProductCard";
-import Spinner from "../ui/Spinner"; // Assuming you have a Spinner component
-import { useEffect, useState } from "react";
-import axios from "axios";
+import Spinner from "../ui/Spinner";
+import Pagination from "../ui/Pagination";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/products");
-        setProducts(response.data.data); // Assuming response.data contains the data object
-        setLoading(false); // Set loading to false after fetching
+        const response = await axios.get(
+          `http://127.0.0.1:3000/api/products?page=${currentPage}`
+        );
+        setProducts(response.data.data);
+        setTotalPages(Math.ceil(response.data.total / response.data.limit));
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [currentPage]);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="h-screen mt-16">
@@ -34,7 +44,7 @@ function ProductList() {
         </div>
         <div className="col-start-2 col-end-5 p-4">
           <div className="overflow-y-auto max-h-screen">
-            {loading ? ( // Render spinner if loading is true
+            {loading ? (
               <div className="mt-96 mr-96">
                 <Spinner />
               </div>
@@ -47,6 +57,11 @@ function ProductList() {
               </div>
             )}
           </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </div>

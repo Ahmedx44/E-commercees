@@ -4,11 +4,12 @@ const AppError = require("./../utils/appError");
 
 exports.createOrder = catchAsync(async (req, res, next) => {
   try {
-    const { userId, products, totalAmount } = req.body;
+    const { userId, products, totalAmount, userName } = req.body;
     const order = new Order({
       userId,
       products,
       totalAmount,
+      userName,
     });
     await order.save();
     res.status(201).json({ message: "Order created successfully", order });
@@ -76,6 +77,21 @@ exports.getAllOrdersByUser = catchAsync(async (req, res, next) => {
     results: orders.length,
     data: {
       orders,
+    },
+  });
+});
+
+exports.getOrderById = catchAsync(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return next(new AppError("Order not found", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      order,
     },
   });
 });

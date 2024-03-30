@@ -16,6 +16,8 @@
     "@mui/icons-material": "^5.15.12",
     "@mui/material": "^5.15.12",
     "@mui/x-charts": "^7.0.0",
+    "@react-login-page/page3": "^1.0.4",
+    "@react-login-page/page5": "^1.0.4",
     "axios": "^1.6.7",
     "cloudinary": "^2.0.3",
     "flowbite-react": "^0.7.3",

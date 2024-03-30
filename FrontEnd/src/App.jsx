@@ -26,6 +26,7 @@ import UserEdit from "./pages/UserEdit";
 import AdminProductDetail from "./pages/AdminProductDetail";
 import AddProduct from "./pages/AddProduct";
 import AddRetailer from "./pages/AddRetailer";
+import OrderDetail from "./pages/OrderDetail";
 
 const App = () => {
   return (
@@ -34,10 +35,10 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<AppLayout />}>
-            <Route index path="/homepage" element={<Homepage />} />
+            <Route index element={<Homepage />} />
             <Route path="/productlist" element={<ProductList />} />
             <Route path="/productdetail/:id" element={<ProductDetail />} />
-            <Route path="/About" element={<About />} />
+            <Route path="/about" element={<About />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/pay" element={<Payment />} />
             <Route path="/history" element={<History />} />
@@ -48,7 +49,7 @@ const App = () => {
 
           <Route path="/admin" element={<PrivateRoute roles={["admin"]} />}>
             <Route path="" element={<Admin />}>
-              <Route index path="dashboard" element={<Dashboard />} />
+              <Route index element={<Dashboard />} />
               <Route path="orders" element={<Orders />} />
               <Route path="products" element={<Product />} />
               <Route path="users" element={<Users />} />
@@ -61,6 +62,7 @@ const App = () => {
                 path="productdetail-admin/:id"
                 element={<AdminProductDetail />}
               />
+              <Route path="orderdetail/:id" element={<OrderDetail />} />
             </Route>
           </Route>
 
@@ -69,7 +71,7 @@ const App = () => {
             element={<PrivateRoute roles={["retailer"]} />}
           >
             <Route path="" element={<Retailers />} />
-            <Route index path="dashboard" />
+            <Route path="dashboard" />
             <Route path="orders" />
             <Route path="products" />
             <Route path="users" />

@@ -23,7 +23,7 @@ function Login() {
       const role = decodedToken.role;
       console.log(decodedToken.role);
       handleRedirect(role);
-      toast.success(`succesfully Loged in`);
+      toast.success(`succesfully Logged in`);
     } catch (err) {
       toast.error("failed to login");
     }
@@ -50,13 +50,14 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen ">
+    <div className="flex items-center justify-center min-h-screen">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-lg p-6 bg-white rounded-lg shadow-md"
+        className="flex flex-col gap-6 w-full max-w-lg p-8 bg-white rounded-lg shadow-md"
+        style={{ width: "500px" }} // Adjust the width as needed
       >
         <div>
-          <Label htmlFor="email1" value="Your email" className="text-xl" />
+          <Label htmlFor="email1" value="Your email" className="text-2xl" />
           <TextInput
             id="email1"
             type="email"
@@ -64,13 +65,14 @@ function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="text-xl h-12" // Adjust the height and font size of the input
           />
         </div>
         <div>
           <Label
             htmlFor="password1"
             value="Your password"
-            className="text-xl"
+            className="text-2xl"
           />
           <TextInput
             id="password1"
@@ -78,17 +80,18 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="text-xl h-12" // Adjust the height and font size of the input
           />
         </div>
-        <div className="flex items-center gap-2">
-          <Label htmlFor="remember" className="text-xl">
+        <div className="flex items-center gap-4">
+          <Label htmlFor="remember" className="text-2xl">
             Do you want to{" "}
-            <Link to="/signup" className="text-green-600">
+            <Link to="/signup" className="text-green-600 text-xl">
               Sign up
             </Link>
           </Label>
         </div>
-        <Button type="submit" className="bg-black">
+        <Button type="submit" className="bg-black text-xl hover:bg-gray-700">
           Login
         </Button>
       </form>

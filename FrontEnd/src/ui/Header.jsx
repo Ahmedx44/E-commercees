@@ -109,7 +109,7 @@ function Header() {
             >
               <Link
                 to="homepage"
-                className="hover:text-gray-500 transition duration-300 delay-100"
+                className="hover:text-gray-500 transition duration-300 delay-100 ml-40"
               >
                 Home
               </Link>

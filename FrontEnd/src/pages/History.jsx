@@ -39,7 +39,7 @@ function History() {
   }, [token, user]);
 
   return (
-    <div className="flex justify-center items-center h-full pt-52">
+    <div className="flex justify-center items-center h-screen -mt-60">
       <table className="divide-y divide-gray-200 w-3/5 text-lg">
         <thead className="bg-gray-50 dark:bg-gray-800">
           <tr>

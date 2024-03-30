@@ -1,21 +1,30 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Table } from "flowbite-react";
 import Title from "../ui/Title";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Dropdown } from "flowbite-react";
-import Spinner from "../ui/Spinner"; // Import the Spinner component
+import Spinner from "../ui/Spinner";
+import { Link, useNavigate } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Box from "@mui/material/Box";
+import { Breadcrumb } from "flowbite-react";
+import { HiShoppingBag } from "react-icons/hi";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:3000/api/orders");
-        console.log(response);
-        setOrders(response.data.data.orders); // Assuming response.data contains the data object
-        setLoading(false); // Set loading to false after fetching
+        setOrders(response.data.data.orders);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
@@ -24,37 +33,69 @@ function Orders() {
     fetchOrders();
   }, []);
 
-  return (
-    <div className="bg-slate-200 h-full">
-      <Title name={"Orders"} />
+  const handleClick = (orderId) => {
+    navigate(`/admin/orderdetail/${orderId}`); // Redirect to order detail page with order ID
+  };
 
-      <div className="m-24 px-10 py-10 pb-10 mb-10 bg-slate-100 h-screen shadow-lg rounded-2xl overflow-x-auto">
-        {loading ? ( // Display spinner while loading
+  // Filter orders based on userName
+  const filteredOrders = orders.filter((order) =>
+    order.userName.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="bg-gray-200 min-h-screen font-sans">
+      <div className="text-2xl p-10">
+        <Breadcrumb aria-label="Default breadcrumb example">
+          <Breadcrumb.Item href="#" icon={HiShoppingBag}>
+            <p className="text-4xl font-bold">Order</p>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+
+      <div className="mx-8 my-4 p-8 bg-gray-100 shadow-lg rounded-xl overflow-x-auto">
+        <input
+          className="w-68 border-2 border-slate-300 p-2 rounded-lg mb-4"
+          type="text"
+          placeholder="Search users..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        {loading ? (
           <div className="flex justify-center items-center h-full">
             <Spinner />
           </div>
         ) : (
           <Table hoverable>
-            <Table.Head className="font-bolder text-lg text-slate-700">
-              <Table.HeadCell>Order Id</Table.HeadCell>
+            <Table.Head className="text-xl p-4 text-gray-700">
               <Table.HeadCell>User Id</Table.HeadCell>
-              <Table.HeadCell>Number of product</Table.HeadCell>
+              <Table.HeadCell>Number of Product</Table.HeadCell>
               <Table.HeadCell>Total Amount</Table.HeadCell>
               <Table.HeadCell>Status</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
-              {orders.map((order) => (
-                <Table.Row key={order._id} className="font-bold text-lg">
-                  <Table.Cell>{order._id}</Table.Cell>
-                  <Table.Cell>{order.userId}</Table.Cell>
+              {filteredOrders.map((order) => (
+                <Table.Row key={order._id} className="font-semibold text-xl">
+                  <Table.Cell>{order.userName}</Table.Cell>
                   <Table.Cell>{order.products.length}</Table.Cell>
                   <Table.Cell>{order.totalAmount} ETB</Table.Cell>
                   <Table.Cell>{order.status}</Table.Cell>
                   <Table.Cell>
-                    <Dropdown label="Action" dismissOnClick={false}>
-                      <Dropdown.Item>Edit</Dropdown.Item>
-                      <Dropdown.Item>Delete</Dropdown.Item>
-                    </Dropdown>
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          Action
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          label="Action"
+                        >
+                          <MenuItem onClick={() => handleClick(order._id)}>
+                            View
+                          </MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Box>
                   </Table.Cell>
                 </Table.Row>
               ))}

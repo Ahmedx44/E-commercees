@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "flowbite-react";
-import { Dropdown } from "flowbite-react";
 import axios from "axios";
+import { Table } from "flowbite-react";
+import Spinner from "../ui/Spinner";
+import { HiViewBoards } from "react-icons/hi";
+import { Breadcrumb } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import Title from "../ui/Title";
-import Spinner from "../ui/Spinner"; // Assuming you have a Spinner component
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -27,38 +28,30 @@ function Products() {
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
-  );
-
   const handleViewClick = (productId) => {
     // Redirect to admin product detail page
     navigate(`/admin/productdetail-admin/${productId}`);
   };
-  const handleaddProduct = () => {
-    // Redirect to admin product detail page
-    navigate(`/admin/addproduct`);
-  };
 
   return (
-    <div className="bg-slate-200 h-full ">
-      <Title name={"Product"} />
-      <div className="m-24 px-10 py-10 pb-10 mb-10 bg-slate-100 h-screen shadow-lg rounded-2xl overflow-x-auto">
-        <div className="flex justify-between">
+    <div className="bg-gray-200 min-h-screen font-sans">
+      <div className="text-2xl p-10">
+        <Breadcrumb aria-label="Default breadcrumb example">
+          <Breadcrumb.Item href="#" icon={HiViewBoards}>
+            <p className="text-4xl font-bold">Product</p>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+
+      <div className="mx-8 my-4 p-8 bg-gray-100 shadow-lg rounded-xl overflow-x-auto">
+        <div className="flex justify-between items-center mb-4">
           <input
             type="text"
             placeholder="Search by name"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="border-2 border-slate-300 p-2 rounded-lg mb-4"
+            className="border-2 border-gray-300 p-2 rounded-lg"
           />
-
-          <button
-            className="bg-slate-600 p-1 rounded-lg  text-white px-5 h-14"
-            onClick={handleaddProduct}
-          >
-            Add Product
-          </button>
         </div>
 
         {loading ? (
@@ -67,7 +60,7 @@ function Products() {
           </div>
         ) : (
           <Table hoverable>
-            <Table.Head className=" font-bolder text-lg text-slate-700">
+            <Table.Head className="text-xl p-4 text-gray-700">
               <Table.HeadCell>Name</Table.HeadCell>
               <Table.HeadCell>Price</Table.HeadCell>
               <Table.HeadCell>Stock</Table.HeadCell>
@@ -75,21 +68,25 @@ function Products() {
               <Table.HeadCell>Action</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
-              {filteredProducts.map((product) => (
-                <Table.Row key={product._id} className="font-bold  text-lg">
+              {products.map((product) => (
+                <Table.Row key={product._id} className="font-semibold text-lg">
                   <Table.Cell>{product.name}</Table.Cell>
                   <Table.Cell>{product.price}</Table.Cell>
                   <Table.Cell>{product.quantity}</Table.Cell>
                   <Table.Cell>{product.rating}</Table.Cell>
                   <Table.Cell>
-                    <Dropdown label="Action" dismissOnClick={false}>
-                      <Dropdown.Item
-                        onClick={() => handleViewClick(product._id)}
+                    <FormControl fullWidth>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Action"
                       >
-                        View
-                      </Dropdown.Item>
-                      <Dropdown.Item>Delete</Dropdown.Item>
-                    </Dropdown>
+                        <MenuItem onClick={() => handleViewClick(product._id)}>
+                          View
+                        </MenuItem>
+                        <MenuItem>Delete</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Table.Cell>
                 </Table.Row>
               ))}

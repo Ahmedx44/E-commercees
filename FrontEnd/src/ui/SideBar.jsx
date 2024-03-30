@@ -23,7 +23,7 @@ function SideBar() {
     >
       <Sidebar.Items className="mt-52 ">
         <Sidebar.ItemGroup>
-          <Link to="dashboard">
+          <Link to="">
             <Sidebar.Item icon={HiChartPie} className="text-3xl my-5 mx-2 ">
               Dasboard
             </Sidebar.Item>

@@ -13,5 +13,6 @@ router
   .delete(orderController.deleteOrder);
 
 router.route("/orderHistory/:id").get(orderController.getAllOrdersByUser);
+router.route("/getorder/:id").get(orderController.getOrderById);
 
 module.exports = router;

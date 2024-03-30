@@ -1,6 +1,5 @@
 import { Outlet } from "react-router";
 import SideBar from "../ui/SideBar";
-import AdminHeader from "../ui/AdminHeader";
 
 function Admin() {
   return (
@@ -9,7 +8,6 @@ function Admin() {
         <SideBar />
       </div>
       <div className="col-span-4">
-        <AdminHeader />
         <Outlet className="bg-yellow=500" />
       </div>
     </div>

@@ -11,6 +11,7 @@ function Payment() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
@@ -22,10 +23,10 @@ function Payment() {
     if (token) {
       // Decode token to extract user information
       const decodedToken = jwtDecode(token);
-      setFname(decodedToken.firstName);
-      setLname(decodedToken.lastName);
+
       setEmail(decodedToken.email);
-      setUser(decodedToken); // Store user information
+      setUser(decodedToken);
+      setUserName(decodedToken.userName); // Store user information
     }
   }, []); // Run only once on component mount
 
@@ -39,8 +40,7 @@ function Payment() {
     // Prepare order details
     const orderDetails = {
       userId: user.id,
-      fname,
-      lname,
+      userName: userName,
       email,
       products: cartItems.map((item) => item._id),
       totalAmount: cartTotalAmount,

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import Title from "./../ui/Title";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Breadcrumb } from "flowbite-react";
+import { IoIosAdd } from "react-icons/io";
+import { HiViewBoards } from "react-icons/hi";
 
 function AddProduct() {
   const [image, setImage] = useState("");
@@ -10,7 +12,6 @@ function AddProduct() {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [category, setCategory] = useState("");
-  // const [retailerId, setRetailerId] = useState("");
   const [file, setFile] = useState("");
 
   const previewFile = (file) => {
@@ -19,7 +20,6 @@ function AddProduct() {
     reader.onloadend = () => {
       setImage(reader.result);
     };
-    console.log(image);
   };
 
   const handleSubmit = async (e) => {
@@ -55,17 +55,31 @@ function AddProduct() {
     setFile(file);
     previewFile(file);
   };
+
   return (
-    <div className="">
-      <Title name={"Add Product"} />
-      <form className="grid grid-cols-2 gap-10" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-5">
+    <div className="container mx-auto px-4 py-8 bg-gray-200 h-screen">
+      <div className="text-2xl p-10">
+        <Breadcrumb aria-label="Default breadcrumb example">
+          <Breadcrumb.Item href="#" icon={HiViewBoards}>
+            <p className="text-4xl font-bold">Product</p>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#" icon={IoIosAdd}>
+            <p className="text-4xl font-bold">Add Product</p>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <form
+        className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-10 bg-slate-50 rounded-xl"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex flex-col gap-4">
           <input
             type="text"
             placeholder="Name"
             id="name"
-            className="rounded-lg font-bold"
+            className="rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 px-4 py-2"
             name="name"
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
@@ -73,54 +87,68 @@ function AddProduct() {
             placeholder="Price"
             id="price"
             name="price"
-            className="rounded-lg font-bold"
+            className="rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 px-4 py-2"
+            value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
-          <input
-            type="textarea"
+          <textarea
             placeholder="Description"
-            id="Description"
-            name="Description"
-            className="rounded-lg font-bold"
+            id="description"
+            name="description"
+            className="rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 px-4 py-2"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
-          />
+          ></textarea>
           <input
             type="number"
             placeholder="Quantity"
             id="quantity"
             name="quantity"
-            className="rounded-lg font-bold"
+            className="rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 px-4 py-2"
+            value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
           />
           <select
-            name="Catgory"
+            name="category"
+            className="rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 px-4 py-2"
+            value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="rounded-lg font-bold"
           >
-            <option value="">Select Catgory</option>
+            <option value="">Select Category</option>
             <option value="Electronics">Electronics</option>
+            {/* Add more options as needed */}
           </select>
           <input
             type="file"
-            accept="image/"
+            accept="image/*"
             onChange={(e) => handleChange(e)}
+            className="hidden"
+            id="fileInput"
           />
-          <input
+          <label
+            htmlFor="fileInput"
+            className="bg-black text-white rounded-lg px-4 py-2 cursor-pointer hover:bg-gray-700 focus:outline-none focus:bg-gray-700  transition duration-200 text-center"
+          >
+            Upload Image
+          </label>
+          <button
             type="submit"
-            onClick={handleSubmit}
-            className="rounded-lg font-bold bg-slate-700 text-white w-56 m-auto"
-          />
+            className="bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700 focus:outline-none focus:bg-gray-700  transition duration-200"
+          >
+            Add Product
+          </button>
         </div>
 
-        <div className="w-96 h-96 overflow-hidden border-black border-x-2 border-y-2">
+        <div className="w-96 h-96 flex items-center justify-center border border-gray-300 rounded-lg overflow-hidden">
           {image ? (
             <img
               src={image}
-              alt="product image"
-              className="object-cover object-center w-full h-full"
+              alt="Product"
+              sizes="100px"
+              className="object-cover w-full h-full"
             />
           ) : (
-            <p>Image Preview will appear here</p>
+            <p className="text-gray-500">Image Preview will appear here</p>
           )}
         </div>
       </form>

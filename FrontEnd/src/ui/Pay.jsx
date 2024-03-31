@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 function Pay({ cartTotalAmount, orderDetails }) {
-  const CHAPA_PUBLIC_KEY = "CHAPUBK_TEST-PGENqDhxY2ix9f1MvrbJkCOXH6tqkl6D";
+  const CHAPA_PUBLIC_KEY = "CHAPUBK_TEST-g4mCZsTlabmVimRnuCDmF2A5eNXZf70g";
   const CHAPA_SECRET_KEY = "CHASECK_TEST-mYpavLWzzLvrfEhy1JNYPr8L3oSMaNXR";
 
   const { fname, lname, email } = orderDetails;
@@ -27,10 +27,10 @@ function Pay({ cartTotalAmount, orderDetails }) {
       <form
         id="payForm"
         method="POST"
-        action="https://api.chapa.co/v1/hosted/pay"
+        action="https://api.chapa.co/v1/transaction/initialize"
       >
         <input type="hidden" name="public_key" value={CHAPA_PUBLIC_KEY} />
-        <input type="hidden" name="tx_ref" value={tx_ref} />
+        <input type="hidden" name="tx_ref" value="chewatatest-666932" />
         <input type="hidden" name="amount" value={cartTotalAmount} />
         <input type="hidden" name="currency" value="ETB" />
         <input type="hidden" name="email" value={email} />

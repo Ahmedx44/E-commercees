@@ -11,4 +11,6 @@ router
   .patch(productController.updateProduct)
   .get(productController.getProductById);
 
+router.get("/retailer/:retailerId", productController.getProductsByRetailerId);
+
 module.exports = router;

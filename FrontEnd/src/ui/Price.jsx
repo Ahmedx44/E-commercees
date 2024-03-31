@@ -1,28 +1,46 @@
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
-import { useState } from "react";
+import React, { useState } from "react";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
-function Price() {
-  const [value, setValue] = useState("");
+const Price = ({ onPriceRangeChange }) => {
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+
+  const handlePriceRangeChange = (value) => {
+    setPriceRange(value);
+    onPriceRangeChange(`${value[0]}-${value[1]}`);
+  };
+
   return (
-    <div>
-      <h1 className="font-bold text-center mt-10 text-center">Price</h1>
-
-      <Box sx={{ width: 120 }} className="ml-5 p-5">
-        <p className="font-bold text-xl">{value}ETB</p>
+    <div className="mt-4 w-48">
+      {" "}
+      {/* Adjust width here */}
+      <h3 className="text-lg font-semibold mb-2">Price Range</h3>
+      <div className="relative">
         <Slider
-          size="small"
-          defaultValue={70}
-          aria-label="Small"
-          valueLabelDisplay="auto"
-          min={1}
-          max={100000}
-          step={10}
-          onChange={(e) => setValue(e.target.value)}
+          range
+          defaultValue={priceRange}
+          min={0}
+          max={1000}
+          onAfterChange={handlePriceRangeChange}
+          marks={{ 0: "", 1000: "" }}
+          trackStyle={{ backgroundColor: "#CBD5E0", height: "4px" }}
+          handleStyle={{
+            backgroundColor: "#4299E1",
+            width: "12px",
+            height: "12px",
+            border: "none",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)",
+            marginTop: "-4px",
+          }}
+          railStyle={{ backgroundColor: "#CBD5E0", height: "4px" }}
         />
-      </Box>
+        <div className="absolute bottom-0 left-0 w-full flex justify-between px-2 text-sm text-gray-600 font-bold">
+          <span>${priceRange[0]}</span>
+          <span>${priceRange[1]}</span>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default Price;

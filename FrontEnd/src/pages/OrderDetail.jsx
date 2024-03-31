@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import Spinner from "../ui/Spinner"; // Import the Spinner component
 import { Breadcrumb } from "flowbite-react";
 import { HiShoppingBag } from "react-icons/hi";
+import "@radix-ui/themes/styles.css";
+import { Badge, DataList } from "@radix-ui/themes";
 
 function OrderDetail() {
   const [order, setOrder] = useState(null);
@@ -56,23 +58,38 @@ function OrderDetail() {
         </select>
       </div>
 
-      <div className="bg-slate-50 m-5 px-10 py-10 rounded-xl flex flex-col gap-5 text-3xl font-bold">
-        <h1>
-          Order Status:{" "}
-          <span className="bg-green-300 p-2 rounded-lg">Processing</span>
-        </h1>
-        <h1>
-          Payment: <span className="bg-green-300 p-2 rounded-lg">Paid</span>
-        </h1>
-        <h1>
-          Shipping: <span className="text-green-500">100ETB</span>
-        </h1>
-        <h1>
-          Order Total:{" "}
-          <span className="text-green-500">{order.totalAmount}ETB</span>
-        </h1>
-        <h1>Delivery:</h1>
-      </div>
+      <DataList.Root className="bg-slate-50 py-10 px-5  rounded-xl m-5 gap-5">
+        <DataList.Item align="center">
+          <DataList.Label minWidth="88px">Order Status</DataList.Label>
+          <DataList.Value>
+            <Badge color="green" variant="soft" radius="pill">
+              Complete
+            </Badge>
+          </DataList.Value>
+        </DataList.Item>
+        <DataList.Item>
+          <DataList.Label minWidth="88px">Payment</DataList.Label>
+          <DataList.Value>
+            <span className="bg-green-300 px-2 py-1 rounded-lg">Paid</span>
+          </DataList.Value>
+        </DataList.Item>
+        <DataList.Item>
+          <DataList.Label minWidth="88px">Shipping</DataList.Label>
+          <DataList.Value>
+            <span className="text-green-500">100ETB</span>
+          </DataList.Value>
+        </DataList.Item>
+        <DataList.Item>
+          <DataList.Label minWidth="88px">Order Total</DataList.Label>
+          <DataList.Value>
+            <span className="text-green-500">{order.totalAmount}ETB</span>
+          </DataList.Value>
+        </DataList.Item>
+        <DataList.Item>
+          <DataList.Label minWidth="88px">Delivery</DataList.Label>
+          <DataList.Value>{/* Add delivery information here */}</DataList.Value>
+        </DataList.Item>
+      </DataList.Root>
     </div>
   );
 }

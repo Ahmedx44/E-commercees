@@ -12,7 +12,7 @@ import { FaCartArrowDown } from "react-icons/fa6";
 import { Rating } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "./../store";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export function ProductCard({ product }) {
   const dispatch = useDispatch();
@@ -25,21 +25,21 @@ export function ProductCard({ product }) {
   };
 
   return (
-    <Card className="w-96 h-13 border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300">
-      <CardHeader shadow={false} floated={false} className="h-64">
+    <Card className="w-80 h-auto border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300">
+      <CardHeader shadow={false} floated={false} className="h-40">
         <img src={product.image} alt="card-image" className="h-full w-full " />
       </CardHeader>
-      <CardBody className="px-6 py-4">
+      <CardBody className="px-4 py-2 h-38">
         <div className="mb-2 flex items-center justify-between">
           <Link to={`/productdetail/${product._id}`}>
             <Typography
               color="blue-gray"
-              className="text-xl font-bold text-black hover:text-grey-700"
+              className="text-lg font-bold text-black hover:text-gray-700"
             >
               {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
             </Typography>
           </Link>
-          <Typography color="blue-gray" className="text-xl font-bold">
+          <Typography color="blue-gray" className="text-lg font-bold">
             ${product.price}
           </Typography>
         </div>

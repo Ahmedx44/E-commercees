@@ -1,41 +1,45 @@
-function Catgory() {
+import React from "react";
+
+const Catgory = ({ onCategoryChange, selectedCategory }) => {
+  const categories = [
+    "All",
+    "Electronics",
+    "Fashion",
+    "Home & Kitchen",
+    "Toys",
+    "Health & Beauty",
+    "Computers & Accessories",
+    "Furniture",
+    "Automotive",
+    "Garden & Tools",
+    "Jewelry",
+    "Watches",
+    "Shoes",
+    "Accessories",
+    "Laptops",
+    "Mobile Phones",
+  ];
+
   return (
     <div>
-      <h1 className="font-bold text-center">Category</h1>
-      <div className="text-center text-gray-600 ml-10 flex flex-col gap-2 font-bold text-xl">
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          All
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Fashion
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Home & Kitchen
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Mobile Phones
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Electronics
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Furniture
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Watches
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Shoes
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Laptops
-        </p>
-        <p className="text-left hover:text-gray-900 hover:cursor-pointer">
-          Accessories
-        </p>
+      <h3 className="text-xl font-bold  ">Category</h3>
+      <div className="flex flex-col text-sm">
+        {categories.map((category) => (
+          <p
+            key={category}
+            onClick={() => onCategoryChange(category)}
+            className={`py-2 px-4 rounded-md cursor-pointer ${
+              selectedCategory === category
+                ? "bg-blue-500 text-white"
+                : "text-gray-700 hover:bg-gray-100"
+            }`}
+          >
+            {category}
+          </p>
+        ))}
       </div>
     </div>
   );
-}
+};
 
 export default Catgory;

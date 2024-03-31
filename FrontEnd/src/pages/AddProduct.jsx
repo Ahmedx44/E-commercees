@@ -116,6 +116,7 @@ function AddProduct() {
           >
             <option value="">Select Category</option>
             <option value="Electronics">Electronics</option>
+            <option value="Fashion">Fashion</option>
             {/* Add more options as needed */}
           </select>
           <input

@@ -27,6 +27,8 @@ import AdminProductDetail from "./pages/AdminProductDetail";
 import AddProduct from "./pages/AddProduct";
 import AddRetailer from "./pages/AddRetailer";
 import OrderDetail from "./pages/OrderDetail";
+import RetProduct from "./pages/RetProduct";
+import RetDashboard from "./pages/RetDashboard";
 
 const App = () => {
   return (
@@ -56,7 +58,7 @@ const App = () => {
               <Route path="retailers" element={<AdminRetailers />} />
               <Route path="reviews" element={<Reviews />} />
               <Route path="useredit" element={<UserEdit />} />
-              <Route path="addproduct" element={<AddProduct />} />
+
               <Route path="addretailer" element={<AddRetailer />} />
               <Route
                 path="productdetail-admin/:id"
@@ -70,15 +72,11 @@ const App = () => {
             path="/retailer"
             element={<PrivateRoute roles={["retailer"]} />}
           >
-            <Route path="" element={<Retailers />} />
-            <Route path="dashboard" />
-            <Route path="orders" />
-            <Route path="products" />
-            <Route path="users" />
-            <Route path="retailers" />
-            <Route path="reviews" />
-            <Route path="useredit" />
-            <Route path="addproduct" />
+            <Route path="" element={<Retailers />}>
+              <Route index element={<RetDashboard />} />
+              <Route path="products" element={<RetProduct />} />
+              <Route path="addproduct" element={<AddProduct />} />{" "}
+            </Route>
           </Route>
 
           <Route

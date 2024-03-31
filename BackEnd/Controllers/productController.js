@@ -4,10 +4,11 @@ const Product = require("./../Models/productModel");
 
 const cloudinary = require("cloudinary");
 
-exports.createProduct = async (req, res, next) => {
+exports.createProduct = catchAsync(async (req, res, next) => {
   try {
     // Destructure the required fields from the request body
-    const { name, description, price, quantity, category, image } = req.body;
+    const { name, description, price, quantity, category, image, retailer } =
+      req.body;
 
     // Upload the image to Cloudinary and get the URL
     const uploadedImage = await cloudinary.uploader.upload(image, {
@@ -22,6 +23,7 @@ exports.createProduct = async (req, res, next) => {
       quantity,
       category,
       image: uploadedImage.secure_url, // Store the secure URL of the image
+      retailer, // Include retailer ID
     });
 
     // Save the product to the database
@@ -34,16 +36,30 @@ exports.createProduct = async (req, res, next) => {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-};
+});
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 3;
+  const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
+  const category = req.query.category;
+  const price = req.query.price;
 
-  const products = await Product.find().skip(skip).limit(limit).exec();
+  const query = {};
 
-  const totalCount = await Product.countDocuments();
+  if (category) {
+    query.category = category;
+  }
+
+  if (price) {
+    const priceRange = price.split("-");
+    const minPrice = priceRange[0] ? parseFloat(priceRange[0]) : 0;
+    const maxPrice = priceRange[1] ? parseFloat(priceRange[1]) : Infinity;
+    query.price = { $gte: minPrice, $lte: maxPrice };
+  }
+
+  const products = await Product.find(query).skip(skip).limit(limit).exec();
+  const totalCount = await Product.countDocuments(query);
 
   res.status(200).json({
     status: "success",
@@ -91,5 +107,28 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: product,
+  });
+});
+
+exports.getProductsByRetailerId = catchAsync(async (req, res, next) => {
+  const retailerId = req.params.retailerId;
+
+  // Find products based on retailer ID
+  const products = await Product.find({ retailer: retailerId });
+
+  // Check if any products were found
+  if (products.length === 0) {
+    return res
+      .status(404)
+      .json({
+        status: "fail",
+        message: "No products found for the given retailer ID",
+      });
+  }
+
+  // Respond with the products
+  res.status(200).json({
+    status: "success",
+    data: products,
   });
 });

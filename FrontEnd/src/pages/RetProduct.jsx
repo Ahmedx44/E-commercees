@@ -8,6 +8,7 @@ import { Table } from "flowbite-react";
 
 function RetProduct() {
   const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState("");
 
@@ -27,18 +28,35 @@ function RetProduct() {
       );
       setProducts(response.data.data);
       setLoading(false);
-      console.log(response);
     } catch (error) {
       console.error("Error fetching products:", error);
       setLoading(false);
     }
   };
 
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="bg-gray-200 min-h-screen font-sans">
-      <div className="p-10 overflow-x-auto">
+      <div className="flex justify-between items-center mb-4">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="border-2 border-gray-300 rounded-lg w-3/4 p-3 m-16"
+        />
+      </div>
+      <div className="p-10 overflow-x-auto w-3/4 m-auto">
+        <Link to="/retailer/addproduct">
+          <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg mb-4">
+            Add Product
+          </button>
+        </Link>
         <Table hoverable striped>
-          <Table.Head className="text-xl p-4 text-gray-700">
+          <Table.Head className="text-lg bg-gray-700 text-white">
             <Table.HeadCell>Name</Table.HeadCell>
             <Table.HeadCell>Price</Table.HeadCell>
             <Table.HeadCell>Stock</Table.HeadCell>
@@ -46,15 +64,36 @@ function RetProduct() {
             <Table.HeadCell>Action</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {products.map((product) => (
-              <Table.Row key={product._id} className="font-semibold text-lg">
-                <Table.Cell>{product.name}</Table.Cell>
-                <Table.Cell>{product.price}</Table.Cell>
-                <Table.Cell>{product.quantity}</Table.Cell>
-                <Table.Cell>{product.rating}</Table.Cell>
-                <Table.Cell></Table.Cell>
-              </Table.Row>
-            ))}
+            {loading ? (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  <Spinner />
+                </td>
+              </tr>
+            ) : filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <Table.Row key={product._id} className="text-lg">
+                  <Table.Cell>{product.name}</Table.Cell>
+                  <Table.Cell>${product.price}</Table.Cell>
+                  <Table.Cell>{product.quantity}</Table.Cell>
+                  <Table.Cell>{product.rating}</Table.Cell>
+                  <Table.Cell>
+                    <Link
+                      to={`/product/${product._id}`}
+                      className="text-blue-500 hover:text-blue-700"
+                    >
+                      View
+                    </Link>
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  No products found.
+                </td>
+              </tr>
+            )}
           </Table.Body>
         </Table>
       </div>

@@ -1,24 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Breadcrumb } from "flowbite-react";
 import { IoIosAdd } from "react-icons/io";
 import { HiViewBoards } from "react-icons/hi";
 import { jwtDecode } from "jwt-decode";
-import { Breadcrumb } from "flowbite-react";
 
-const AddRetailer = () => {
+const AddAssistance = () => {
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [lastName, setlastName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("retailer");
+  const [role, setRole] = useState("customer assitance");
   const [sex, setSex] = useState("");
   const [image, setImage] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [file, setFile] = useState("");
   const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken.id);
+    }
+  }, []);
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -52,11 +60,11 @@ const AddRetailer = () => {
           image,
         }
       );
-      toast.success("Retailer added successfully!");
-      // Clear input fields after successful creation
+      toast.success("Assistance added successfully!");
+
       setUserName("");
       setFirstName("");
-      setLastName("");
+      setlastName("");
       setEmail("");
       setSex("");
       setPassword("");
@@ -65,7 +73,7 @@ const AddRetailer = () => {
       setImage("");
     } catch (error) {
       console.log(error);
-      toast.error("Failed to add retailer.");
+      toast.error("Failed to add assistance.");
     }
   };
 
@@ -74,10 +82,10 @@ const AddRetailer = () => {
       <div className="text-2xl p-10">
         <Breadcrumb aria-label="Default breadcrumb example">
           <Breadcrumb.Item href="#" icon={HiViewBoards}>
-            <p className="text-4xl font-bold">Retailers</p>
+            <p className="text-4xl font-bold">Assistance</p>
           </Breadcrumb.Item>
           <Breadcrumb.Item href="#" icon={IoIosAdd}>
-            <p className="text-4xl font-bold">Add Retailer</p>
+            <p className="text-4xl font-bold">Add Assistance</p>
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -88,10 +96,10 @@ const AddRetailer = () => {
         <div className="space-y-8">
           <div>
             <h2 className="text-lg font-semibold leading-6 text-gray-900">
-              Retailer Information
+              Assistance Information
             </h2>
             <p className="text-sm leading-6 text-gray-600">
-              Enter details about the retailer.
+              Enter details about the assistance.
             </p>
           </div>
           <div className="space-y-4">
@@ -137,7 +145,7 @@ const AddRetailer = () => {
                 type="text"
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => setlastName(e.target.value)}
               />
             </div>
             <div>
@@ -190,7 +198,7 @@ const AddRetailer = () => {
               {image && (
                 <img
                   src={image}
-                  alt="Retailer"
+                  alt="Assistance"
                   className="w-12 h-12 rounded-lg object-cover"
                 />
               )}
@@ -247,7 +255,7 @@ const AddRetailer = () => {
           {image ? (
             <img
               src={image}
-              alt="Retailer"
+              alt="Assistance"
               className="object-cover w-full h-full"
             />
           ) : (
@@ -259,7 +267,7 @@ const AddRetailer = () => {
             type="submit"
             className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Add Retailer
+            Add Assistance
           </button>
         </div>
       </form>
@@ -267,4 +275,4 @@ const AddRetailer = () => {
   );
 };
 
-export default AddRetailer;
+export default AddAssistance;

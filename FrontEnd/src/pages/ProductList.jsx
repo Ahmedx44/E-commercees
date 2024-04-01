@@ -54,50 +54,52 @@ function ProductList() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32">
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div className="md:col-span-1">
-          <div className="mb-8 md:mb-0 mt-10">
-            <Catgory
-              onCategoryChange={handleCategoryChange}
-              selectedCategory={selectedCategory}
-            />
-          </div>
-          <div>
-            <Price
-              onPriceRangeChange={handlePriceRangeChange}
-              selectedPriceRange={selectedPriceRange}
-            />
-          </div>
-        </div>
-        <div className="md:col-span-4 relative">
-          <div className="sticky top-0 z-10 bg-white py-4">
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={handleSearch}
-              className="border border-gray-300 rounded-xl px-4 py-5 mb-4 mt-10 w-full mx-10"
-            />
-          </div>
-          {loading ? (
-            <div className="flex justify-center">
-              <Spinner />
+    <div className="w-screen">
+      <div className="container px-4 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="md:col-span-1">
+            <div className="mb-8 md:mb-0 mt-10">
+              <Catgory
+                onCategoryChange={handleCategoryChange}
+                selectedCategory={selectedCategory}
+              />
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {Array.isArray(filteredProducts) &&
-                filteredProducts.map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
+            <div>
+              <Price
+                onPriceRangeChange={handlePriceRangeChange}
+                selectedPriceRange={selectedPriceRange}
+              />
             </div>
-          )}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            className="mt-8"
-          />
+          </div>
+          <div className="md:col-span-4 relative">
+            <div className=" top-0 z-10 bg-white py-4">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={handleSearch}
+                className="border border-gray-300 rounded-xl px-4 py-5 mb-4 mt-20 w-full mx-10 "
+              />
+            </div>
+            {loading ? (
+              <div className="flex justify-center">
+                <Spinner />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-5">
+                {Array.isArray(filteredProducts) &&
+                  filteredProducts.map((product) => (
+                    <ProductCard key={product._id} product={product} />
+                  ))}
+              </div>
+            )}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              className="mt-8"
+            />
+          </div>
         </div>
       </div>
     </div>

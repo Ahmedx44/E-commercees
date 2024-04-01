@@ -51,6 +51,14 @@ function SideBar() {
               Reatilers
             </Sidebar.Item>
           </Link>
+          <Link to="addassistance">
+            <Sidebar.Item
+              icon={RiOrganizationChart}
+              className="text-3xl my-5 mx-2"
+            >
+              Reatilers
+            </Sidebar.Item>
+          </Link>
           <Link onClick={handleLogout}>
             <Sidebar.Item
               icon={RiLogoutCircleFill}

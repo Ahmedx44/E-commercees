@@ -44,7 +44,7 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="bg-slate-200 h-screen rounded-lg">
+    <div className=" h-screen rounded-lg">
       <div className="text-2xl p-10">
         <Breadcrumb aria-label="Default breadcrumb example">
           <Breadcrumb.Item href="#" icon={HiHome}>

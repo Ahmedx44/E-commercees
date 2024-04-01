@@ -29,6 +29,7 @@ import AddRetailer from "./pages/AddRetailer";
 import OrderDetail from "./pages/OrderDetail";
 import RetProduct from "./pages/RetProduct";
 import RetDashboard from "./pages/RetDashboard";
+import AddAssistance from "./pages/AddAssistance";
 
 const App = () => {
   return (
@@ -58,7 +59,7 @@ const App = () => {
               <Route path="retailers" element={<AdminRetailers />} />
               <Route path="reviews" element={<Reviews />} />
               <Route path="useredit" element={<UserEdit />} />
-
+              <Route path="addassistance" element={<AddAssistance />} />
               <Route path="addretailer" element={<AddRetailer />} />
               <Route
                 path="productdetail-admin/:id"

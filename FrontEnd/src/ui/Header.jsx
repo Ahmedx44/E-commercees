@@ -53,14 +53,14 @@ function Header() {
 
   return (
     <div className="border-t ">
-      <nav className="text-3xl fixed w-full z-10 top-0 left-0 font-bold font-sans">
+      <nav className="text-xl fixed w-full z-10 top-0 left-0 font-bold font-sans">
         <Navbar fluid rounded>
           <NavbarBrand href="https://flowbite-react.com">
             <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
               Ecommerce
             </span>
           </NavbarBrand>
-          <div className="flex md:order-2 pt-16 relative bottom-5">
+          <div className="flex md:order-2 pt-10 relative bottom-5">
             <div className="mr-4">
               <CartIcon />
             </div>

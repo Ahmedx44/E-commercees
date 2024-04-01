@@ -35,7 +35,7 @@ function Products() {
 
   return (
     <div className="bg-gray-200 min-h-screen font-sans">
-      <div className="text-2xl p-10">
+      <div className="text-2xl p-10 mt-16">
         <Breadcrumb aria-label="Default breadcrumb example">
           <Breadcrumb.Item href="#" icon={HiViewBoards}>
             <p className="text-4xl font-bold">Product</p>

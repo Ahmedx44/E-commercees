@@ -3,7 +3,8 @@ dotenv.config({ path: "./config.env" });
 const app = require("./app");
 const mongoose = require("mongoose");
 
-const DB = process.env.Database;
+const DB = process.env.DATABASE; // Accessing the environment variable as DATABASE instead of Database
+
 
 mongoose
   .connect(DB)

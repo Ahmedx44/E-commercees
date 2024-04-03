@@ -6,6 +6,7 @@ import { HiViewBoards } from "react-icons/hi";
 import { Breadcrumb } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import toast from "react-hot-toast";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -31,6 +32,19 @@ function Products() {
   const handleViewClick = (productId) => {
     // Redirect to admin product detail page
     navigate(`/admin/productdetail-admin/${productId}`);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://127.0.0.1:3000/api/products/${id}`);
+      toast.success("Deleted Successfully");
+      // Refresh products after deletion
+      const updatedProducts = products.filter((product) => product._id !== id);
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.log(error);
+      toast.error("Couldn't Delete");
+    }
   };
 
   return (
@@ -80,11 +94,17 @@ function Products() {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="Action"
+                        onChange={(e) => {
+                          const action = e.target.value;
+                          if (action === "view") {
+                            handleViewClick(product._id);
+                          } else if (action === "delete") {
+                            handleDelete(product._id);
+                          }
+                        }}
                       >
-                        <MenuItem onClick={() => handleViewClick(product._id)}>
-                          View
-                        </MenuItem>
-                        <MenuItem>Delete</MenuItem>
+                        <MenuItem value="view">View</MenuItem>
+                        <MenuItem value="delete">Delete</MenuItem>
                       </Select>
                     </FormControl>
                   </Table.Cell>

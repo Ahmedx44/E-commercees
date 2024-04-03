@@ -22,14 +22,23 @@ const Cart = () => {
         console.error("Product is missing an id property");
         return;
       }
-      dispatch(addToCart(product));
+     
     }
   };
 
   const handleRemoveFromCart = (itemId, itemName) => {
     dispatch(removeFromCart(itemId));
-    // Display toast message when item is removed
     toast.success(`${itemName} has been removed from the cart`);
+  };
+
+  const handleIncreaseQuantity = (product) => {
+    dispatch(increaseQuantity(product));
+    toast.success(` increased the quantity`);
+  };
+
+  const handleDecreaseQuantity = (product) => {
+    dispatch(decreaseQuantity(product));
+    toast.success(`decreased the quantity`);
   };
 
   return (
@@ -59,7 +68,7 @@ const Cart = () => {
                 </td>
                 <td className="px-4 py-2 border-b">
                   <button
-                    onClick={() => dispatch(decreaseQuantity(item.id))}
+                    onClick={() => handleDecreaseQuantity(item)}
                     className="bg-black text-white py-1 px-2 rounded"
                   >
                     -
@@ -68,19 +77,19 @@ const Cart = () => {
                     {item.quantity}
                   </span>
                   <button
-                    onClick={() => dispatch(increaseQuantity(item.id))}
+                    onClick={() => handleIncreaseQuantity(item)}
                     className="bg-black text-white py-1 px-2 rounded"
                   >
                     +
                   </button>
                 </td>
                 <td className="px-4 py-2 border-b">
-                  <button
-                    onClick={() => handleRemoveFromCart(item.id, item.name)}
-                    className="bg-black text-white py-1 px-2 rounded-lg hover:bg-slate-700"
-                  >
-                    <MdDelete />
-                  </button>
+                <button
+  onClick={() => handleRemoveFromCart(item._id, item.name)} // Ensure item._id is passed
+  className="bg-black text-white py-1 px-2 rounded-lg hover:bg-slate-700"
+>
+  <MdDelete />
+</button>
                 </td>
               </tr>
             ))}

@@ -23,10 +23,11 @@ function Payment() {
     if (token) {
       // Decode token to extract user information
       const decodedToken = jwtDecode(token);
-
+setFname(decodedToken.firstName);
+setLname(decodedToken.lastName);
       setEmail(decodedToken.email);
-      setUser(decodedToken);
-      setUserName(decodedToken.userName); // Store user information
+     
+    
     }
   }, []); // Run only once on component mount
 
@@ -80,6 +81,7 @@ function Payment() {
             type="text"
             placeholder="Enter your first name"
             value={fname}
+            disabled
             onChange={(e) => setFname(e.target.value)}
           />
         </div>
@@ -90,6 +92,7 @@ function Payment() {
           <TextInput
             id="lname"
             type="text"
+            disabled
             placeholder="Enter your last name"
             value={lname}
             onChange={(e) => setLname(e.target.value)}

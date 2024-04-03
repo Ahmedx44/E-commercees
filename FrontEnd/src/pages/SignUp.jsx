@@ -1,8 +1,7 @@
-import { Button, Label, TextInput } from "flowbite-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import axios from "axios";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   const [userName, setUserName] = useState("");
@@ -22,144 +21,165 @@ function SignUp() {
     }
     try {
       await axios.post("http://127.0.0.1:3000/api/users/register", {
-        userName: userName.trim(), // trim whitespace from userName
+        userName: userName.trim(),
         email,
         firstName,
         lastName,
         password,
         passwordConfirm,
-        phoneNumber: phoneNumber.trim(), // trim whitespace from phoneNumber
+        phoneNumber: phoneNumber.trim(),
       });
       console.log("User registered successfully");
-      toast.success(`successfully registered`);
+      toast.success(`Successfully registered`);
       window.location.href = "/login";
-      // Redirect to login page
     } catch (error) {
       setError(error.response.data.message);
-      toast.error("failed to register");
+      toast.error("Failed to register");
     }
   };
+
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form
-        className="max-w-md w-full p-6 bg-white rounded-lg shadow-md"
-        onSubmit={handleSubmit}
-      >
-        <div className="mb-4">
-          <Label
-            htmlFor="userName"
-            value="Username"
-            className="text-xl font-bold"
-          />
-          <TextInput
-            id="userName"
-            type="text"
-            placeholder="Enter your username"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-            className="text-xl font-bold"
-          />
+    <div className="min-h-screen bg-white flex justify-center items-center">
+      <div className="max-w-md w-full bg-white shadow rounded-md overflow-hidden sm:p-10 p-6">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Sign Up for an Account
+          </h2>
         </div>
-        <div className="mb-4">
-          <Label
-            htmlFor="First Name"
-            value="First Name"
-            className="text-xl font-bold"
-          />
-          <TextInput
-            id="firstName"
-            type="name"
-            placeholder="First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-            className="text-xl font-bold"
-          />
-        </div>
-        <div className="mb-4">
-          <Label
-            htmlFor="email"
-            value="Last Name"
-            className="text-xl font-bold"
-          />
-          <TextInput
-            id="lastName"
-            type="name"
-            placeholder="name@flowbite.com"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-            className="text-xl font-bold"
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="email" value="Email" className="text-xl font-bold" />
-          <TextInput
-            id="email"
-            type="email"
-            placeholder="name@flowbite.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="text-xl font-bold"
-          />
-        </div>
-        <div className="mb-4">
-          <Label
-            htmlFor="password"
-            value="Password"
-            className="text-xl font-bold"
-          />
-          <TextInput
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label
-            htmlFor="confirmPassword"
-            value="Confirm Password"
-            className="text-xl font-bold"
-          />
-          <TextInput
-            id="confirmPassword"
-            type="password"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label
-            htmlFor="phoneNumber"
-            value="Phone Number"
-            className="text-xl font-bold"
-          />
-          <TextInput
-            id="phoneNumber"
-            type="tel"
-            placeholder="Enter your phone number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <Label htmlFor="login" className="text-xl font-bold">
-            {"Do you want to "}
-            <Link to="/login" className="text-green-600">
-              Login
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="userName" className="sr-only">
+              Username
+            </label>
+            <input
+              id="userName"
+              name="userName"
+              type="text"
+              autoComplete="username"
+              required
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Username"
+            />
+          </div>
+          <div>
+            <label htmlFor="firstName" className="sr-only">
+              First Name
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autoComplete="given-name"
+              required
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="First Name"
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName" className="sr-only">
+              Last Name
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autoComplete="family-name"
+              required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Last Name"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="sr-only">
+              Email address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Email address"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="sr-only">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Password"
+            />
+          </div>
+          <div>
+            <label htmlFor="passwordConfirm" className="sr-only">
+              Confirm Password
+            </label>
+            <input
+              id="passwordConfirm"
+              name="passwordConfirm"
+              type="password"
+              autoComplete="new-password"
+              required
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+              className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Confirm Password"
+            />
+          </div>
+          <div>
+            <label htmlFor="phoneNumber" className="sr-only">
+              Phone Number
+            </label>
+            <input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="tel"
+              autoComplete="tel"
+              required
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Phone Number"
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Sign Up
+            </button>
+          </div>
+        </form>
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              Sign in
             </Link>
-          </Label>
+          </p>
         </div>
-        <Button type="submit" className="bg-black hover:bg-gray-900">
-          Sign Up
-        </Button>
-      </form>
+      </div>
     </div>
   );
 }

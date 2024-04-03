@@ -42,6 +42,19 @@ function Orders() {
     order.userName.toLowerCase().includes(search.toLowerCase())
   );
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "pending":
+        return "yellow";
+      case "processing":
+        return "orange";
+      case "completed":
+        return "green";
+      default:
+        return "white";
+    }
+  };
+
   return (
     <div className="bg-gray-200 min-h-screen font-sans">
       <div className="text-2xl p-10 mt-16">
@@ -78,7 +91,17 @@ function Orders() {
                   <Table.Cell>{order.userName}</Table.Cell>
                   <Table.Cell>{order.products.length}</Table.Cell>
                   <Table.Cell>{order.totalAmount} ETB</Table.Cell>
-                  <Table.Cell>{order.status}</Table.Cell>
+                  <Table.Cell>
+                    <span
+                      style={{
+                        backgroundColor: getStatusColor(order.status),
+                        padding: "5px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      {order.status}
+                    </span>
+                  </Table.Cell>
                   <Table.Cell>
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>

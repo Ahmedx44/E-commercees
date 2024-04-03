@@ -25,7 +25,7 @@ export function ProductCard({ product }) {
 
   return (
     <Card className="w-96 border-gray-300 shadow-xl transition-shadow duration-300 bg-gray-50">
-      <CardHeader shadow={false} floated={false} className="h-48">
+      <CardHeader shadow={false} floated={false} className="h-80">
         <img src={product.image} alt="card-image" className="h-full w-full " />
       </CardHeader>
       <CardBody className="px-4 py-2">

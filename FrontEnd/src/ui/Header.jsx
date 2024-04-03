@@ -41,7 +41,7 @@ function Header() {
       setRole(null);
       setUser(null);
       // Redirect to homepage
-      window.location.href = "/homepage";
+      window.location.href = "";
       // Display success message
 
       toast.success(`Successfully logged out`);
@@ -108,7 +108,7 @@ function Header() {
               className="text-2xl font-bold hover:text-gray-500"
             >
               <Link
-                to="homepage"
+                to=""
                 className="hover:text-gray-500 transition duration-300 delay-100 ml-40"
               >
                 Home

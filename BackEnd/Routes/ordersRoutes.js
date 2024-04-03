@@ -14,5 +14,6 @@ router
 
 router.route("/orderHistory/:id").get(orderController.getAllOrdersByUser);
 router.route("/getorder/:id").get(orderController.getOrderById);
+router.route("/:id").get(orderController.getOrderById);
 
 module.exports = router;

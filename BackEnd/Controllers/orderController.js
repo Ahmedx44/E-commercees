@@ -31,11 +31,9 @@ exports.getAllOrders = catchAsync(async (req, res, next) => {
   });
 });
 
-// Update an order by ID (Admin only)
 exports.updateOrder = catchAsync(async (req, res, next) => {
   const { status } = req.body;
 
-  // Update the order
   const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,

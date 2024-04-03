@@ -71,14 +71,14 @@ function ProductList() {
               />
             </div>
           </div>
-          <div className="md:col-span-4 relative">
-            <div className=" top-0 z-10 bg-white py-4">
+          <div className="md:col-span-4 relative bg-slate-50 p-10 rounded-xl">
+            <div className=" top-0 z-10 bg-white py-4 bg-slate-50">
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={handleSearch}
-                className="border border-gray-300 rounded-xl px-4 py-5 mb-4 mt-20 w-full mx-10 "
+                className="border border-gray-300 rounded-xl bg-slate-50 py-5 mb-4 mt-20 w-4/5 mx-10 "
               />
             </div>
             {loading ? (

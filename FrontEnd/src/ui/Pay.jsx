@@ -10,7 +10,7 @@ function Pay({ cartTotalAmount, orderDetails }) {
 
   const generateUniqueTxRef = () => {
     const tx = Date.now() + Math.random(); // Introduce randomness
-    return `AHMED-tx-${tx}787s`;
+    return `AHMED-tx-${tx}787ssda`;
   };
 
   const [tx_ref, setTxRef] = useState(generateUniqueTxRef());
@@ -27,10 +27,10 @@ function Pay({ cartTotalAmount, orderDetails }) {
       <form
         id="payForm"
         method="POST"
-        action="https://api.chapa.co/v1/transaction/initialize"
+        action="https://api.chapa.co/v1/hosted/pay"
       >
         <input type="hidden" name="public_key" value={CHAPA_PUBLIC_KEY} />
-        <input type="hidden" name="tx_ref" value="chewatatest-666932" />
+        <input type="hidden" name="tx_ref" value={tx_ref} />
         <input type="hidden" name="amount" value={cartTotalAmount} />
         <input type="hidden" name="currency" value="ETB" />
         <input type="hidden" name="email" value={email} />

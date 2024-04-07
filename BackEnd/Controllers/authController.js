@@ -1,3 +1,5 @@
+// authController.js
+
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const catchAsync = require("./../utils/catchAsync");
@@ -51,36 +53,26 @@ exports.signup = catchAsync(async (req, res, next) => {
     phoneNumber: req.body.phoneNumber,
     image: req.body.image,
   });
-  createSendToken(newUser, 200, res); // Pass newUser, not User
+  createSendToken(newUser, 200, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // Check if the user inserted password and email
   if (!email || !password) {
     return next(new AppError("Please provide email and password"));
   }
 
-  // Check if user exists
   const user = await User.findOne({ email }).select("+password");
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect email or password", 400));
   }
 
-  createSendToken(user, 200, res); // Pass user, not User
+  createSendToken(user, 200, res);
 
   next();
 });
-
-// exports.logout = (req, res) => {
-//   res.cookie("jwt", "loggedout", {
-//     expires: new Date(Date.now() + 10 * 1000),
-//     httpOnly: true,
-//   });
-//   res.status(200).json({ status: "success" });
-// };
 
 exports.logout = (req, res) => {
   res.cookie("jwt", "loggedout", {

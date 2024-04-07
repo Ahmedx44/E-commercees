@@ -28,6 +28,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/users", usersRoute);
 app.use("/api/products", productsRoute);
+app.use("api/message", messageRoute);
 app.use("/api/orders", ordersRoute);
 
 module.exports = app;

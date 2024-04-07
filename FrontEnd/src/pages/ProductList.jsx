@@ -55,7 +55,11 @@ function ProductList() {
 
   return (
     <div className="w-screen">
-      <div className="container px-4 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32">
+      <div className="bg-black p-20 mt-24 text-center text-white font-bold">
+        <h1 className="text-4xl font-bold text-white ">Cart</h1>
+        <p>Home | Cart</p>
+      </div>
+      <div className="container px-4  -mt-28 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div className="md:col-span-1">
             <div className="mb-8 md:mb-0 mt-10">

@@ -29,6 +29,7 @@ function Header() {
       setRole(decodedToken.role);
       setUser(decodedToken.userName);
       setImage(decodedToken.image);
+      // console.log(image);
       console.log(decodedToken);
     }
   }, []);

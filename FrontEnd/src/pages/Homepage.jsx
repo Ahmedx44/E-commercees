@@ -8,6 +8,10 @@ export default function Example() {
 
   return (
     <div className="bg-white">
+      <div className="bg-black p-20 mt-24 text-center text-white font-bold">
+        <h1 className="text-4xl font-bold text-white ">Home</h1>
+        <p></p>
+      </div>
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"

@@ -12,6 +12,7 @@ import { Rating } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "./../store";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom"; // Import Link component
 
 export function ProductCard({ product }) {
   const dispatch = useDispatch();
@@ -30,12 +31,13 @@ export function ProductCard({ product }) {
       </CardHeader>
       <CardBody className="px-4 py-2">
         <div className="mb-2 flex items-center justify-between">
-          <Typography
-            color="blue-gray"
+          {/* Wrap product name inside Link component */}
+          <Link
+            to={`/productdetail/${product._id}`}
             className="text-lg font-bold text-black hover:text-gray-700"
           >
             {product.name}
-          </Typography>
+          </Link>
           <Typography color="blue-gray" className="text-lg font-bold">
             ${product.price}
           </Typography>

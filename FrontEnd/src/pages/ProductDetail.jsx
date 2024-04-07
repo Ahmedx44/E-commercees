@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "./../store";
+import Spinner from "../ui/Spinner";
 import axios from "axios";
 import {
   Card,
@@ -20,19 +21,19 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (id) {
-      const fetchProduct = async () => {
-        try {
-          const response = await axios.get(
-            `http://127.0.0.1:3000/api/products/${id}`
-          );
-          setProduct(response.data.data);
-        } catch (error) {
-          console.error("Error fetching product:", error);
-          // Handle error
-        }
-      };
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:3000/api/products/${id}`
+        );
+        setProduct(response.data.data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        // Handle error
+      }
+    };
 
+    if (id) {
       fetchProduct();
     }
   }, [id]);
@@ -54,7 +55,7 @@ const ProductDetail = () => {
       <div className="mb-30">
         <div className="w-3/4 width  rounded-lg relative top-9 left-96 flex justify-between justify-center rounded-lg">
           <div className="flex items-center ">
-            {product && (
+            {product ? (
               <>
                 <img
                   src={product.image}
@@ -97,6 +98,8 @@ const ProductDetail = () => {
                   </button>
                 </div>
               </>
+            ) : (
+              <Spinner className="ml-96" />
             )}
           </div>
         </div>

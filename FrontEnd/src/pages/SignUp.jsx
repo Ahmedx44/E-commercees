@@ -8,10 +8,27 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [image, setImage] = useState("");
+  const [file, setFIle] = useState();
+
   const [lastName, setLastName] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+  };
+
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    setFile(file);
+    previewFile(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +45,7 @@ function SignUp() {
         password,
         passwordConfirm,
         phoneNumber: phoneNumber.trim(),
+        image,
       });
       console.log("User registered successfully");
       toast.success(`Successfully registered`);
@@ -111,6 +129,7 @@ function SignUp() {
               placeholder="Email address"
             />
           </div>
+
           <div>
             <label htmlFor="password" className="sr-only">
               Password
@@ -158,6 +177,28 @@ function SignUp() {
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               placeholder="Phone Number"
             />
+          </div>
+          <div>
+            <label
+              htmlFor="photo"
+              className="block text-sm font-medium leading-5 text-gray-900"
+            >
+              Photo
+            </label>
+            <input
+              id="photo"
+              type="file"
+              onChange={(e) => handleChange(e)}
+              accept="image/*"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+            {image && (
+              <img
+                src={image}
+                alt="Retailer"
+                className="w-12 h-12 rounded-lg object-cover"
+              />
+            )}
           </div>
           <div>
             <button

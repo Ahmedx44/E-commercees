@@ -1,26 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import React from "react";
 
-function Pay({ cartTotalAmount, orderDetails }) {
-  const CHAPA_PUBLIC_KEY = "CHAPUBK_TEST-g4mCZsTlabmVimRnuCDmF2A5eNXZf70g";
-  const CHAPA_SECRET_KEY = "CHASECK_TEST-mYpavLWzzLvrfEhy1JNYPr8L3oSMaNXR";
+function Pay({ cartTotalAmount, orderDetails, tx_ref }) {
+  const CHAPA_PUBLIC_KEY = "CHAPUBK_TEST-R7plWake1SKHPgWOgmzVXAdkH3eiKhT6";
 
+  console.log(tx_ref);
   const { fname, lname, email } = orderDetails;
-
-  const generateUniqueTxRef = () => {
-    const tx = Date.now() + Math.random(); // Introduce randomness
-    return `AHMED-tx-${tx}787ssda`;
-  };
-
-  const [tx_ref, setTxRef] = useState(generateUniqueTxRef());
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTxRef(generateUniqueTxRef()); // Regenerate tx_ref after a delay
-    }, 1000); // Adjust the delay as needed
-    return () => clearTimeout(timer);
-  }, [cartTotalAmount, orderDetails]); // Ensure tx_ref is regenerated when cartTotalAmount or orderDetails change
 
   return (
     <div className="">
@@ -36,7 +20,7 @@ function Pay({ cartTotalAmount, orderDetails }) {
         <input type="hidden" name="email" value={email} />
         <input type="hidden" name="first_name" value={fname} />
         <input type="hidden" name="last_name" value={lname} />
-        <input type="hidden" name="title" value="Let us do this " />
+        <input type="hidden" name="title" value="Ethio-Bazaar " />
         <input
           type="hidden"
           name="description"
@@ -58,7 +42,6 @@ function Pay({ cartTotalAmount, orderDetails }) {
           value="http://localhost:5173/cart"
         />
         <input type="hidden" name="meta[Ecommerce]" value="test" />
-
         <button
           type="submit"
           className="w-96 bg-black text-white rounded-lg ml-4"

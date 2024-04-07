@@ -170,6 +170,8 @@ function AddProduct() {
                 <option value="">Select Category</option>
                 <option value="Electronics">Electronics</option>
                 <option value="Fashion">Fashion</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Fashion">Fashion</option>
                 {/* Add more options as needed */}
               </select>
             </div>

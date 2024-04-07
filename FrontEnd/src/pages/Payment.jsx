@@ -1,47 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import Pay from "./../ui/Pay"; // Import the Pay component
 import { clearCart } from "../store"; // Import the clearCart action
+import { v4 as uuidv4 } from "uuid";
+import { Label, TextInput, Checkbox } from "flowbite-react";
 
 function Payment() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState();
+  const [name, setName] = useState();
+  const [id, setId] = useState();
+
+  const generateUniqueTxRef = () => {
+    const timestamp = Date.now(); // Get the current timestamp
+    const randomString = Math.random().toString(36).substring(2, 15); // Generate a random string
+    return `${timestamp}-${randomString}`;
+  };
+
+  const [tx_ref, setTxRef] = useState(String(generateUniqueTxRef()));
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTxRef(String(generateUniqueTxRef())); // Regenerate tx_ref after a delay
+    }, 1000); // Adjust the delay as needed
+    return () => clearTimeout(timer);
+  }, []); // Run once on component mount to set the initial tx_ref
 
   useEffect(() => {
     // Retrieve token from local storage
     const token = localStorage.getItem("token");
     if (token) {
-      // Decode token to extract user information
       const decodedToken = jwtDecode(token);
-setFname(decodedToken.firstName);
-setLname(decodedToken.lastName);
+      setFname(decodedToken.firstName);
+      setLname(decodedToken.lastName);
+      setName(decodedToken.userName);
+      setId(decodedToken.id);
       setEmail(decodedToken.email);
-     
-    
+      console.log(decodedToken);
+      console.log(name);
     }
-  }, []); // Run only once on component mount
-
+  }, [name]); // Run only once on component mount
+  console.log(tx_ref);
   const handlePayNow = async () => {
     // Ensure user data is available
-    if (!user) {
-      toast.error("Failed to place order. Please log in again.");
-      return;
-    }
 
     // Prepare order details
     const orderDetails = {
-      userId: user.id,
-      userName: userName,
+      userId: id,
+      userName: name,
       email,
       products: cartItems.map((item) => item._id),
       totalAmount: cartTotalAmount,
@@ -53,6 +65,7 @@ setLname(decodedToken.lastName);
         "http://127.0.0.1:3000/api/orders/createOrder",
         orderDetails
       );
+      console.log("Order creation response:", response.data); // Log response for debugging
       const createdOrder = response.data.order;
 
       // Clear the cart after creating the order
@@ -64,8 +77,7 @@ setLname(decodedToken.lastName);
         payForm.submit();
       }
     } catch (error) {
-      console.error("Error creating order:", error);
-      toast.error("Failed to create order. Please try again.");
+      console.error("Error creating order:", error.response); // Log specific error for debugging
     }
   };
 
@@ -129,6 +141,7 @@ setLname(decodedToken.lastName);
         <button onClick={handlePayNow}>
           <Pay
             cartTotalAmount={cartTotalAmount}
+            tx_ref={tx_ref}
             orderDetails={{ fname, lname, email, amount: cartTotalAmount }}
           />
         </button>

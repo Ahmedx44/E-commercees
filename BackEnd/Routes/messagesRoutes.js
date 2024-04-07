@@ -6,12 +6,10 @@ const messageController = require("../Controllers/messageController"); // Correc
 const { protect } = require("../Controllers/authController");
 
 // Define routes
-router.get("/users", protect, messageController.getUsersWithMessages);
-router.get(
-  "/user/:userId/messages",
-  protect,
-  messageController.getMessagesWithUser
-);
+router.get("/", messageController.getMessages);
+router.get("/users", messageController.getUsersWithMessages);
+
 router.post("/send", protect, messageController.sendMessage);
+router.get("/:userId", messageController.getMessagesByUser);
 
 module.exports = router;

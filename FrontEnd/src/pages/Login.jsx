@@ -115,7 +115,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://127.0.0.1:3000/api/users/login",
+        "http://127.0.0.1:4000/api/users/login",
         { email, password }
       );
       const token = response.data.token;
@@ -142,7 +142,7 @@ function Login() {
       case "retailer":
         window.location.href = "/retailer";
         break;
-      case "customerAssistance":
+      case "customer assitance":
         window.location.href = "/assistance";
         break;
       default:

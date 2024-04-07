@@ -1,5 +1,4 @@
 // authController.js
-
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const catchAsync = require("./../utils/catchAsync");

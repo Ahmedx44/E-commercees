@@ -1,5 +1,11 @@
+import CustomerAssistancePage from "./CustomerAssistancePage";
+
 function Assistance() {
-  return <div>Retailer</div>;
+  return (
+    <div>
+      <CustomerAssistancePage />
+    </div>
+  );
 }
 
 export default Assistance;

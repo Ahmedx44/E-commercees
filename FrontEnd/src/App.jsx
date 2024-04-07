@@ -82,7 +82,7 @@ const App = () => {
 
           <Route
             path="/assistance"
-            element={<PrivateRoute roles={["customerAssistance"]} />}
+            element={<PrivateRoute roles={["customer assitance"]} />}
           >
             <Route path="" element={<Assistance />} />
           </Route>

@@ -7,6 +7,7 @@ const messageModel = require("./Models/messageModel");
 const User = require("./Models/userModel");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const Message = require("./Models/messageModel");
 const cors = require("cors");
 const cloudinary = require("./utils/cloudinaryy"); // Assuming cloudinary is used for image uploads/storage
 
@@ -44,25 +45,25 @@ app.use("/api/orders", ordersRoute);
 io.on("connection", (socket) => {
   console.log("A user connected");
 
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
-
-  socket.on("message", async (data) => {
-    const { recipientId, text, senderId } = data;
+  socket.on("message", async (messageData) => {
     try {
-      // Create a new message document
-      const newMessage = await messageModel.create({
-        sender: senderId,
-        recipient: recipientId,
-        text: text,
+      const message = new Message({
+        sender: messageData.senderId,
+        recipient: messageData.recipientId,
+        userName: messageData.userName,
+        text: messageData.text,
       });
 
-      // Broadcast the new message to all connected clients
-      io.emit("message", newMessage); // Real-time update for all clients
+      await message.save();
+      io.emit("message", message);
     } catch (error) {
       console.error("Error saving message:", error);
+      socket.emit("error", "An error occurred while saving the message.");
     }
+  });
+
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
   });
 });
 

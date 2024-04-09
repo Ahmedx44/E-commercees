@@ -11,12 +11,15 @@ const ChatWidget = () => {
   const [showChat, setShowChat] = useState(false);
   const messageEndRef = useRef(null);
   const [user, setUser] = useState(null);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
       setUser(decodedToken.id);
+      setName(decodedToken.userName);
+      console.log(`username:${name}`);
       console.log(decodedToken);
     }
   }, []);
@@ -43,9 +46,19 @@ const ChatWidget = () => {
           const response = await fetch(
             `http://localhost:4000/api/message/${user}`
           );
-          const data = await response.json();
-          setMessages(data);
-          scrollToBottom();
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const responseData = await response.json();
+
+          if (Array.isArray(responseData.data.messages)) {
+            setMessages(responseData.data.messages);
+            scrollToBottom();
+          } else {
+            console.error("Unexpected response format:", responseData);
+          }
         } catch (error) {
           console.error("Error fetching messages:", error);
         }
@@ -62,6 +75,7 @@ const ChatWidget = () => {
         recipientId: assistanceId,
         text: inputValue,
         senderId: user,
+        userName: name, // Add the userName here
       });
       setInputValue("");
     }
@@ -77,6 +91,10 @@ const ChatWidget = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  useEffect(() => {
+    console.log(`username:${name}`);
+  }, [name]);
+
   return (
     <div className="fixed bottom-0 right-0 z-50 mb-20 mr-20">
       <button
@@ -91,11 +109,19 @@ const ChatWidget = () => {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`p-2 text-white ${
-                  message.sender === user ? "bg-green-500" : "bg-blue-500"
+                className={`flex ${
+                  message.sender === user ? "justify-end" : "justify-start"
                 }`}
               >
-                <p>{message.text}</p>
+                <div
+                  className={`p-2 ${
+                    message.sender === user
+                      ? "bg-green-100 text-green-800"
+                      : "bg-blue-100 text-blue-800"
+                  } rounded-lg m-1`}
+                >
+                  <p className="break-words">{message.text}</p>
+                </div>
               </div>
             ))}
             <div ref={messageEndRef} />
@@ -106,7 +132,7 @@ const ChatWidget = () => {
               placeholder="Type your message here.."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress} // Add key press event listener
+              onKeyPress={handleKeyPress}
               className="w-full border border-gray-300 rounded-lg p-2"
             />
             <button

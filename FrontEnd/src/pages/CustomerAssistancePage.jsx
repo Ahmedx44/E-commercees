@@ -1,45 +1,68 @@
+// CustomerAssistanceInterface.jsx
 import React, { useState, useEffect } from "react";
+import CustomerList from "../ui/CustomerList";
 import io from "socket.io-client";
-import UserList from "../ui/UserList"; // Component to display list of users
-import Conversation from "../ui/Conversation"; // Component to display conversation
+import Conversation from "../ui/Conversation";
 
 const socket = io("http://localhost:4000");
 
 const CustomerAssistanceInterface = () => {
-  const [usersWithMessages, setUsersWithMessages] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [customersWithMessages, setCustomersWithMessages] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch users with messages
-    const fetchUsersWithMessages = async () => {
+    const fetchCustomersWithMessages = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:4000/api/message/users");
+        const response = await fetch("http://localhost:4000/api/message");
         const data = await response.json();
-        setUsersWithMessages(data);
-        console.log(usersWithMessages);
+
+        if (response.ok) {
+          setCustomersWithMessages(data.data.messages); // Assuming data structure is { data: { messages: Array } }
+          setLoading(false);
+        } else {
+          console.error("Error fetching customers with messages:", data);
+          setLoading(false);
+        }
       } catch (error) {
-        console.error("Error fetching users with messages:", error);
+        console.error("Error fetching customers with messages:", error);
+        setLoading(false);
       }
     };
-    fetchUsersWithMessages();
+    fetchCustomersWithMessages();
   }, []);
+
+  const handleCustomerClick = (customer) => {
+    setSelectedCustomer(customer);
+  };
 
   return (
     <div className="flex h-screen">
       <div className="w-1/4 border-r p-4">
-        <h2 className="text-xl mb-4">Users with Messages</h2>
-        <UserList users={usersWithMessages} setSelectedUser={setSelectedUser} />
+        <h2 className="text-xl mb-4">Customers with Messages</h2>
+        {loading ? (
+          <div className="flex items-center justify-center h-full">
+            <p className="text-lg">Loading...</p>
+          </div>
+        ) : (
+          <CustomerList
+            customers={customersWithMessages} // Pass customersWithMessages here
+            onCustomerClick={(customer) =>
+              handleCustomerClick(customer, socket)
+            }
+          />
+        )}
       </div>
       <div className="w-3/4 p-4">
-        {selectedUser ? (
+        {selectedCustomer ? (
           <Conversation
-            recipientId={selectedUser._id}
-            recipientName={selectedUser.userName}
-            socket={socket}
+            recipientId={selectedCustomer._id}
+            recipientName={selectedCustomer.userName}
+            socket={socket} // Pass socket object here
           />
         ) : (
           <div className="flex items-center justify-center h-full">
-            <p className="text-lg">Select a user to start conversation</p>
+            <p className="text-lg">Select a customer to start conversation</p>
           </div>
         )}
       </div>

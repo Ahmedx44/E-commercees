@@ -13,6 +13,10 @@ const messageSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  userName: {
+    type: String,
+    required: [true, "name is required"],
+  },
   text: {
     type: String,
     required: true,

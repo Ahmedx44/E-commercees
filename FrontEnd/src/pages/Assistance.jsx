@@ -1,9 +1,9 @@
-import CustomerAssistancePage from "./CustomerAssistancePage";
+import CustomerAssistance from "./CustomerAssistance";
 
 function Assistance() {
   return (
     <div>
-      <CustomerAssistancePage />
+      <CustomerAssistance />
     </div>
   );
 }

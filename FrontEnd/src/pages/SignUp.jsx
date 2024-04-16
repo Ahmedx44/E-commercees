@@ -37,7 +37,7 @@ function SignUp() {
       return;
     }
     try {
-      await axios.post("http://127.0.0.1:3000/api/users/register", {
+      await axios.post("http://127.0.0.1:4000/api/users/register", {
         userName: userName.trim(),
         email,
         firstName,

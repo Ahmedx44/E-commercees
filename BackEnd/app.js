@@ -1,24 +1,27 @@
 const express = require("express");
 const usersRoute = require("./Routes/userRoute");
 const productsRoute = require("./Routes/productsRoute");
-const messageRoute = require("./Routes/messagesRoutes");
 const ordersRoute = require("./Routes/ordersRoutes");
-const messageModel = require("./Models/messageModel");
 const User = require("./Models/userModel");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const Chat = require("./Models/chatModel");
+const chatRoutes = require("./Routes/chatRoute");
+const customerAssistanceRoutes = require("./Routes/customerAssistanceRoute");
+const messageRoute = require("./Routes/messageRoute");
 const Message = require("./Models/messageModel");
 const cors = require("cors");
 const cloudinary = require("./utils/cloudinaryy"); // Assuming cloudinary is used for image uploads/storage
-
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: "*", // Adjust this according to your CORS policy
+    origin: "*", // Allow all origins, or specify your frontend URL if needed
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true,
   },
 });
-
 // Set a larger size limit for raw request bodies (e.g., 50MB)
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
@@ -38,32 +41,48 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/users", usersRoute);
 app.use("/api/products", productsRoute);
-app.use("/api/message", messageRoute);
+app.use("/api/messages", messageRoute);
 app.use("/api/orders", ordersRoute);
+app.use("/api/chats", chatRoutes);
+app.use("/api/customer-assistance", customerAssistanceRoutes);
 
-// Socket.io connection handler
 io.on("connection", (socket) => {
-  console.log("A user connected");
+  console.log("User connected");
 
-  socket.on("message", async (messageData) => {
+  socket.on("send_message", async (message) => {
     try {
-      const message = new Message({
-        sender: messageData.senderId,
-        recipient: messageData.recipientId,
-        userName: messageData.userName,
-        text: messageData.text,
-      });
+      // Check if the chat already exists for the sender and assistance
+      const { sender, text } = message;
+      const assistanceId = "66100272885b8ec4444466ea"; // Replace with actual assistance ID
+      const chat = await Chat.findOne({
+        participants: { $all: [sender, assistanceId] },
+      }).exec();
 
-      await message.save();
-      io.emit("message", message);
+      // If chat doesn't exist, create a new one
+      if (!chat) {
+        const newChat = await Chat.create({
+          participants: [sender, assistanceId],
+          lastMessage: null,
+        });
+        // Assign the newly created chat to the message
+        message.chat = newChat._id;
+      } else {
+        // Assign existing chat to the message
+        message.chat = chat._id;
+      }
+
+      // Save the message in the database
+      await Message.create(message);
+
+      // Broadcast the new message to all connected clients
+      io.emit("new_message", message);
     } catch (error) {
-      console.error("Error saving message:", error);
-      socket.emit("error", "An error occurred while saving the message.");
+      console.error(error);
     }
   });
 
   socket.on("disconnect", () => {
-    console.log("A user disconnected");
+    console.log("User disconnected");
   });
 });
 

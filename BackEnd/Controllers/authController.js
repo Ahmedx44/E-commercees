@@ -6,9 +6,18 @@ const AppError = require("./../utils/appError");
 const User = require("./../Models/userModel");
 const cloudinary = require("cloudinary");
 
-const signToken = (id, role, userName, firstName, lastName, email, image) => {
+const signToken = (
+  id,
+  role,
+  userName,
+  firstName,
+  lastName,
+  email,
+  image,
+  chats
+) => {
   return jwt.sign(
-    { id, role, userName, firstName, lastName, email, image },
+    { id, role, userName, firstName, lastName, email, image, chats },
     process.env.JWT_SECRET
   );
 };
@@ -21,12 +30,15 @@ const createSendToken = (user, statusCode, res) => {
     user.firstName,
     user.lastName,
     user.email,
-    user.image
+    user.image,
+    user.chats
   );
+
   const cookieOption = {
     expire: new Date(Date.now() + process.env.JWT_COOKIR_EXPIRE),
     httpOnly: true,
   };
+
   user.password = undefined;
 
   res.cookie("jwt", token, cookieOption);
@@ -34,9 +46,7 @@ const createSendToken = (user, statusCode, res) => {
   res.status(statusCode).json({
     status: "success",
     token,
-    data: {
-      user,
-    },
+    data: { user },
   });
 };
 

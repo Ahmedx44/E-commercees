@@ -27,3 +27,37 @@ exports.getUserById = catchAsync(async (req, res, next) => {
     },
   });
 });
+// controllers/userController.js
+
+exports.updateUserChats = async (req, res, next) => {
+  try {
+    const { id, chatId } = req.body;
+
+    // Update user's chats field
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $addToSet: { chats: chatId } }, // Add chatId to the chats array if it doesn't already exist
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        status: "fail",
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        user: updatedUser,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating user chats:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to update user chats",
+    });
+  }
+};

@@ -1,71 +1,52 @@
 const mongoose = require("mongoose");
-const validator = require("validator"); //npm install validator
+const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema({
   userName: {
     type: String,
-    required: [true, "name is required"],
+    required: [true, "Name is required"],
   },
   firstName: {
     type: String,
-    required: [true, "firstName is required"],
+    required: [true, "First name is required"],
   },
   lastName: {
     type: String,
-    required: [true, "lastName is required"],
+    required: [true, "Last name is required"],
   },
   email: {
     type: String,
-    required: [true, "Email is required "],
+    required: [true, "Email is required"],
     unique: true,
     lowercase: true,
-    validator: [validator.isEmail, "please provide valid Email"],
+    validator: [validator.isEmail, "Please provide a valid email"],
   },
   sex: {
     type: String,
-    // required: [true, "sex is required"],
     enum: ["male", "female"],
   },
   image: String,
   role: {
     type: String,
-    enum: ["admin", "customer", "retailer", "customer assitance"],
+    enum: ["admin", "customer", "retailer", "customer assistance"],
     default: "customer",
   },
   password: {
     type: String,
-    // required: [true, "Please provide a password"],
     minlength: 8,
     select: false,
   },
-  passwordConfirm: {
-    type: String,
-    // required: [true, "Please confirm your password"],
-    validate: {
-      // This only works on CREATE and SAVE!!!
-      validator: function (el) {
-        return el === this.password;
-      },
-      message: "Passwords are not the same!",
-    },
-  },
-  passwordChangedAt: Date,
   phoneNumber: {
     type: String,
     minlength: 10,
-    validator: [validator.isMobilePhone, "please provide valid phone number"],
-    required: [true, "please provide phone number"],
+    validator: [validator.isMobilePhone, "Please provide a valid phone number"],
+    required: [true, "Please provide a phone number"],
   },
-});
-
-userSchema.pre("save", function (next) {
-  if (this.isModified("password")) {
-    if (this.password !== this.confirmPassword) {
-      this.invalidate("confirmPassword", "Passwords do not match");
-    }
-  }
-  next();
+  chats: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Chat",
+  },
 });
 
 userSchema.pre("save", async function (next) {
@@ -73,7 +54,6 @@ userSchema.pre("save", async function (next) {
 
   this.password = await bcrypt.hash(this.password, 10);
 
-  this.passwordConfirm = undefined;
   next();
 });
 

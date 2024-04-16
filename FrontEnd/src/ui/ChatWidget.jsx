@@ -3,103 +3,111 @@ import { BsFillChatFill } from "react-icons/bs";
 import io from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
 
-const socket = io("http://localhost:4000");
-
 const ChatWidget = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [showChat, setShowChat] = useState(false);
+  const [userId, setUserId] = useState();
+  const [chatId, setChatId] = useState();
   const messageEndRef = useRef(null);
-  const [user, setUser] = useState(null);
-  const [name, setName] = useState("");
+  const socket = useRef(null);
 
+  // Decode the token to get the user ID
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token"); // Assuming you store the token in localStorage
     if (token) {
       const decodedToken = jwtDecode(token);
-      setUser(decodedToken.id);
-      setName(decodedToken.userName);
-      console.log(`username:${name}`);
-      console.log(decodedToken);
+      setUserId(decodedToken.id);
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
-    socket.on("message", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-      scrollToBottom();
-    });
+    if (userId) {
+      socket.current = io("http://localhost:4000");
+      socket.current.emit("join_chat", userId);
+
+      socket.current.on("messages", (messages) => {
+        setMessages(messages);
+      });
+
+      socket.current.on("new_message", (message) => {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      });
+    }
 
     return () => {
-      socket.off("message");
+      if (socket.current) {
+        socket.current.disconnect();
+      }
     };
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  useEffect(() => {
-    if (user) {
-      const fetchMessages = async () => {
-        try {
-          const response = await fetch(
-            `http://localhost:4000/api/message/${user}`
-          );
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const responseData = await response.json();
-
-          if (Array.isArray(responseData.data.messages)) {
-            setMessages(responseData.data.messages);
-            scrollToBottom();
-          } else {
-            console.error("Unexpected response format:", responseData);
-          }
-        } catch (error) {
-          console.error("Error fetching messages:", error);
-        }
-      };
-      fetchMessages();
-    }
-  }, [user]);
-
-  const sendMessage = () => {
-    if (inputValue.trim() !== "") {
-      console.log("Sending message:", inputValue);
-      const assistanceId = "66100272885b8ec4444466ea"; // Replace with actual ID
-      socket.emit("message", {
-        recipientId: assistanceId,
-        text: inputValue,
-        senderId: user,
-        userName: name, // Add the userName here
-      });
-      setInputValue("");
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      sendMessage();
-    }
-  };
+  }, [userId]);
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const sendMessage = async (message) => {
+    if (socket.current && userId) {
+      // Emit the message to the server
+      socket.current.emit("send_message", { ...message, sender: userId });
+
+      try {
+        // Update the user's chats field in the database
+        await fetch(`http://127.0.0.1:4000/api/users/${userId}/chats`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ chatId: message.chat }),
+        });
+
+        // Clear the input field
+        setInputValue("");
+      } catch (error) {
+        console.error("Error updating user chats:", error);
+      }
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      sendMessage({ text: inputValue });
+      scrollToBottom();
+    }
+  };
+
   useEffect(() => {
-    console.log(`username:${name}`);
-  }, [name]);
+    if (userId && chatId) {
+      fetchMessages(chatId);
+    }
+  }, [userId, chatId]);
+
+  const fetchMessages = async (chatId) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:4000/api/chats/${chatId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch messages");
+      }
+      const data = await response.json();
+      setMessages(data.messages);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const toggleChat = (chatId) => {
+    setShowChat(!showChat);
+    setChatId(chatId);
+    if (!showChat) {
+      fetchMessages(chatId);
+    }
+  };
 
   return (
     <div className="fixed bottom-0 right-0 z-50 mb-20 mr-20">
       <button
         className="fixed bottom-10 right-10 z-50 bg-green-500 text-white rounded-full p-2 hover:bg-green-700"
-        onClick={() => setShowChat(!showChat)}
+        onClick={() => toggleChat(chatId)} // Pass chatId here
       >
         <BsFillChatFill className="text-2xl" />
       </button>
@@ -110,12 +118,12 @@ const ChatWidget = () => {
               <div
                 key={index}
                 className={`flex ${
-                  message.sender === user ? "justify-end" : "justify-start"
+                  message.sender === userId ? "justify-end" : "justify-start"
                 }`}
               >
                 <div
                   className={`p-2 ${
-                    message.sender === user
+                    message.sender === userId
                       ? "bg-green-100 text-green-800"
                       : "bg-blue-100 text-blue-800"
                   } rounded-lg m-1`}
@@ -137,7 +145,9 @@ const ChatWidget = () => {
             />
             <button
               className="mt-2 bg-green-500 text-white rounded-full p-2 hover:bg-green-700"
-              onClick={sendMessage}
+              onClick={
+                () => sendMessage({ chatId, sender: userId, text: inputValue }) // Pass chatId here
+              }
             >
               Send
             </button>

@@ -19,7 +19,7 @@ function ProductList() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:3000/api/products?page=${currentPage}&category=${selectedCategory}&price=${selectedPriceRange}`
+          `http://127.0.0.1:4000/api/products?page=${currentPage}&category=${selectedCategory}&price=${selectedPriceRange}`
         );
         setProducts(response.data.data);
         setTotalPages(Math.ceil(response.data.total / response.data.limit));

@@ -1,31 +1,18 @@
-// messageModel.js
-
 const mongoose = require("mongoose");
+const chat = require("./chatModel");
 
-const messageSchema = new mongoose.Schema({
-  sender: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const messageSchema = new mongoose.Schema(
+  {
+    chat: { type: mongoose.Schema.Types.ObjectId, ref: "Chat", required: true },
+    sender: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    text: { type: String, required: true },
   },
-  recipient: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  userName: {
-    type: String,
-    required: [true, "name is required"],
-  },
-  text: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true }
+);
 
 const Message = mongoose.model("Message", messageSchema);
 

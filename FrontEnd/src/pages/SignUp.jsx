@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import LocationModal from "../pages/LocationModal";
 
 function SignUp() {
   const [userName, setUserName] = useState("");
@@ -9,12 +10,13 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [image, setImage] = useState("");
-  const [file, setFIle] = useState();
-
+  const [file, setFile] = useState();
   const [lastName, setLastName] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -30,31 +32,41 @@ function SignUp() {
     previewFile(file);
   };
 
+  const handleLocationSelected = (location) => {
+    setSelectedLocation(location);
+    setIsLocationModalOpen(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== passwordConfirm) {
       setError("Passwords do not match");
       return;
     }
+
+    const userData = {
+      userName: userName.trim(),
+      email,
+      firstName,
+      lastName,
+      password,
+      passwordConfirm,
+      phoneNumber: phoneNumber.trim(),
+      image,
+      location: selectedLocation,
+    };
+
     try {
-      await axios.post("http://127.0.0.1:4000/api/users/register", {
-        userName: userName.trim(),
-        email,
-        firstName,
-        lastName,
-        password,
-        passwordConfirm,
-        phoneNumber: phoneNumber.trim(),
-        image,
-      });
+      await axios.post("http://127.0.0.1:4000/api/users/register", userData);
       console.log("User registered successfully");
-      toast.success(`Successfully registered`);
+      toast.success("Successfully registered");
       window.location.href = "/login";
     } catch (error) {
       setError(error.response.data.message);
       toast.error("Failed to register");
     }
   };
+  console.log(selectedLocation);
 
   return (
     <div className="min-h-screen bg-white flex justify-center items-center">
@@ -129,7 +141,6 @@ function SignUp() {
               placeholder="Email address"
             />
           </div>
-
           <div>
             <label htmlFor="password" className="sr-only">
               Password
@@ -199,6 +210,19 @@ function SignUp() {
                 className="w-12 h-12 rounded-lg object-cover"
               />
             )}
+          </div>
+          <div>
+            <button
+              onClick={() => setIsLocationModalOpen(true)}
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Choose Location for Delivery
+            </button>
+            <LocationModal
+              isOpen={isLocationModalOpen}
+              onClose={() => setIsLocationModalOpen(false)}
+              onLocationSelected={handleLocationSelected}
+            />
           </div>
           <div>
             <button

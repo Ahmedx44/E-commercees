@@ -22,7 +22,6 @@ const Cart = () => {
         console.error("Product is missing an id property");
         return;
       }
-     
     }
   };
 
@@ -84,12 +83,12 @@ const Cart = () => {
                   </button>
                 </td>
                 <td className="px-4 py-2 border-b">
-                <button
-  onClick={() => handleRemoveFromCart(item._id, item.name)} // Ensure item._id is passed
-  className="bg-black text-white py-1 px-2 rounded-lg hover:bg-slate-700"
->
-  <MdDelete />
-</button>
+                  <button
+                    onClick={() => handleRemoveFromCart(item._id, item.name)} // Ensure item._id is passed
+                    className="bg-black text-white py-1 px-2 rounded-lg hover:bg-slate-700"
+                  >
+                    <MdDelete />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -107,6 +106,14 @@ const Cart = () => {
                 )}
               </span>
             </div>
+
+            <Link to="/productlist">
+              <Button
+                color="black"
+                className="text-white"
+                name=" Continue Shopping"
+              ></Button>
+            </Link>
             <div className="mt-4">
               <Link to="/pay">
                 <Button

@@ -56,8 +56,8 @@ function ProductList() {
   return (
     <div className="w-screen">
       <div className="bg-black p-20 mt-24 text-center text-white font-bold">
-        <h1 className="text-4xl font-bold text-white ">Cart</h1>
-        <p>Home | Cart</p>
+        <h1 className="text-4xl font-bold text-white ">Shop</h1>
+        <p>Home | Shop</p>
       </div>
       <div className="container px-4  -mt-28 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -75,7 +75,7 @@ function ProductList() {
               />
             </div>
           </div>
-          <div className="md:col-span-4 relative bg-slate-50 p-10 rounded-xl">
+          <div className="md:col-span-4 relative bg-slate-100 p-10 rounded-xl">
             <div className=" top-0 z-10 bg-white py-4 bg-slate-50">
               <input
                 type="text"
@@ -90,7 +90,7 @@ function ProductList() {
                 <Spinner />
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-5 mt-10">
                 {Array.isArray(filteredProducts) &&
                   filteredProducts.map((product) => (
                     <ProductCard key={product._id} product={product} />

@@ -17,6 +17,8 @@ function SignUp() {
   const [error, setError] = useState("");
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocationLat, setSelectedLocationLat] = useState(null);
+  const [selectedLocationLng, setSelectedLocationLng] = useState(null);
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -35,6 +37,8 @@ function SignUp() {
   const handleLocationSelected = (location) => {
     setSelectedLocation(location);
     setIsLocationModalOpen(false);
+    setSelectedLocationLat(location[0]);
+    setSelectedLocationLng(location[1]);
   };
 
   const handleSubmit = async (e) => {
@@ -53,7 +57,7 @@ function SignUp() {
       passwordConfirm,
       phoneNumber: phoneNumber.trim(),
       image,
-      location: selectedLocation,
+      location: [selectedLocationLat, selectedLocationLng],
     };
 
     try {
@@ -66,7 +70,6 @@ function SignUp() {
       toast.error("Failed to register");
     }
   };
-  console.log(selectedLocation);
 
   return (
     <div className="min-h-screen bg-white flex justify-center items-center">

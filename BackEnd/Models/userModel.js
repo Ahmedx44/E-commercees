@@ -47,6 +47,10 @@ const userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Chat",
   },
+  location: {
+    type: [Number],
+    index: "2dsphere",
+  },
 });
 
 userSchema.pre("save", async function (next) {

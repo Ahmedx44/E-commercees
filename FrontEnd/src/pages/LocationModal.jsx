@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useMapEvents } from "react-leaflet";
 
 const LocationModal = ({ isOpen, onClose, onLocationSelected }) => {
   const [position, setPosition] = useState(null);
@@ -56,7 +51,13 @@ const LocationModal = ({ isOpen, onClose, onLocationSelected }) => {
           <LocationMarker />
         </MapContainer>
         {position && (
-          <button onClick={() => onLocationSelected(position)}>
+          <button
+            onClick={() => {
+              onLocationSelected(position);
+              setSelectedLocationLat(position[0]);
+              setSelectedLocationLng(position[1]);
+            }}
+          >
             Select Location
           </button>
         )}

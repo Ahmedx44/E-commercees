@@ -31,7 +31,8 @@ const createSendToken = (user, statusCode, res) => {
     user.lastName,
     user.email,
     user.image,
-    user.chats
+    user.chats,
+    user.location // Add location to the token
   );
 
   const cookieOption = {
@@ -61,10 +62,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     role: req.body.role,
     phoneNumber: req.body.phoneNumber,
     image: req.body.image,
+    location: req.body.location,
   });
   createSendToken(newUser, 200, res);
 });
-
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 

@@ -17,6 +17,7 @@ function Payment() {
   const [user, setUser] = useState();
   const [name, setName] = useState();
   const [id, setId] = useState();
+  const [location, setLocation] = useState([]);
 
   const generateUniqueTxRef = () => {
     const timestamp = Date.now(); // Get the current timestamp
@@ -26,9 +27,10 @@ function Payment() {
 
   const [tx_ref, setTxRef] = useState(String(generateUniqueTxRef()));
   useEffect(() => {
+    // Regenerate tx_ref after a delay
     const timer = setTimeout(() => {
-      setTxRef(String(generateUniqueTxRef())); // Regenerate tx_ref after a delay
-    }, 1000); // Adjust the delay as needed
+      setTxRef(String(generateUniqueTxRef()));
+    }, 1000);
     return () => clearTimeout(timer);
   }, []); // Run once on component mount to set the initial tx_ref
 
@@ -42,6 +44,9 @@ function Payment() {
       setName(decodedToken.userName);
       setId(decodedToken.id);
       setEmail(decodedToken.email);
+      setUser(decodedToken); // Set the user object
+      setLocation(decodedToken.location);
+      console.log(location);
       console.log(decodedToken);
       console.log(name);
     }
@@ -49,12 +54,26 @@ function Payment() {
   console.log(tx_ref);
   const handlePayNow = async () => {
     // Ensure user data is available
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
+
+    const decodedToken = jwtDecode(token);
+    const user = {
+      id: decodedToken.id,
+      userName: decodedToken.userName,
+      email: decodedToken.email,
+      location: decodedToken.location,
+    };
 
     // Prepare order details
     const orderDetails = {
-      userId: id,
-      userName: name,
-      email,
+      userId: user.id,
+      userName: user.userName,
+      email: user.email,
+      location: location,
       products: cartItems.map((item) => item._id),
       totalAmount: cartTotalAmount,
     };
@@ -62,7 +81,7 @@ function Payment() {
     try {
       // Create the order
       const response = await axios.post(
-        "http://127.0.0.1:3000/api/orders/createOrder",
+        "http://127.0.0.1:4000/api/orders/createOrder",
         orderDetails
       );
       console.log("Order creation response:", response.data); // Log response for debugging
@@ -83,7 +102,7 @@ function Payment() {
 
   return (
     <div>
-      <form className="flex max-w-md flex-col gap-4 mx-auto mt-40 p-4 border rounded-lg shadow-lg bg-white">
+      <form className="flex max-w-md flex-col gap-4mx-auto mt-40 p-4 border rounded-lg shadow-lg bg-white">
         <div>
           <div className="mb-2 block">
             <Label htmlFor="fname" value="First Name" />
@@ -104,9 +123,9 @@ function Payment() {
           <TextInput
             id="lname"
             type="text"
-            disabled
             placeholder="Enter your last name"
             value={lname}
+            disabled
             onChange={(e) => setLname(e.target.value)}
           />
         </div>

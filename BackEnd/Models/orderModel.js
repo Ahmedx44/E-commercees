@@ -25,6 +25,10 @@ const orderSchema = mongoose.Schema({
     enum: ["pending", "processing", "completed"],
     default: "pending",
   },
+  location: {
+    type: [Number],
+    index: "2dsphere",
+  },
 });
 
 // Pre-save middleware to calculate totalAmount based on product prices

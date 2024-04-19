@@ -14,10 +14,11 @@ const signToken = (
   lastName,
   email,
   image,
-  chats
+  chats,
+  location
 ) => {
   return jwt.sign(
-    { id, role, userName, firstName, lastName, email, image, chats },
+    { id, role, userName, firstName, lastName, email, image, chats, location },
     process.env.JWT_SECRET
   );
 };
@@ -32,7 +33,7 @@ const createSendToken = (user, statusCode, res) => {
     user.email,
     user.image,
     user.chats,
-    user.location // Add location to the token
+    user.location
   );
 
   const cookieOption = {

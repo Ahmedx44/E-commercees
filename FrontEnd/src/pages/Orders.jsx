@@ -22,7 +22,7 @@ function Orders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/orders");
+        const response = await axios.get("http://127.0.0.1:4000/api/orders");
         setOrders(response.data.data.orders);
         setLoading(false);
       } catch (error) {

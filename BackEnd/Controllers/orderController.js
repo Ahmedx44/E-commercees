@@ -4,12 +4,13 @@ const AppError = require("./../utils/appError");
 
 exports.createOrder = catchAsync(async (req, res, next) => {
   try {
-    const { userId, products, totalAmount, userName } = req.body;
+    const { userId, products, totalAmount, userName, location } = req.body;
     const order = new Order({
       userId,
       products,
       totalAmount,
       userName,
+      location,
     });
     await order.save();
     res.status(201).json({ message: "Order created successfully", order });

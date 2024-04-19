@@ -7,6 +7,7 @@ import { HiShoppingBag } from "react-icons/hi";
 import "@radix-ui/themes/styles.css";
 import { Badge, DataList } from "@radix-ui/themes";
 import toast from "react-hot-toast"; // Import toast for notifications
+import OrderLocationMap from "../ui/OrderLocationMap";
 
 function OrderDetail() {
   const [order, setOrder] = useState(null);
@@ -19,7 +20,7 @@ function OrderDetail() {
       const fetchOrder = async () => {
         try {
           const response = await axios.get(
-            `http://127.0.0.1:3000/api/orders/getorder/${id}`
+            `http://127.0.0.1:4000/api/orders/getorder/${id}`
           );
           const orderData = response.data.data.order;
           setOrder(orderData);
@@ -29,7 +30,7 @@ function OrderDetail() {
           const productImages = await Promise.all(
             orderData.products.map(async (productId) => {
               const productResponse = await axios.get(
-                `http://127.0.0.1:3000/api/products/${productId}`
+                `http://127.0.0.1:4000/api/products/${productId}`
               );
               const productData = productResponse.data.data.image;
               console.log(productData);
@@ -51,7 +52,7 @@ function OrderDetail() {
 
   const handleStatusChange = async () => {
     try {
-      await axios.patch(`http://127.0.0.1:3000/api/orders/${id}`, {
+      await axios.patch(`http://127.0.0.1:4000/api/orders/${id}`, {
         status,
       });
       // Update the order status in the local state
@@ -126,6 +127,9 @@ function OrderDetail() {
           <DataList.Label minWidth="88px">Payment</DataList.Label>
           <DataList.Value>
             <span className="text-black bg-green-300 p-1 rounded-lg">Paid</span>
+          </DataList.Value>
+          <DataList.Value>
+            <OrderLocationMap location={order.location} />
           </DataList.Value>
           <DataList.Label minWidth="88px">Shipping Amount</DataList.Label>
           <DataList.Value>

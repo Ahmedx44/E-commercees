@@ -13,5 +13,6 @@ router
 
 router.get("/retailer/:retailerId", productController.getProductsByRetailerId);
 router.post("/:id/reviews", productController.createProductReview);
+router.get("/:id/reviews", productController.getProductReviews);
 
 module.exports = router;

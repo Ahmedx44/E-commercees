@@ -24,6 +24,7 @@ const ProductDetail = () => {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [reviews, setReviews] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,6 +43,11 @@ const ProductDetail = () => {
           `http://127.0.0.1:4000/api/products/${id}`
         );
         setProduct(response.data.data);
+
+        const reviewsResponse = await axios.get(
+          `http://127.0.0.1:4000/api/products/${id}/reviews`
+        );
+        setReviews(reviewsResponse.data.data);
       } catch (error) {
         console.error("Error fetching product:", error);
         // Handle error
@@ -134,8 +140,9 @@ const ProductDetail = () => {
               <h2 className="text-2xl font-bold pl-3">Product Reviews</h2>
             </div>
           </CardHeader>
+
           <CardBody>
-            <div className="bg-gray-100 rounded-lg">
+            <div className="bg-gray-100 rounded-lg p-4 shadow-md">
               <div className="flex justify-center p-4">
                 <Rating value={rating} onChange={setRating} />
               </div>
@@ -145,16 +152,40 @@ const ProductDetail = () => {
                     <textarea
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      className="border border-gray-300 rounded-lg bg-white h-32 focus:outline-none focus:border-blue-300 p-2 resize-none"
+                      className="border border-gray-300 rounded-lg bg-white h-32 focus:outline-none focus:border-blue-300 p-2 resize-none w-full"
                       placeholder="Leave a review"
                     />
                   </div>
                   <div className="mt-4 flex justify-end">
-                    <Button type="submit" color="green">
+                    <Button type="submit" color="green" className="w-32">
                       Submit Review
                     </Button>
                   </div>
                 </form>
+
+                {/* Display reviews */}
+                <div className="mt-8">
+                  {reviews.map((review) => (
+                    <div key={review._id} className="mb-4">
+                      <Typography variant="h6" color="gray" className="mb-2">
+                        {review.name}
+                      </Typography>
+                      <div className="flex items-center mb-2">
+                        <Rating value={review.rating} readOnly />
+                        <Typography
+                          variant="body2"
+                          color="gray"
+                          className="ml-2"
+                        >
+                          {review.rating} / 5
+                        </Typography>
+                      </div>
+                      <Typography variant="body2" color="gray">
+                        {review.comment}
+                      </Typography>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </CardBody>

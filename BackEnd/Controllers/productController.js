@@ -37,6 +37,25 @@ exports.createProduct = catchAsync(async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+exports.getProductReviews = catchAsync(async (req, res, next) => {
+  const productId = req.params.id;
+
+  // Find the product by ID
+  const product = await Product.findById(productId);
+
+  // Check if the product exists
+  if (!product) {
+    return next(new AppError("Product not found", 404));
+  }
+
+  // If the product exists, return its reviews
+  res.status(200).json({
+    status: "success",
+    data: product.reviews,
+  });
+});
+
 exports.createProductReview = async (req, res, next) => {
   const { rating, comment, name } = req.body;
   const productId = req.params.id;

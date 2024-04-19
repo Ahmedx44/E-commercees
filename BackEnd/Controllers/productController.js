@@ -37,6 +37,26 @@ exports.createProduct = catchAsync(async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+exports.createProductReview = async (req, res, next) => {
+  const { rating, comment, name } = req.body;
+  const productId = req.params.id;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    // Add the new review to the product
+    product.reviews.push({ rating, comment, name });
+    await product.save();
+
+    res.status(201).json({ message: "Review added successfully" });
+  } catch (error) {
+    console.error("Error adding review:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
@@ -118,12 +138,10 @@ exports.getProductsByRetailerId = catchAsync(async (req, res, next) => {
 
   // Check if any products were found
   if (products.length === 0) {
-    return res
-      .status(404)
-      .json({
-        status: "fail",
-        message: "No products found for the given retailer ID",
-      });
+    return res.status(404).json({
+      status: "fail",
+      message: "No products found for the given retailer ID",
+    });
   }
 
   // Respond with the products

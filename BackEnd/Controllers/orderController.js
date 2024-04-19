@@ -33,23 +33,28 @@ exports.getAllOrders = catchAsync(async (req, res, next) => {
 });
 
 exports.updateOrder = catchAsync(async (req, res, next) => {
-  const { status } = req.body;
+  try {
+    const { status } = req.body;
 
-  const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+    const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-  if (!order) {
-    return next(new AppError("Order not found", 404));
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        order,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating order:", error);
+    res.status(500).json({ message: "Failed to update order" });
   }
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      order,
-    },
-  });
 });
 
 exports.deleteOrder = catchAsync(async (req, res, next) => {

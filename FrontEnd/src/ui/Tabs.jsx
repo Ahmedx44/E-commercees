@@ -45,6 +45,11 @@ export default function BasicTabs({ product }) {
     setValue(newValue);
   };
 
+  if (!product) {
+    // Render null or loading indicator if product is null
+    return null;
+  }
+
   return (
     <Box sx={{ width: "50%", margin: "auto" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

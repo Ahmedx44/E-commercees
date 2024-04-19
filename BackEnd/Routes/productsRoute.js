@@ -12,5 +12,6 @@ router
   .get(productController.getProductById);
 
 router.get("/retailer/:retailerId", productController.getProductsByRetailerId);
+router.post("/:id/reviews", productController.createProductReview);
 
 module.exports = router;

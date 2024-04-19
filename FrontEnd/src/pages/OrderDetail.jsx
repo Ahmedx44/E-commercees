@@ -5,7 +5,7 @@ import Spinner from "../ui/Spinner"; // Import the Spinner component
 import { Breadcrumb } from "flowbite-react";
 import { HiShoppingBag } from "react-icons/hi";
 import "@radix-ui/themes/styles.css";
-import { Badge, DataList } from "@radix-ui/themes";
+import { DataList } from "@radix-ui/themes";
 import toast from "react-hot-toast"; // Import toast for notifications
 import OrderLocationMap from "../ui/OrderLocationMap";
 
@@ -25,21 +25,6 @@ function OrderDetail() {
           const orderData = response.data.data.order;
           setOrder(orderData);
           setStatus(orderData.status);
-
-          // Fetch product details to get the images for all products
-          const productImages = await Promise.all(
-            orderData.products.map(async (productId) => {
-              const productResponse = await axios.get(
-                `http://127.0.0.1:4000/api/products/${productId}`
-              );
-              const productData = productResponse.data.data.image;
-              console.log(productData);
-              return productData;
-            })
-          );
-
-          // Set the images state with all product images
-          setImage(productImages);
         } catch (error) {
           console.error("Error fetching order:", error);
           // Handle error
@@ -49,6 +34,36 @@ function OrderDetail() {
       fetchOrder();
     }
   }, [id]);
+
+  useEffect(() => {
+    const fetchProductImages = async () => {
+      try {
+        const productImages = await Promise.all(
+          order.products.map(async (productId) => {
+            try {
+              const productResponse = await axios.get(
+                `http://127.0.0.1:4000/api/products/${productId}`
+              );
+              return productResponse.data.data.image;
+            } catch (error) {
+              console.log(
+                `Error fetching product with ID ${productId}:`,
+                error
+              );
+              return null; // Handle the error by returning null or any other value
+            }
+          })
+        );
+        setImage(productImages.filter((image) => image !== null));
+      } catch (error) {
+        console.error("Error fetching product images:", error);
+      }
+    };
+
+    if (order) {
+      fetchProductImages();
+    }
+  }, [order]);
 
   const handleStatusChange = async () => {
     try {
@@ -120,16 +135,13 @@ function OrderDetail() {
       <DataList.Root className="bg-slate-50 py-10 px-5  rounded-xl m-5 gap-5">
         {/* Display total amount */}
         <DataList.Item align="center">
-          <DataList.Label minWidth="88px">Total Amount</DataList.Label>
+          <DataList.Label>Total Amount</DataList.Label>
           <DataList.Value>
             <span className="text-green-500">{order.totalAmount} ETB</span>
           </DataList.Value>
           <DataList.Label minWidth="88px">Payment</DataList.Label>
           <DataList.Value>
             <span className="text-black bg-green-300 p-1 rounded-lg">Paid</span>
-          </DataList.Value>
-          <DataList.Value>
-            <OrderLocationMap location={order.location} />
           </DataList.Value>
           <DataList.Label minWidth="88px">Shipping Amount</DataList.Label>
           <DataList.Value>
@@ -156,6 +168,10 @@ function OrderDetail() {
                 />
               ))}
             </div>
+          </DataList.Value>
+          <DataList.Label minWidth="88px">Location:</DataList.Label>
+          <DataList.Value>
+            <OrderLocationMap location={order.location} />
           </DataList.Value>
         </DataList.Item>
 

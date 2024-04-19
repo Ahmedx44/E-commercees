@@ -72,6 +72,7 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", // Assuming the retailer is also a user
   },
+  reviews: [{ rating: Number, comment: String, name: String }],
 });
 
 productSchema.pre("save", function (next) {

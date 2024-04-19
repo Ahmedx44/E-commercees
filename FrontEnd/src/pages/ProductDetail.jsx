@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "./../store";
 import Spinner from "../ui/Spinner";
-
 import axios from "axios";
+
 import {
   Card,
   CardHeader,
@@ -15,11 +15,25 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Tabss from "../ui/Tabs";
+import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [name, setName] = useState("");
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setName(decodedToken.userName);
+      console.log(decodedToken);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -46,123 +60,108 @@ const ProductDetail = () => {
     }
   };
 
-  const ProductRatingForm = () => {
-    const [rating, setRating] = useState(0);
-    const [comment, setComment] = useState("");
-
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      // submit rating and comment to server here
-    };
-
-    return (
-      <>
-        <div className="bg-black p-20 mt-24 text-center text-white font-bold ">
-          <h1 className="text-4xl font-bold text-white mb-3 ">
-            Product Detail
-          </h1>
-          <p>Home | Product Detail</p>
-        </div>
-
-        <div className="mb-30">
-          <div className="w-3/4 width  rounded-lg relative top-9 left-96 flex justify-between justify-center rounded-lg">
-            <div className="flex items-center ">
-              {product ? (
-                <>
-                  <img
-                    src={product.image}
-                    alt=""
-                    className="w-96 heightimg object-center mr-9 p-7  pl-24"
-                  />
-                  <div className="text-black bold text-5xl">
-                    <h2 className="text-5xl font-bold p-5">
-                      {product.name.charAt(0).toUpperCase() +
-                        product.name.slice(1)}
-                    </h2>
-                    <p className="text-xl pl-6">By: Ahmed</p>
-
-                    <div className="flex">
-                      <Rating
-                        name="read-only"
-                        value={product.rating}
-                        readOnly
-                        className="pl-5"
-                      />
-                      <p className="text-xl p-5 mt-2 font-bold">
-                        (2 Customer reviewed)
-                      </p>
-                    </div>
-                    <div className="flex text-2xl gap-2 ml-5">
-                      <p className="font-bold">Price: </p>
-                      <p className="l-10 text-red-500 font-bold">
-                        ${product.price}
-                      </p>
-                    </div>
-                    <div className=" flex gap-2 text-2xl font-bold ml-5 mt-5">
-                      <p className="font-bold">Available:</p>
-                      <p className="text-red-500">{product.quantity}</p>
-                    </div>
-                    <button
-                      onClick={handleAddToCart}
-                      className="text-4xl p-4 bg-gray-800 text-black rounded-xl transition duration-300 delay-100 mt-10 hover:bg-gray-700 text-white"
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <Spinner className="" />
-              )}
-            </div>
-          </div>
-        </div>
-        <Tabss product={product} className="w-96" />
-        <div>
-          <form onSubmit={handleSubmit} className="mt-8">
-            <h2 className="text-2xl font-bold mb-2">Rate this product</h2>
-            <div className="mb-4">
-              <label htmlFor="rating" className="block text-lg font-semibold">
-                Rating:
-              </label>
-              <select
-                id="rating"
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-            <div className="mb-4">
-              <label htmlFor="comment" className="block text-lg font-semibold">
-                Comment:
-              </label>
-              <textarea
-                id="comment"
-                rows="4"
-                cols="50"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition duration-300"
-            >
-              Submit
-            </button>
-          </form>
-        </div>
-      </>
-    );
+  const handleSubmitReview = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post(`http://127.0.0.1:4000/api/products/${id}/reviews`, {
+        rating,
+        comment,
+        name,
+      });
+      toast.success("succefully added");
+      // Optionally, you can refresh the product detail page to reflect the updated reviews/ratings
+    } catch (error) {
+      console.error("Error submitting review:", error);
+    }
   };
 
-  return <ProductRatingForm />;
+  return (
+    <>
+      <div className="bg-black p-20 mt-24 text-center text-white font-bold  ">
+        <h1 className="text-4xl font-bold text-white mb-3 ">Product Detail</h1>
+        <p>Home | Product Detail</p>
+      </div>
+      <div className="mb-30 bg-gray-100">
+        <div className="w-3/4 width  rounded-lg relative top-9 left-96 flex justify-between justify-center rounded-lg">
+          <div className="flex items-center ">
+            {product ? (
+              <>
+                <img
+                  src={product.image}
+                  alt=""
+                  className="w-96 heightimg object-center mr-9 p-7  pl-24"
+                />
+                <div className="text-black bold text-5xl">
+                  <h2 className="text-5xl font-bold p-5">
+                    {product.name.charAt(0).toUpperCase() +
+                      product.name.slice(1)}
+                  </h2>
+                  <p className="text-xl pl-6">By: Ahmed</p>
+                  <div className=" flex gap-2 text-2xl font-bold ml-5 mt-5">
+                    <p className="font-bold">Available:</p>
+                    <p className="text-red-500">{product.quantity}</p>
+                  </div>
+                  <button
+                    onClick={handleAddToCart}
+                    className="text-4xl p-4 bg-gray-800 text-black rounded-xl transition duration-300 delay-100 mt-10 hover:bg-gray-700 text-white"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </>
+            ) : (
+              <Spinner className="" />
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="mt-10 bg-gray-100">
+        <Card className="mb-20 w-11/12 m-auto">
+          <CardHeader color="blue" contentPosition="none">
+            <div className="bg-blue-900 text-white rounded-t-lg py-2">
+              <h2 className="text-2xl font-bold pl-3">Product Information</h2>
+            </div>
+          </CardHeader>
+          <CardBody>
+            <Typography color="gray">
+              {product ? product.description : ""}
+            </Typography>
+          </CardBody>
+        </Card>
+        <Card className="w-11/12 m-auto">
+          <CardHeader color="green" contentPosition="none">
+            <div className="bg-green-900 text-white rounded-t-lg py-2">
+              <h2 className="text-2xl font-bold pl-3">Product Reviews</h2>
+            </div>
+          </CardHeader>
+          <CardBody>
+            <div className="bg-gray-100 rounded-lg">
+              <div className="flex justify-center p-4">
+                <Rating value={rating} onChange={setRating} />
+              </div>
+              <div className="px-4 pb-4">
+                <form onSubmit={handleSubmitReview}>
+                  <div className="mt-4">
+                    <textarea
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      className="border border-gray-300 rounded-lg bg-white h-32 focus:outline-none focus:border-blue-300 p-2 resize-none"
+                      placeholder="Leave a review"
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-end">
+                    <Button type="submit" color="green">
+                      Submit Review
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+    </>
+  );
 };
 
 export default ProductDetail;

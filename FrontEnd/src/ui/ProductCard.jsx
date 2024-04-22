@@ -50,7 +50,6 @@ export function ProductCard({ product }) {
         <Typography component="legend" className="font-bold">
           Rating
         </Typography>
-        <Rating name="disabled" value={product.rating} disabled />
       </CardBody>
       <CardFooter className="pt-0">
         <Button

@@ -1,20 +1,45 @@
 const Message = require("../Models/messageModel");
-
-const User = require("../Models/userModel");
+const Chat = require("../Models/chatModel");
 
 exports.sendMessage = async (req, res) => {
   try {
-    const { sender, recipient, text } = req.body;
-    // You might want to add additional validation here to ensure sender and recipient are valid
+    const { sender, recipient, text, name } = req.body;
+    console.log("Received message:", req.body); // Debugging console log
 
-    const message = await Message.findOneAndUpdate(
-      { sender: sender, recipient: recipient },
-      { $push: { text: { sender: sender, message: text } } },
-      { upsert: true, new: true }
-    );
-    res.status(201).json({ message });
+    // Check if a chat already exists between sender and recipient
+    let chat = await Chat.findOne({
+      participants: { $all: [sender, recipient] },
+    });
+
+    // If chat doesn't exist, create a new one
+    if (!chat) {
+      chat = new Chat({
+        participants: [sender, recipient],
+        messages: [],
+      });
+    }
+
+    // Save the message to the database
+    const message = new Message({
+      sender,
+      recipient,
+      name,
+      text,
+    });
+    const savedMessage = await message.save();
+
+    // Add the message to the chat
+    chat.messages.push(savedMessage);
+    await chat.save();
+
+    console.log("Saved message:", savedMessage); // Debugging console log
+
+    // Emit the new message to all connected clients (if using Socket.IO)
+    // io.emit("newMessage", savedMessage);
+
+    res.status(201).json({ message: savedMessage });
   } catch (error) {
-    console.error(error);
+    console.error("Error saving message:", error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -42,6 +67,7 @@ exports.getLastMessageForUser = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
 exports.getMessagesForCustomerAssistance = async (req, res) => {
   try {
     const messages = await Message.find({

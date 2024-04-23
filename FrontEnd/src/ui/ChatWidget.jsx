@@ -1,40 +1,56 @@
+import { jwtDecode } from "jwt-decode";
 import React, { useState, useEffect } from "react";
 import { BsFillChatFill } from "react-icons/bs";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:4000");
 
 const ChatWidget = () => {
   const [showChat, setShowChat] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("ahmed");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserId(decodedToken.id);
+      setUserName(decodedToken.userName);
+      console.log("User ID:", decodedToken.id); // Debugging console log
     }
+  }, []);
+
+  useEffect(() => {
+    // Listen for new messages from the server
+    socket.on("newMessage", (newMessage) => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    });
+
+    return () => {
+      socket.off("newMessage");
+    };
   }, []);
 
   const toggleChat = () => {
     setShowChat(!showChat);
   };
 
+  // Inside the sendMessage function
   const sendMessage = async () => {
     if (inputValue.trim() !== "") {
       const message = {
         text: inputValue,
-        recipient: "66100272885b8ec4444466ea", // Replace with the recipient's ID
+        sender: userId,
+        recipient: "66100272885b8ec4444466ea", // Assuming recipient ID
+        name: userName,
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:4000/api/messages/send",
-          message
-        );
-        const savedMessage = response.data.message;
-        setMessages((prevMessages) => [...prevMessages, savedMessage]);
+        console.log("Sending message:", message);
+        // Emit the message to the server
+        socket.emit("sendMessage", message);
         setInputValue("");
       } catch (error) {
         console.error("Error sending message:", error);
@@ -42,27 +58,6 @@ const ChatWidget = () => {
       }
     }
   };
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/api/messages/user/${userId}`
-        );
-        const fetchedMessages = response.data.messages;
-        console.log(fetchedMessages);
-        setMessages([]); // Clear previous messages
-        setMessages(fetchedMessages);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-        // Handle error as needed
-      }
-    };
-
-    if (userId) {
-      fetchMessages();
-    }
-  }, [userId]);
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -77,26 +72,29 @@ const ChatWidget = () => {
           <div className="h-48 overflow-y-auto px-4 py-2">
             {messages.map((message, index) => (
               <div key={index}>
-                {message.text.map((textItem, textIndex) => (
+                <div
+                  className={`flex ${
+                    message.sender === userId ? "justify-end" : "justify-start"
+                  } mb-2`}
+                >
                   <div
-                    key={`${index}-${textIndex}`}
-                    className={`flex ${
-                      textItem.sender === userId
-                        ? "justify-end"
-                        : "justify-start"
-                    } mb-2`}
+                    className={`p-2 ${
+                      message.sender === userId
+                        ? "bg-green-100 text-green-800"
+                        : "bg-blue-100 text-blue-800"
+                    } rounded-lg`}
                   >
-                    <div
-                      className={`p-2 ${
-                        textItem.sender === userId
-                          ? "bg-green-100 text-green-800"
-                          : "bg-blue-100 text-blue-800"
-                      } rounded-lg`}
-                    >
-                      <p className="break-words">{textItem.message}</p>
-                    </div>
+                    {Array.isArray(message.text) ? (
+                      message.text.map((textMessage, textIndex) => (
+                        <p key={textIndex} className="break-words">
+                          {textMessage.message}
+                        </p>
+                      ))
+                    ) : (
+                      <p className="break-words">{message.text}</p>
+                    )}
                   </div>
-                ))}
+                </div>
               </div>
             ))}
           </div>

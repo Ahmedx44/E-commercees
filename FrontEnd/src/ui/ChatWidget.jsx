@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { BsFillChatFill } from "react-icons/bs";
 
 const ChatWidget = () => {
   const [showChat, setShowChat] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]); // Initialize messages as an empty array
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("ahmed");
   const [chatId, setChatId] = useState("");
@@ -21,6 +22,13 @@ const ChatWidget = () => {
     }
   }, []);
 
+  useEffect(() => {
+    // Fetch messages when the chatId is available
+    if (chatId) {
+      fetchChatMessages();
+    }
+  }, [chatId]);
+
   const fetchChatId = async (userId) => {
     try {
       const response = await axios.get(
@@ -28,8 +36,6 @@ const ChatWidget = () => {
       );
       if (response.data.status === "success") {
         setChatId(response.data.data.chatId);
-        // Fetch messages when the chatId is available
-        fetchChatMessages(response.data.data.chatId);
       } else {
         console.error("Failed to fetch chatId:", response.data.message);
       }
@@ -38,12 +44,13 @@ const ChatWidget = () => {
     }
   };
 
-  const fetchChatMessages = async (chatId) => {
+  const fetchChatMessages = async () => {
     try {
       const response = await axios.get(
         `http://127.0.0.1:4000/api/chat/messages/${chatId}`
       );
-      setMessages(response.data.messages);
+      setMessages(response.data.chat.messages); // Update messages state with fetched messages
+      console.log(response.data.chat.messages); // Log fetched messages
     } catch (error) {
       console.error("Error fetching chat messages:", error);
     }
@@ -63,8 +70,6 @@ const ChatWidget = () => {
       };
 
       try {
-        // Send message if chatId is available or not
-
         // Save the message to the database
         const savedMessage = await axios.post(
           "http://127.0.0.1:4000/api/messages/send",
@@ -88,7 +93,7 @@ const ChatWidget = () => {
         className="bg-blue-500 text-white rounded-full p-3 hover:bg-blue-700 focus:outline-none"
         onClick={toggleChat}
       >
-        Toggle Chat
+        <BsFillChatFill />
       </button>
       {showChat && (
         <div className="fixed bottom-0 right-0 z-50 w-64 bg-white border border-gray-300 rounded-lg shadow-lg">

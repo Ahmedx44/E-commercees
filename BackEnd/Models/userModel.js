@@ -43,10 +43,7 @@ const userSchema = mongoose.Schema({
     validator: [validator.isMobilePhone, "Please provide a valid phone number"],
     required: [true, "Please provide a phone number"],
   },
-  chats: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Chat",
-  },
+  chatId: { type: String },
   location: {
     type: [Number],
     index: "2dsphere",

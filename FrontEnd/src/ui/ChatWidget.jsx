@@ -1,9 +1,6 @@
-import { jwtDecode } from "jwt-decode";
 import React, { useState, useEffect } from "react";
-import { BsFillChatFill } from "react-icons/bs";
-import io from "socket.io-client";
-
-const socket = io("http://localhost:4000");
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const ChatWidget = () => {
   const [showChat, setShowChat] = useState(false);
@@ -11,6 +8,7 @@ const ChatWidget = () => {
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("ahmed");
+  const [chatId, setChatId] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,26 +16,43 @@ const ChatWidget = () => {
       const decodedToken = jwtDecode(token);
       setUserId(decodedToken.id);
       setUserName(decodedToken.userName);
-      console.log("User ID:", decodedToken.id); // Debugging console log
+      // Fetch chatId when the component mounts
+      fetchChatId(decodedToken.id);
     }
   }, []);
 
-  useEffect(() => {
-    // Listen for new messages from the server
-    socket.on("newMessage", (newMessage) => {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
+  const fetchChatId = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:4000/api/users/${userId}/chatId`
+      );
+      if (response.data.status === "success") {
+        setChatId(response.data.data.chatId);
+        // Fetch messages when the chatId is available
+        fetchChatMessages(response.data.data.chatId);
+      } else {
+        console.error("Failed to fetch chatId:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching chatId:", error);
+    }
+  };
 
-    return () => {
-      socket.off("newMessage");
-    };
-  }, []);
+  const fetchChatMessages = async (chatId) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:4000/api/chat/messages/${chatId}`
+      );
+      setMessages(response.data.messages);
+    } catch (error) {
+      console.error("Error fetching chat messages:", error);
+    }
+  };
 
   const toggleChat = () => {
     setShowChat(!showChat);
   };
 
-  // Inside the sendMessage function
   const sendMessage = async () => {
     if (inputValue.trim() !== "") {
       const message = {
@@ -48,13 +63,21 @@ const ChatWidget = () => {
       };
 
       try {
-        console.log("Sending message:", message);
-        // Emit the message to the server
-        socket.emit("sendMessage", message);
+        // Send message if chatId is available or not
+
+        // Save the message to the database
+        const savedMessage = await axios.post(
+          "http://127.0.0.1:4000/api/messages/send",
+          message
+        );
+
+        // Add the message to the local messages state
+        setMessages([...messages, savedMessage.data.message]);
+
+        // Clear the input field
         setInputValue("");
       } catch (error) {
         console.error("Error sending message:", error);
-        // Handle error as needed
       }
     }
   };
@@ -65,7 +88,7 @@ const ChatWidget = () => {
         className="bg-blue-500 text-white rounded-full p-3 hover:bg-blue-700 focus:outline-none"
         onClick={toggleChat}
       >
-        <BsFillChatFill className="text-2xl" />
+        Toggle Chat
       </button>
       {showChat && (
         <div className="fixed bottom-0 right-0 z-50 w-64 bg-white border border-gray-300 rounded-lg shadow-lg">
@@ -84,15 +107,7 @@ const ChatWidget = () => {
                         : "bg-blue-100 text-blue-800"
                     } rounded-lg`}
                   >
-                    {Array.isArray(message.text) ? (
-                      message.text.map((textMessage, textIndex) => (
-                        <p key={textIndex} className="break-words">
-                          {textMessage.message}
-                        </p>
-                      ))
-                    ) : (
-                      <p className="break-words">{message.text}</p>
-                    )}
+                    <p className="break-words">{message.text}</p>
                   </div>
                 </div>
               </div>

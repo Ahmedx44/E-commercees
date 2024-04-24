@@ -7,6 +7,7 @@ const router = express.Router();
 router.route("/").get(userController.getUsers);
 router.route("/:id").get(userController.getUserById);
 router.put("/:userId/chats", userController.updateUserChats);
+router.get("/:userId/chatId", userController.getUserChatId);
 router.route("/login").post(authController.login);
 router.route("/register").post(authController.signup);
 router.route("/logout").get(authController.logout);

@@ -1,10 +1,12 @@
+// messageController.js
+
 const Message = require("../Models/messageModel");
 const Chat = require("../Models/chatModel");
+const User = require("../Models/userModel");
 
 exports.sendMessage = async (req, res) => {
   try {
     const { sender, recipient, text, name } = req.body;
-    console.log("Received message:", req.body); // Debugging console log
 
     // Check if a chat already exists between sender and recipient
     let chat = await Chat.findOne({
@@ -32,7 +34,17 @@ exports.sendMessage = async (req, res) => {
     chat.messages.push(savedMessage);
     await chat.save();
 
-    console.log("Saved message:", savedMessage); // Debugging console log
+    // Update the userModel with the chatId
+    const user = await User.findOne({ _id: sender });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // If it's the first message, save the chatId in the userModel
+    if (!user.chatId) {
+      user.chatId = chat._id;
+      await user.save();
+    }
 
     // Emit the new message to all connected clients (if using Socket.IO)
     // io.emit("newMessage", savedMessage);

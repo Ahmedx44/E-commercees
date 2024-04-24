@@ -61,3 +61,39 @@ exports.updateUserChats = async (req, res, next) => {
     });
   }
 };
+exports.getUserChatId = catchAsync(async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+
+    // Fetch user by userId
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        status: "fail",
+        message: "User not found",
+      });
+    }
+
+    // Check if user has a chatId
+    if (!user.chatId) {
+      return res.status(404).json({
+        status: "fail",
+        message: "ChatId not found for this user",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        chatId: user.chatId,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching user chatId:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to fetch user chatId",
+    });
+  }
+});

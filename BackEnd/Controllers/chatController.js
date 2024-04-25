@@ -12,6 +12,17 @@ exports.getChatMessagesByChatId = async (req, res) => {
   }
 };
 
+exports.getAllChats = async (req, res) => {
+  try {
+    console.log("hello");
+    const chats = await Chat.find();
+    res.status(200).json({ chats });
+  } catch (error) {
+    console.error("Error fetching chats:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 exports.getChat = async (req, res) => {
   try {
     const userId = req.params.userId;

@@ -7,5 +7,6 @@ router.get("/:userId", chatController.getChat);
 router.get("/:userId/messages", chatController.getChatMessages);
 router.post("/:userId/chatId", chatController.saveChatIdToUser);
 router.get("/messages/:chatId", chatController.getChatMessagesByChatId);
+router.get("/chats/all", chatController.getAllChats);
 
 module.exports = router;

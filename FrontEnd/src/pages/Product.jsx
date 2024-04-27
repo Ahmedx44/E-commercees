@@ -1,31 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table } from "flowbite-react";
-import Spinner from "../ui/Spinner";
-import { HiViewBoards } from "react-icons/hi";
-import { Breadcrumb } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import toast from "react-hot-toast";
+import { Breadcrumb } from "flowbite-react";
+import { HiViewBoards } from "react-icons/hi";
+import Spinner from "../ui/Spinner";
+import { Link, useNavigate } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true); // Add loading state
-
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/products");
+        const response = await axios.get("http://127.0.0.1:4000/api/products");
         setProducts(response.data.data);
         setLoading(false); // Set loading to false after fetching
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-
     fetchProducts();
   }, []);
 
@@ -36,7 +32,7 @@ function Products() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:3000/api/products/${id}`);
+      await axios.delete(`http://127.0.0.1:4000/api/products/${id}`);
       toast.success("Deleted Successfully");
       // Refresh products after deletion
       const updatedProducts = products.filter((product) => product._id !== id);
@@ -48,7 +44,7 @@ function Products() {
   };
 
   return (
-    <div className="bg-gray-200 min-h-screen font-sans">
+    <div className="min-h-screen font-sans">
       <div className="text-2xl p-10 mt-16">
         <Breadcrumb aria-label="Default breadcrumb example">
           <Breadcrumb.Item href="#" icon={HiViewBoards}>
@@ -57,61 +53,49 @@ function Products() {
         </Breadcrumb>
       </div>
 
-      <div className="mx-8 my-4 p-8 bg-gray-100 shadow-lg rounded-xl overflow-x-auto">
-        <div className="flex justify-between items-center mb-4">
-          <input
-            type="text"
-            placeholder="Search by name"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="border-2 border-gray-300 p-2 rounded-lg"
-          />
-        </div>
-
-        {loading ? (
+      <div className="overflow-x-auto p-16">
+        <table className="table table-zebra p-16 text-2xl  roboto">
+          <thead>
+            <tr className="text-2xl text-black roboto">
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Average Rating</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product._id}>
+                <td>{product.name}</td>
+                <td>{product.price} ETB</td>
+                <td>{product.quantity}</td>
+                <td>{product.rating}</td>
+                <td>
+                  <details className="dropdown">
+                    <summary className="m-1 btn">Action</summary>
+                    <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                      <li>
+                        <button onClick={() => handleViewClick(product._id)}>
+                          View
+                        </button>
+                      </li>
+                      <li>
+                        <button onClick={() => handleDelete(product._id)}>
+                          Delete
+                        </button>
+                      </li>
+                    </ul>
+                  </details>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {loading && (
           <div className="flex justify-center items-center h-full">
             <Spinner />
           </div>
-        ) : (
-          <Table hoverable>
-            <Table.Head className="text-xl p-4 text-gray-700">
-              <Table.HeadCell>Name</Table.HeadCell>
-              <Table.HeadCell>Price</Table.HeadCell>
-              <Table.HeadCell>Stock</Table.HeadCell>
-              <Table.HeadCell>Rating</Table.HeadCell>
-              <Table.HeadCell>Action</Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {products.map((product) => (
-                <Table.Row key={product._id} className="font-semibold text-lg">
-                  <Table.Cell>{product.name}</Table.Cell>
-                  <Table.Cell>{product.price}</Table.Cell>
-                  <Table.Cell>{product.quantity}</Table.Cell>
-                  <Table.Cell>{product.rating}</Table.Cell>
-                  <Table.Cell>
-                    <FormControl fullWidth>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="Action"
-                        onChange={(e) => {
-                          const action = e.target.value;
-                          if (action === "view") {
-                            handleViewClick(product._id);
-                          } else if (action === "delete") {
-                            handleDelete(product._id);
-                          }
-                        }}
-                      >
-                        <MenuItem value="view">View</MenuItem>
-                        <MenuItem value="delete">Delete</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
         )}
       </div>
     </div>

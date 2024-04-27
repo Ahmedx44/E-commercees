@@ -96,10 +96,8 @@ function OrderDetail() {
         return "white";
     }
   };
-
-  // Render order details when order is available
   return (
-    <div className="bg-slate-200 h-screen mt-12">
+    <div className=" h-screen mt-12 roboto">
       <div className="text-2xl p-10">
         <Breadcrumb aria-label="Default breadcrumb example">
           <Breadcrumb.Item href="/admin/orders" icon={HiShoppingBag}>
@@ -111,7 +109,7 @@ function OrderDetail() {
         </Breadcrumb>
       </div>
 
-      <div className="bg-slate-50 py-10 px-5 m-5 rounded-xl text-3xl font-bold flex items-center gap-2">
+      <div className=" py-10 px-5 m-5 rounded-xl text-3xl font-bold flex items-center gap-2">
         Status:
         <select
           name=""
@@ -126,28 +124,33 @@ function OrderDetail() {
         </select>
         <button
           onClick={handleStatusChange}
-          className="bg-blue-500 text-white rounded-lg px-4 py-2"
+          className="text-white rounded-lg px-4 py-2 bg-green-400"
         >
           Update Status
         </button>
       </div>
 
-      <DataList.Root className="bg-slate-50 py-10 px-5  rounded-xl m-5 gap-5">
-        {/* Display total amount */}
+      <DataList.Root className=" py-10 px-5  rounded-xl m-5 gap-5">
         <DataList.Item align="center">
-          <DataList.Label>Total Amount</DataList.Label>
+          <DataList.Label className="font-bold">Total Amount:</DataList.Label>
           <DataList.Value>
             <span className="text-green-500">{order.totalAmount} ETB</span>
           </DataList.Value>
-          <DataList.Label minWidth="88px">Payment</DataList.Label>
+          <DataList.Label minWidth="88px" className="font-bold">
+            Payment:
+          </DataList.Label>
           <DataList.Value>
             <span className="text-black bg-green-300 p-1 rounded-lg">Paid</span>
           </DataList.Value>
-          <DataList.Label minWidth="88px">Shipping Amount</DataList.Label>
+          <DataList.Label minWidth="88px" className="font-bold">
+            Shipping Amount:
+          </DataList.Label>
           <DataList.Value>
             <span className="text-green-500">100</span>
           </DataList.Value>
-          <DataList.Label minWidth="88px">Delivery</DataList.Label>
+          <DataList.Label minWidth="88px" className="font-bold">
+            Status:
+          </DataList.Label>
           <DataList.Value>
             <span
               className="text-black bg-green-300 p-1 rounded-lg"
@@ -156,7 +159,9 @@ function OrderDetail() {
               {status}
             </span>
           </DataList.Value>
-          <DataList.Label minWidth="88px">Product Images</DataList.Label>
+          <DataList.Label minWidth="88px" className="font-bold">
+            Product Images
+          </DataList.Label>
           <DataList.Value>
             <div className="flex flex-wrap gap-10 mt-20">
               {image.map((img, index) => (
@@ -164,12 +169,14 @@ function OrderDetail() {
                   key={index}
                   src={img}
                   alt={`Product ${index + 1}`}
-                  className="max-w-72 max-h-72 rounded-3xl"
+                  className="max-w-72 max-h-72 rounded-xl"
                 />
               ))}
             </div>
           </DataList.Value>
-          <DataList.Label minWidth="88px">Location:</DataList.Label>
+          <DataList.Label minWidth="88px" className="font-bold">
+            Location:
+          </DataList.Label>
           <DataList.Value>
             <OrderLocationMap location={order.location} />
           </DataList.Value>

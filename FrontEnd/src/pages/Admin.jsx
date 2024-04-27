@@ -5,7 +5,6 @@ import AdminHeader from "../ui/AdminHeader";
 function Admin() {
   return (
     <div>
-      <AdminHeader />
       <div className="grid grid-cols-5">
         <div className="col-span-1">
           <SideBar />

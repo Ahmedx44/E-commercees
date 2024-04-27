@@ -25,18 +25,43 @@ export function ProductCard({ product }) {
   };
 
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
-      <figure className="px-10 pt-10">
-        <img src={product.image} alt="Shoes" className="rounded-xl" />
-      </figure>
-      <div className="card-body items-center text-center">
-        <h2 className="card-title">Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions">
-          <button className="btn btn-primary">Buy Now</button>
+    <Card className="w-96 border-gray-300 shadow-xl transition-shadow duration-300 bg-gray-100">
+      <CardHeader shadow={false} floated={false} className="h-80">
+        <img src={product.image} alt="card-image" className="h-full w-full " />
+      </CardHeader>
+      <CardBody className="px-4 py-2">
+        <div className="mb-2 flex items-center justify-between">
+          <Link
+            to={`/productdetail/${product._id}`}
+            className="text-lg font-bold text-black hover:text-gray-700"
+          >
+            {product.name}
+          </Link>
+          <Typography color="blue-gray" className="text-lg font-bold">
+            ${product.price}
+          </Typography>
         </div>
-      </div>
-    </div>
+        <Typography
+          variant="big"
+          color="gray"
+          className="font-normal opacity-75"
+        ></Typography>
+        <Typography component="legend" className="font-bold">
+          Rating
+        </Typography>
+      </CardBody>
+      <CardFooter className="pt-0">
+        <Button
+          ripple={false}
+          fullWidth={true}
+          onClick={handleAddToCart}
+          className="w-full text-white bg-fuchsia-300 shadow-none hover:bg-fuchsia-900 hover:shadow-none flex justify-center items-center transition duration-300 delay-100"
+        >
+          <FaCartArrowDown className="text-white text-lg mr-3 size-6" />
+          <span className="text-lg">Add to Cart</span>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }
 

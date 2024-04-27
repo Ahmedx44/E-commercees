@@ -1,154 +1,158 @@
-import {
-  Avatar,
-  Dropdown,
-  DropdownDivider,
-  DropdownHeader,
-  DropdownItem,
-  Navbar,
-  NavbarBrand,
-  NavbarCollapse,
-  NavbarLink,
-  NavbarToggle,
-} from "flowbite-react";
-
-import { Link } from "react-router-dom";
-import CartIcon from "./../ui/CartIcon";
-import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import Button from "./../ui/Button";
+import { useEffect, useState } from "react";
+import CartIcon from "../ui/CartIcon";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-
-const imagess = "../image/Screenshot from 2024-04-27 08-46-12.png";
+import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
 
 function Header() {
-  const [role, setRole] = useState(null);
-  const [user, setUser] = useState(null);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
-      setRole(decodedToken.role);
-      setUser(decodedToken.userName);
       setImage(decodedToken.image);
-      // console.log(image);
+      setUser(decodedToken);
       console.log(decodedToken);
     }
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      // Clear localStorage
+  const handleLogout = () => {
+    if (user) {
       localStorage.removeItem("token");
-      // Clear state
       setRole(null);
       setUser(null);
-      // Redirect to homepage
-      window.location.href = "";
-      // Display success message
-
-      toast.success(`Successfully logged out`);
-    } catch (error) {
-      // Display error message
-      toast.error("Failed to logout");
+      toast.success("Successfully logged out");
     }
   };
 
   return (
-    <div className="border-t roboto  ">
-      <nav className="text-xl fixed w-full z-10 top-0 left-0 font-bold font-sans">
-        <Navbar fluid rounded>
-          <NavbarBrand>
-            <span className="self-center whitespace-nowrap text-3xl font-semibold dark:text-white  jersey20">
-              Ethio-Bazaar
-            </span>
-          </NavbarBrand>
-          <div className="flex md:order-2 pt-10 relative bottom-5">
-            <div className="mr-4">
-              <CartIcon />
+    <div>
+      <div className="navbar bg-base-100 fixed top-0 z-10 h-36">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
             </div>
-
-            {role ? (
-              <Dropdown
-                arrowIcon={false}
-                inline
-                label={<Avatar alt="User settings" img={image} rounded />}
-              >
-                <DropdownHeader>
-                  <span className="block text-sm">welcome</span>
-                  <span className="block truncate text-sm font-medium">
-                    {user}
-                  </span>
-                </DropdownHeader>
-                <DropdownItem>Settings</DropdownItem>
-                <DropdownItem>
-                  {" "}
-                  <Link
-                    to="history"
-                    className="hover:text-gray-500 transition duration-300 delay-100"
-                  >
-                    Order History
-                  </Link>
-                </DropdownItem>
-                <DropdownDivider />
-                <DropdownItem onClick={(e) => handleLogout(e)}>
-                  Log out
-                </DropdownItem>
-              </Dropdown>
-            ) : (
-              <Link
-                to="/signup"
-                className="hover:text-gray-500 transition duration-300 delay-100"
-              >
-                <Button name="Create Acount">Create account</Button>
-              </Link>
-            )}
-            <NavbarToggle />
-          </div>
-          <NavbarCollapse>
-            <NavbarLink
-              href="#"
-              className="text-2xl font-bold hover:text-gray-500"
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <Link
-                to=""
-                className="hover:text-gray-500 transition duration-300 delay-100 ml-40 roboto"
+              <li>
+                <a className="text-xl">Home</a>
+              </li>
+              <li>
+                <a className="text-xl">Shop</a>
+              </li>
+              <li>
+                <a>Page</a>
+                <ul className="p-2">
+                  <li>
+                    <a>Cart</a>
+                  </li>
+                  <li>
+                    <a>Order History</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a>Contact</a>
+              </li>
+            </ul>
+          </div>
+          <a className="btn btn-ghost text-2xl">
+            <img src={Logo} alt="" className="w-28 relative bottom-5" />
+          </a>
+        </div>
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+            <Link to="/">
+              <li>
+                <a className="text-2xl font-bold roboto">Home</a>
+              </li>
+            </Link>
+            <Link to="/productlist">
+              <li>
+                <a className="text-2xl font-bold roboto">Shop</a>
+              </li>
+            </Link>
+            <li>
+              <details>
+                <summary className="text-2xl font-bold roboto">Page</summary>
+                <ul className="p-2">
+                  <li>
+                    <a className="text-2xl font-bold roboto">Cart</a>
+                  </li>
+                  <li>
+                    <a className="text-2xl font-bold roboto">Order History</a>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <a className="text-2xl font-bold roboto">About</a>
+            </li>
+          </ul>
+        </div>
+        {user ? (
+          <>
+            <CartIcon />
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
               >
-                Home
-              </Link>
-            </NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold ">
-              <Link
-                to="ProductList"
-                className="hover:text-gray-500 transition duration-300 delay-100 roboto"
+                <div className="w-10 rounded-full">
+                  <img alt="Profile" src={image} />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
               >
-                Shop
-              </Link>
-            </NavbarLink>
-
-            <NavbarLink href="#" className="text-2xl font-bold ">
-              <Link
-                to="about"
-                className="hover:text-gray-500 transition duration-300 delay-100 roboto"
-              >
-                Contact
-              </Link>
-            </NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold ">
-              <Link
-                to="ProductList"
-                className="hover:text-gray-500 transition duration-300 delay-100 roboto"
-              >
-                About
-              </Link>
-            </NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold "></NavbarLink>
-            <NavbarLink href="#" className="text-2xl font-bold "></NavbarLink>
-          </NavbarCollapse>
-        </Navbar>
-      </nav>
+                <li>
+                  <a className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </a>
+                </li>
+                <li>
+                  <a>Settings</a>
+                </li>
+                <li onClick={handleLogout}>
+                  <a>Logout</a>
+                </li>
+              </ul>
+            </div>
+          </>
+        ) : (
+          <div className="navbar-end">
+            <Link to="/login">
+              <a className="btn bg-fuchsia-200 font-bold roboto text-xl">
+                Login
+              </a>
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
 export default Header;

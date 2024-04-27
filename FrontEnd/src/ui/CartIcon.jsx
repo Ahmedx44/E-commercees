@@ -12,7 +12,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     top: 0,
     border: `2px solid ${theme.palette.background.paper}`,
     padding: "0 4px",
-    backgroundColor: "black", // Change the background color to black
+    backgroundColor: "purple", // Change the background color to black
   },
 }));
 
@@ -21,7 +21,7 @@ const CartIcon = () => {
   return (
     <Link
       to="cart"
-      className="hover:text-gray-500 transition duration-300 delay-100"
+      className="hover:text-gray-500 transition duration-300 delay-100 navbar-end mx-2"
     >
       <IconButton aria-label="cart" style={{ fontSize: 100 }}>
         <StyledBadge badgeContent={cartItems.length} color="primary">

@@ -10,12 +10,15 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
+
 import { Link } from "react-router-dom";
 import CartIcon from "./../ui/CartIcon";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import Button from "./../ui/Button";
 import toast from "react-hot-toast";
+
+const imagess = "../image/Screenshot from 2024-04-27 08-46-12.png";
 
 function Header() {
   const [role, setRole] = useState(null);
@@ -53,12 +56,12 @@ function Header() {
   };
 
   return (
-    <div className="border-t ">
+    <div className="border-t roboto  ">
       <nav className="text-xl fixed w-full z-10 top-0 left-0 font-bold font-sans">
         <Navbar fluid rounded>
-          <NavbarBrand href="https://flowbite-react.com">
-            <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-              Ecommerce
+          <NavbarBrand>
+            <span className="self-center whitespace-nowrap text-3xl font-semibold dark:text-white  jersey20">
+              Ethio-Bazaar
             </span>
           </NavbarBrand>
           <div className="flex md:order-2 pt-10 relative bottom-5">
@@ -110,7 +113,7 @@ function Header() {
             >
               <Link
                 to=""
-                className="hover:text-gray-500 transition duration-300 delay-100 ml-40"
+                className="hover:text-gray-500 transition duration-300 delay-100 ml-40 roboto"
               >
                 Home
               </Link>
@@ -118,17 +121,26 @@ function Header() {
             <NavbarLink href="#" className="text-2xl font-bold ">
               <Link
                 to="ProductList"
-                className="hover:text-gray-500 transition duration-300 delay-100"
+                className="hover:text-gray-500 transition duration-300 delay-100 roboto"
               >
                 Shop
               </Link>
             </NavbarLink>
+
             <NavbarLink href="#" className="text-2xl font-bold ">
               <Link
                 to="about"
-                className="hover:text-gray-500 transition duration-300 delay-100"
+                className="hover:text-gray-500 transition duration-300 delay-100 roboto"
               >
                 Contact
+              </Link>
+            </NavbarLink>
+            <NavbarLink href="#" className="text-2xl font-bold ">
+              <Link
+                to="ProductList"
+                className="hover:text-gray-500 transition duration-300 delay-100 roboto"
+              >
+                About
               </Link>
             </NavbarLink>
             <NavbarLink href="#" className="text-2xl font-bold "></NavbarLink>

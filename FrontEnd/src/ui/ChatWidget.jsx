@@ -95,46 +95,50 @@ const ChatWidget = () => {
       >
         <BsFillChatFill />
       </button>
-      {showChat && (
-        <div className="fixed bottom-0 right-0 z-50 w-64 bg-white border border-gray-300 rounded-lg shadow-lg">
-          <div className="h-48 overflow-y-auto px-4 py-2">
-            {messages.map((message, index) => (
-              <div key={index}>
-                <div
-                  className={`flex ${
-                    message.sender === userId ? "justify-end" : "justify-start"
-                  } mb-2`}
-                >
+      <div className="fixed bottom-16 right-16 z-50 w-64 bg-white border border-gray-300 rounded-lg shadow-lg">
+        {showChat && (
+          <>
+            <div className="h-48 overflow-y-auto px-4 py-2">
+              {messages.map((message, index) => (
+                <div key={index}>
                   <div
-                    className={`p-2 ${
+                    className={`flex ${
                       message.sender === userId
-                        ? "bg-green-100 text-green-800"
-                        : "bg-blue-100 text-blue-800"
-                    } rounded-lg`}
+                        ? "justify-end"
+                        : "justify-start"
+                    } mb-2`}
                   >
-                    <p className="break-words">{message.text}</p>
+                    <div
+                      className={`p-2 ${
+                        message.sender === userId
+                          ? "bg-green-100 text-green-800"
+                          : "bg-blue-100 text-blue-800"
+                      } rounded-lg`}
+                    >
+                      <p className="break-words">{message.text}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="p-4">
-            <input
-              type="text"
-              placeholder="Type your message here.."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none"
-            />
-            <button
-              className="mt-2 bg-green-500 text-white rounded-full p-2 hover:bg-green-700"
-              onClick={sendMessage}
-            >
-              Send
-            </button>
-          </div>
-        </div>
-      )}
+              ))}
+            </div>
+            <div className="p-4">
+              <input
+                type="text"
+                placeholder="Type your message here.."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none"
+              />
+              <button
+                className="mt-2 bg-green-500 text-white rounded-full p-2 hover:bg-green-700"
+                onClick={sendMessage}
+              >
+                Send
+              </button>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

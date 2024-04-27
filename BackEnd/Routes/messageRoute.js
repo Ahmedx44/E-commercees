@@ -9,5 +9,5 @@ router.get(
   messageController.getMessagesForCustomerAssistance
 );
 router.get("/user/:userId/last", messageController.getLastMessageForUser);
-
+router.post("/send/:chatId", messageController.sendMessageToExistingChat);
 module.exports = router;

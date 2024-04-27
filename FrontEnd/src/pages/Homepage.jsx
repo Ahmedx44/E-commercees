@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import Chapaintro from "../ui/Chapaintro";
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -72,6 +73,7 @@ export default function Example() {
           />
         </div>
       </div>
+      <Chapaintro />
     </div>
   );
 }

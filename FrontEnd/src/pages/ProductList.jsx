@@ -60,9 +60,16 @@ function ProductList() {
         <p>Home | Shop</p>
       </div>
       <div className="container px-4  -mt-28 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div className="md:col-span-1">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 align-center">
+          <div className="md:col-span-2">
             <div className="mb-8 md:mb-0 mt-10">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={handleSearch}
+                className="border-none bg-fuchsia-100 rounded-full p-4 mb-4 w-3/4 text-2xl roboto focus:border-none focus:outline-none"
+              />
               <Catgory
                 onCategoryChange={handleCategoryChange}
                 selectedCategory={selectedCategory}
@@ -75,16 +82,8 @@ function ProductList() {
               />
             </div>
           </div>
-          <div className="md:col-span-4 relative bg-slate-100 p-10 rounded-xl">
-            <div className=" top-0 z-10 bg-white py-4 bg-slate-50">
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={handleSearch}
-                className="border border-gray-300 rounded-xl bg-slate-50 py-5 mb-4 mt-20 w-4/5 mx-10 "
-              />
-            </div>
+          <div className="md:col-span-4 relative  p-10 rounded-xl">
+            <div className=" top-0 z-10 bg-white py-4 "></div>
             {loading ? (
               <div className="flex justify-center">
                 <Spinner />

@@ -7,7 +7,9 @@ export default {
   ],
   theme: {
     extend: {
-     
+      fontFamily: {
+        abc: ["Jersey 25", "sans-serif"],
+      },
     },
   },
   plugins: [require("flowbite/plugin")],

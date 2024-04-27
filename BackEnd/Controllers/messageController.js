@@ -18,6 +18,7 @@ exports.sendMessage = async (req, res) => {
       chat = new Chat({
         participants: [sender, recipient],
         messages: [],
+        name: name,
       });
     }
 
@@ -88,6 +89,39 @@ exports.getMessagesForCustomerAssistance = async (req, res) => {
     res.json({ messages });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+exports.sendMessageToExistingChat = async (req, res) => {
+  try {
+    const { sender, text, name } = req.body;
+    const chatId = req.params.chatId; // Get chat ID from request parameters
+
+    // Find the chat with the provided ID
+    const chat = await Chat.findById(chatId);
+
+    // If chat doesn't exist, return an error
+    if (!chat) {
+      return res.status(404).json({ error: "Chat not found" });
+    }
+
+    // Save the message to the database
+    const message = new Message({
+      sender,
+      recipient: chatId, // Assuming recipient is the chat ID
+      name,
+      text,
+    });
+    const savedMessage = await message.save();
+
+    // Add the message to the chat's messages array
+    chat.messages.push(savedMessage);
+    await chat.save();
+
+    res.status(201).json({ message: savedMessage });
+  } catch (error) {
+    console.error("Error sending message:", error);
     res.status(500).json({ error: "Server error" });
   }
 };

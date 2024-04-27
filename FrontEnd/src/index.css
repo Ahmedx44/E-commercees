@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: jersey20;
+  src: url("./assets/Jersey20-Regular.ttf");
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("./assets/RobotoSlab-VariableFont_wght.ttf");
+}
+
+.jersey20 {
+  font-family: jersey20;
+}
+.roboto {
+  font-family: Roboto;
+}
+
 .width {
   height: 500px;
 }

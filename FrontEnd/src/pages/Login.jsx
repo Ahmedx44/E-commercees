@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -52,11 +53,7 @@ function Login() {
     <div className="min-h-screen bg-white flex justify-center items-center">
       <div className="max-w-md w-full bg-white shadow-md rounded-md overflow-hidden sm:p-10 p-6">
         <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
+          <img className="mx-auto h-28 w-28 " src={Logo} alt="Workflow" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
           </h2>

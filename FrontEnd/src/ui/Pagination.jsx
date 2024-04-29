@@ -2,7 +2,7 @@ import React from "react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   return (
-    <div className="join mt-10 center">
+    <div className="join ml-96 mt-20">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
@@ -14,7 +14,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`join-item btn`}
+        className={`join-item btn bg-indigo-200`}
       >
         »
       </button>

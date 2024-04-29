@@ -25,7 +25,7 @@ export function ProductCard({ product }) {
   };
 
   return (
-    <Card className="w-96 border-gray-300 shadow-xl transition-shadow duration-300 bg-gray-100">
+    <Card className="w-96 border-gray-300 shadow-2xl transition-shadow duration-300 bg-gray-50">
       <CardHeader shadow={false} floated={false} className="h-80">
         <img src={product.image} alt="card-image" className="h-full w-full " />
       </CardHeader>
@@ -55,7 +55,7 @@ export function ProductCard({ product }) {
           ripple={false}
           fullWidth={true}
           onClick={handleAddToCart}
-          className="w-full text-white bg-fuchsia-300 shadow-none hover:bg-fuchsia-900 hover:shadow-none flex justify-center items-center transition duration-300 delay-100"
+          className="w-full text-white bg-indigo-600 shadow-none hover:bg-indigo-900 hover:shadow-none flex justify-center items-center transition duration-300 delay-100"
         >
           <FaCartArrowDown className="text-white text-lg mr-3 size-6" />
           <span className="text-lg">Add to Cart</span>

@@ -19,7 +19,11 @@ function Button({ name, size = "large", color = "black" }) {
   const colorClass = colors[color];
 
   return (
-    <button className={`rounded-lg ${sizeClass} ${colorClass} `}>{name}</button>
+    <button
+      className={`rounded-lg ${sizeClass} ${colorClass} bg-indigo-600 hover:bg-indigo-900 `}
+    >
+      {name}
+    </button>
   );
 }
 

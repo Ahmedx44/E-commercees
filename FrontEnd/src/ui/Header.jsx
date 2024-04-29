@@ -22,7 +22,7 @@ function Header() {
   const handleLogout = () => {
     if (user) {
       localStorage.removeItem("token");
-      setRole(null);
+
       setUser(null);
       toast.success("Successfully logged out");
     }
@@ -63,10 +63,14 @@ function Header() {
                 <a>Page</a>
                 <ul className="p-2">
                   <li>
-                    <a>Cart</a>
+                    <Link to="/cart">
+                      <a>Cart</a>
+                    </Link>
                   </li>
                   <li>
-                    <a>Order History</a>
+                    <Link to="/history">
+                      <a>Order History</a>
+                    </Link>
                   </li>
                 </ul>
               </li>
@@ -96,10 +100,14 @@ function Header() {
                 <summary className="text-2xl font-bold roboto">Page</summary>
                 <ul className="p-2">
                   <li>
-                    <a className="text-2xl font-bold roboto">Cart</a>
+                    <Link to="/cart">
+                      <a className="text-2xl font-bold roboto">Cart</a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="text-2xl font-bold roboto">Order History</a>
+                    <Link to="/history">
+                      <a className="text-2xl font-bold roboto">Order History</a>
+                    </Link>
                   </li>
                 </ul>
               </details>

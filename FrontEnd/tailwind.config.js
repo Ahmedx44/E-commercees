@@ -10,6 +10,10 @@ export default {
       fontFamily: {
         abc: ["Jersey 25", "sans-serif"],
       },
+      colors: {
+        // Define custom colors here
+        "yellow-custom": "#FFC100",
+      },
     },
   },
   plugins: [require("flowbite/plugin"), require("daisyui")],

@@ -34,21 +34,21 @@ const Category = ({
       <div
         tabIndex={0}
         role="button"
-        className="flex items-center justify-center btn bg-fuchsia-200 rounded-full text-gray-700 text-xl roboto px-10 h-10 w-96  text-center"
-        onClick={() => setShowPriceBelow(false)} // Close the Price dropdown when category dropdown is clicked
+        className="flex items-center justify-center btn bg-indigo-200 rounded-full text-gray-700 text-xl roboto px-10 h-10 w-96  text-center"
+        onClick={() => setShowPriceBelow(false)}
       >
         <span className="text-4xl">Category</span>
       </div>
 
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-4 shadow w-full bg-fuchsia-200 mt-3 rounded-2xl "
+        className="dropdown-content z-[1] menu p-4 shadow w-full bg-indigo-300 mt-3 rounded-2xl hover:bg-indigo-400 "
       >
         {categories.map((category) => (
           <li key={category}>
             <a
               onClick={() => handleCategoryClick(category)}
-              className={`block py-2 px-4 hover:bg-gray-200 ${
+              className={`block py-2 px-4 hover:bg-indigo-200 ${
                 selectedCategory === category ? "font-bold" : ""
               }`}
             >

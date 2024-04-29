@@ -42,7 +42,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="bg-black p-20 mt-24 text-center text-white font-bold">
+      <div className="bg-indigo-700 p-20 mt-32 text-center text-white font-bold">
         <h1 className="text-4xl font-bold text-white ">Cart</h1>
         <p>Home | Cart</p>
       </div>
@@ -118,7 +118,7 @@ const Cart = () => {
               <Link to="/pay">
                 <Button
                   color="black"
-                  className="text-white"
+                  className="text-white bg-indigo-700"
                   name="Proceed to Checkout"
                 >
                   Proceed to Checkout

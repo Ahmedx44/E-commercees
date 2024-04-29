@@ -1,10 +1,12 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
+import Spinner from "../ui/Spinner";
 
 function History() {
   const [orders, setOrders] = useState([]);
   const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(true); // State for loading indicator
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -19,16 +21,13 @@ function History() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:3000/api/orders/orderHistory/${user}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `http://127.0.0.1:4000/api/orders/orderHistory/${user}`
         );
         setOrders(response.data.data.orders);
+        setLoading(false); // Set loading to false after fetching data
       } catch (error) {
         console.error("Error fetching orders:", error);
+        setLoading(false); // Also set loading to false in case of error
       }
     };
 
@@ -38,45 +37,72 @@ function History() {
     }
   }, [token, user]);
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "pending":
+        return "yellow";
+      case "processing":
+        return "orange";
+      case "completed":
+        return "green";
+      default:
+        return "white";
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen -mt-60">
-      <table className="divide-y divide-gray-200 w-3/5 text-lg">
-        <thead className="bg-gray-50 dark:bg-gray-800">
-          <tr>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
-              N0
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
-              Products
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
-              Total Amount
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800">
-          {orders.map((order, index) => (
-            <tr key={order._id}>
-              <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {index + 1}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {order.products.length}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                ${order.totalAmount}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {order.status}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="bg-indigo-700 p-20 mt-32 text-center text-white font-bold roboto">
+        <h1 className="text-4xl font-bold text-white ">Order History</h1>
+        <p>Home | Order History</p>
+      </div>
+      <div className="flex justify-center items-center h-screen -mt-60">
+        <div className="p-16 overflow-x-auto">
+          <table className="table table-zebra p-16 text-2xlroboto">
+            <thead>
+              <tr className="text-black text-2xl roboto">
+                <th>Order Id</th>
+                <th>Number of Product</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="4" className="text-center">
+                    <Spinner />
+                  </td>
+                </tr>
+              ) : (
+                orders.map((order, index) => (
+                  <tr key={order._id}>
+                    <td className="text-2xl  mb:text-sm">{order._id}</td>
+                    <td className="text-xl sm:text-base">
+                      {order.products.length}
+                    </td>
+                    <td className="text-xl sm:text-base">
+                      {order.totalAmount} ETB
+                    </td>
+                    <td>
+                      <span
+                        style={{
+                          backgroundColor: getStatusColor(order.status),
+                          padding: "5px",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        {order.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
   );
 }
 

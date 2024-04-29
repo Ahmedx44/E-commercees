@@ -24,6 +24,10 @@ export function ProductCard({ product }) {
     });
   };
 
+  // Capitalize the first letter of product.name
+  const capitalizedProductName =
+    product.name.charAt(0).toUpperCase() + product.name.slice(1);
+
   return (
     <Card className="w-96 border-gray-300 shadow-2xl transition-shadow duration-300 bg-gray-50">
       <CardHeader shadow={false} floated={false} className="h-80">
@@ -35,7 +39,7 @@ export function ProductCard({ product }) {
             to={`/productdetail/${product._id}`}
             className="text-lg font-bold text-black hover:text-gray-700"
           >
-            {product.name}
+            {capitalizedProductName} {/* Use the capitalized product name */}
           </Link>
           <Typography color="blue-gray" className="text-lg font-bold">
             ${product.price}

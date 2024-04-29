@@ -8,12 +8,14 @@ import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
 function Header() {
   const [image, setImage] = useState();
   const [user, setUser] = useState();
+  const [role, setRole] = useState();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
       setImage(decodedToken.image);
+      setRole(decodedToken.role);
       setUser(decodedToken);
       console.log(decodedToken);
     }
@@ -22,7 +24,6 @@ function Header() {
   const handleLogout = () => {
     if (user) {
       localStorage.removeItem("token");
-
       setUser(null);
       toast.success("Successfully logged out");
     }
@@ -79,9 +80,11 @@ function Header() {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-2xl">
-            <img src={Logo} alt="" className="w-28 relative bottom-5" />
-          </a>
+          <Link to="/">
+            <a className="btn btn-ghost text-2xl">
+              <img src={Logo} alt="" className="w-28 relative " />
+            </a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
@@ -119,6 +122,15 @@ function Header() {
         </div>
         {user ? (
           <>
+            {role === "admin" ? (
+              <div className="">
+                <Link to="/admin">
+                  <a className="btn bg-indigo-600 text-white font-bold roboto text-xl hover:bg-indigo-800">
+                    Dashboard
+                  </a>
+                </Link>
+              </div>
+            ) : null}
             <CartIcon />
             <div className="dropdown dropdown-end">
               <div

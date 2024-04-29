@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+import React from "react";
 import {
   HiChartPie,
   HiShoppingBag,
   HiUser,
   HiViewBoards,
 } from "react-icons/hi";
-import React from "react";
 import { RiLogoutCircleFill, RiOrganizationChart } from "react-icons/ri";
+import { Link } from "react-router-dom";
 import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
 
 function SideBar() {
@@ -20,7 +20,7 @@ function SideBar() {
   };
 
   return (
-    <div className="h-screen fixed top-0 left-0  text-black  w-96 transition duration-300 ease-in-out transform">
+    <div className="h-screen fixed top-0 left-0 border-r border-gray-300 text-black w-96 transition duration-300 ease-in-out transform">
       <div className="p-4">
         <div className="text-2xl mb-4 ">
           <img src={Logo} alt="" className="w-24" />
@@ -56,6 +56,14 @@ function SideBar() {
                 <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
                   <HiShoppingBag className="mr-2" />
                   Orders
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link to="/">
+                <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
+                  <RiOrganizationChart className="mr-2" />
+                  Home
                 </div>
               </Link>
             </li>

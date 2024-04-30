@@ -58,7 +58,7 @@ function ProductList() {
 
   return (
     <div className="w-screen">
-      <div className="p-32 mt-24 text-center text-white bg-indigo-700 font-bold w-full ">
+      <div className="p-32 mt-24 text-center text-white bg-indigo-400 font-bold w-full ">
         <h1 className="text-4xl font-bold ">Shop</h1>
         <p>Home | Shop</p>
       </div>
@@ -72,7 +72,7 @@ function ProductList() {
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={handleSearch}
-                  className="border-none bg-indigo-200 rounded-full mb-4 w-3/4 text-2xl roboto focus:border-none focus:outline-none"
+                  className="border-none bg-indigo-300 rounded-full mb-4 w-3/4 text-2xl roboto focus:border-none focus:outline-none text-white"
                 />
                 <CiSearch className="w-20 h-10 mt-1 -mx-20" />
               </div>

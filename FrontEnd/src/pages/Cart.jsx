@@ -42,7 +42,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="bg-indigo-700 p-20 mt-32 text-center text-white font-bold">
+      <div className="bg-light-green p-20 mt-32 text-center text-white font-bold">
         <h1 className="text-4xl font-bold text-white ">Cart</h1>
         <p>Home | Cart</p>
       </div>
@@ -59,7 +59,7 @@ const Cart = () => {
           <tbody>
             {cartItems.map((item) => (
               <tr key={item.id}>
-                <td className="px-4 py-10 border-b font-bold text-left text-black">
+                <td className="px-4 py-10 border-b font-bold text-left text-black text-xl">
                   {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
                 </td>
                 <td className="px-4 py-2 border-b font-semibold">
@@ -68,7 +68,7 @@ const Cart = () => {
                 <td className="px-4 py-2 border-b">
                   <button
                     onClick={() => handleDecreaseQuantity(item)}
-                    className="bg-black text-white py-1 px-2 rounded"
+                    className="bg-indigo-500  text-white py-1 px-2 rounded"
                   >
                     -
                   </button>
@@ -77,7 +77,7 @@ const Cart = () => {
                   </span>
                   <button
                     onClick={() => handleIncreaseQuantity(item)}
-                    className="bg-black text-white py-1 px-2 rounded"
+                    className="bg-indigo-500  text-white py-1 px-2 rounded"
                   >
                     +
                   </button>
@@ -85,7 +85,7 @@ const Cart = () => {
                 <td className="px-4 py-2 border-b">
                   <button
                     onClick={() => handleRemoveFromCart(item._id, item.name)} // Ensure item._id is passed
-                    className="bg-black text-white py-1 px-2 rounded-lg hover:bg-slate-700"
+                    className="bg-indigo-700  text-white py-1 px-2 rounded-lg hover:bg-slate-700"
                   >
                     <MdDelete />
                   </button>

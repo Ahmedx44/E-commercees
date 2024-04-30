@@ -59,7 +59,7 @@ export function ProductCard({ product }) {
           ripple={false}
           fullWidth={true}
           onClick={handleAddToCart}
-          className="w-full text-white bg-indigo-600 shadow-none hover:bg-indigo-900 hover:shadow-none flex justify-center items-center transition duration-300 delay-100"
+          className="w-full text-white bg-indigo-400 shadow-none hover:bg-indigo-700 hover:shadow-none flex justify-center items-center transition duration-300 delay-100"
         >
           <FaCartArrowDown className="text-white text-lg mr-3 size-6" />
           <span className="text-lg">Add to Cart</span>

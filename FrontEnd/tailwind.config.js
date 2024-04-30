@@ -11,8 +11,9 @@ export default {
         abc: ["Jersey 25", "sans-serif"],
       },
       colors: {
-        // Define custom colors here
         "yellow-custom": "#FFC100",
+        "green-g": "#67a236",
+        "light-green": "#91c765",
       },
     },
   },

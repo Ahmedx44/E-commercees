@@ -9,7 +9,7 @@ export default function Example() {
 
   return (
     <div className="bg-white">
-      <div className="p-32 bg-indigo-700 mt-24 text-center text-white font-bold">
+      <div className="p-20 bg-indigo-700 mt-24 text-center text-white font-bold">
         <h1 className="text-4xl font-bold text-white p-5 mt-2">Home</h1>
         <p></p>
       </div>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import LocationModal from "../pages/LocationModal";
+import LeafletMap from "../ui/LeafletMap";
 
 function SignUp() {
   const [userName, setUserName] = useState("");
@@ -33,12 +33,11 @@ function SignUp() {
     setFile(file);
     previewFile(file);
   };
-
   const handleLocationSelected = (location) => {
     setSelectedLocation(location);
+    setSelectedLocationLat(location.lat);
+    setSelectedLocationLng(location.lng);
     setIsLocationModalOpen(false);
-    setSelectedLocationLat(location[0]);
-    setSelectedLocationLng(location[1]);
   };
 
   const handleSubmit = async (e) => {
@@ -73,7 +72,7 @@ function SignUp() {
 
   return (
     <div className="min-h-screen bg-white flex justify-center items-center">
-      <div className="max-w-md w-full bg-white shadow rounded-md overflow-hidden sm:p-10 p-6">
+      <div className="max-w-md w-full bg-white shadow rounded-xl m-10 overflow-hidden sm:p-10 p-6">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign Up for an Account
@@ -214,19 +213,24 @@ function SignUp() {
               />
             )}
           </div>
-          <div>
-            <button
-              onClick={() => setIsLocationModalOpen(true)}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Choose Location for Delivery
-            </button>
-            <LocationModal
-              isOpen={isLocationModalOpen}
-              onClose={() => setIsLocationModalOpen(false)}
-              onLocationSelected={handleLocationSelected}
-            />
-          </div>
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <button
+            className="btn bg-indigo-400 border-none"
+            onClick={() => document.getElementById("my_modal_1").showModal()}
+          >
+            Choose Location For Delivery
+          </button>
+          <dialog id="my_modal_1" className="modal">
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Select Location</h3>
+              <LeafletMap onLocationSelected={handleLocationSelected} />
+              <div className="modal-action">
+                <form method="dialog">
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
           <div>
             <button
               type="submit"

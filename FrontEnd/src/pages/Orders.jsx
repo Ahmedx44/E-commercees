@@ -58,22 +58,23 @@ function Orders() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      {loading ? (
-        <div className="flex justify-center items-center h-full">
-          <Spinner />
-        </div>
-      ) : (
-        <div className="p-16">
-          <table className="table table-zebra p-16 text-xl roboto">
-            <thead>
-              <tr className="text-black text-2xl roboto">
-                <th>User Id</th>
-                <th>Number of Product</th>
-                <th>Total Amount</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+
+      <div className="p-16">
+        <table className="table table-zebra p-16 text-xl roboto">
+          <thead>
+            <tr className="text-black text-2xl roboto">
+              <th>User Id</th>
+              <th>Number of Product</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          {loading ? (
+            <div className="flex justify-center items-center h-full">
+              <Spinner />
+            </div>
+          ) : (
             <tbody>
               {filteredOrders.map((order) => (
                 <tr key={order._id}>
@@ -97,9 +98,9 @@ function Orders() {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </div>
-      )}
+          )}
+        </table>
+      </div>
     </div>
   );
 }

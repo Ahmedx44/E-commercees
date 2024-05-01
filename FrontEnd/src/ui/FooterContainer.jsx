@@ -3,7 +3,7 @@ import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
 function FooterContainer() {
   return (
     <div>
-      <footer className="footer p-16 bg-neutral text-neutral-content">
+      <footer className="footer p-16  text-neutral-content bg-indigo-900">
         <aside>
           <img src={Logo} alt="" className="w-24 rounded-full" />
 

@@ -5,7 +5,7 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { FaProductHunt } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { SiCashapp } from "react-icons/si";
-
+import { FiHome } from "react-icons/fi";
 import BasicPie from "../ui/BasicPie";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";

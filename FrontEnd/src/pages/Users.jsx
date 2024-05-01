@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Breadcrumb } from "flowbite-react";
+import { HiViewBoards } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import Spinner from "../ui/Spinner"; // Import the Spinner component
@@ -31,36 +33,43 @@ function Users() {
   );
 
   return (
-    <div className=" h-full">
+    <div className="h-full">
       <div className="text-2xl p-10 mt-16">
-        <h1 className="text-4xl font-bold">Customers</h1>
+        <Breadcrumb aria-label="Default breadcrumb example">
+          <Breadcrumb.Item href="#" icon={HiViewBoards}>
+            <p className="text-4xl font-bold">Product</p>
+          </Breadcrumb.Item>
+        </Breadcrumb>
       </div>
+
       <input
-        className="w-68 border-2 border-slate-100 p-2 rounded-lg mb-4 "
+        className="w-68 border-2 border-slate-100 p-2 rounded-lg mb-4"
         type="text"
         placeholder="Search users..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      {loading ? ( // Display spinner while loading
-        <div className="flex justify-center items-center h-full">
-          <Spinner />
-        </div>
-      ) : (
-        <div className="p-16">
-          <table className="table table-zebra p-16 text-2xl roboto">
-            <thead>
-              <tr className="text-2xl text-black roboto">
-                <th>Name</th>
-                <th>Email</th>
-                <th>Orders</th>
-                <th>Number</th>
-                <th>Action</th>
+      <div className="p-16">
+        <table className="table table-zebra p-16 text-2xl roboto">
+          <thead>
+            <tr className="text-2xl text-black roboto">
+              <th>Name</th>
+              <th>Email</th>
+              <th>Orders</th>
+              <th>Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? ( // Display spinner while loading
+              <tr>
+                <td colSpan="5" className="text-center">
+                  <Spinner />
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map((user) => (
+            ) : (
+              filteredUsers.map((user) => (
                 <tr key={user._id}>
                   <td>{user.userName}</td>
                   <td>{user.email}</td>
@@ -82,11 +91,11 @@ function Users() {
                     </details>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

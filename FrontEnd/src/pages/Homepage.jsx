@@ -9,7 +9,7 @@ export default function Example() {
 
   return (
     <div className="bg-white">
-      <div className="p-20 bg-indigo-700 mt-24 text-center text-white font-bold">
+      <div className="p-20 bg-indigo-400 mt-24 text-center text-white font-bold">
         <h1 className="text-4xl font-bold text-white p-5 mt-2">Home</h1>
         <p></p>
       </div>
@@ -38,10 +38,10 @@ export default function Example() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-indigo-400 px-3.5 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 to="productlist"
               >
-                Get Started
+                Start Shopping
               </Link>
               <a
                 href="#"

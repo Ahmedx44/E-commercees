@@ -8,6 +8,7 @@ import {
 import { RiLogoutCircleFill, RiOrganizationChart } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
+import { FiHome } from "react-icons/fi";
 
 function SideBar() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -59,19 +60,20 @@ function SideBar() {
                 </div>
               </Link>
             </li>
-            <li>
-              <Link to="/">
-                <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
-                  <RiOrganizationChart className="mr-2" />
-                  Home
-                </div>
-              </Link>
-            </li>
+
             <li>
               <Link to="retailers">
                 <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
                   <RiOrganizationChart className="mr-2" />
                   Retailers
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link to="/">
+                <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
+                  <FiHome className="mr-2" />
+                  Home
                 </div>
               </Link>
             </li>

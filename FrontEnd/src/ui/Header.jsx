@@ -125,7 +125,7 @@ function Header() {
             {role === "admin" ? (
               <div className="">
                 <Link to="/admin">
-                  <a className="btn bg-light-green text-white font-bold roboto text-xl hover:bg-indigo-800">
+                  <a className="btn bg-indigo-400 text-white font-bold roboto text-xl hover:bg-indigo-800">
                     Dashboard
                   </a>
                 </Link>

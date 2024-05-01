@@ -42,7 +42,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="bg-light-green p-20 mt-32 text-center text-white font-bold">
+      <div className="bg-indigo-400 p-20 mt-32 text-center text-white font-bold">
         <h1 className="text-4xl font-bold text-white ">Cart</h1>
         <p>Home | Cart</p>
       </div>

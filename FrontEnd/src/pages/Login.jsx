@@ -51,7 +51,7 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-white flex justify-center items-center">
-      <div className="max-w-md w-full bg-white shadow-md rounded-md overflow-hidden sm:p-10 p-6">
+      <div className="max-w-md w-full bg-white shadow-2xl rounded-md overflow-hidden sm:p-10 p-6">
         <div>
           <img className="mx-auto h-28 w-28 " src={Logo} alt="Workflow" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -94,14 +94,14 @@ function Login() {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-700 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Sign in
             </button>
           </div>
         </form>
         <div className="text-center">
-          <p className="text-sm text-gray-600">
+          <p className=" text-gray-600 text-xl mt-5">
             Don't have an account?{" "}
             <Link
               to="/signup"

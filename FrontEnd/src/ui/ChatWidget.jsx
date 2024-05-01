@@ -90,7 +90,7 @@ const ChatWidget = () => {
   return (
     <div className="fixed bottom-4 right-4 z-50">
       <button
-        className="bg-blue-500 text-white rounded-full p-3 hover:bg-blue-700 focus:outline-none"
+        className="bg-indigo-700 text-white rounded-full p-3 hover:bg-indigo-400 focus:outline-none"
         onClick={toggleChat}
       >
         <BsFillChatFill />
@@ -130,7 +130,7 @@ const ChatWidget = () => {
                 className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none"
               />
               <button
-                className="mt-2 bg-green-500 text-white rounded-full p-2 hover:bg-green-700"
+                className="mt-2 bg-indigo-500 text-white rounded-full p-2 hover:bg-indigo-400"
                 onClick={sendMessage}
               >
                 Send

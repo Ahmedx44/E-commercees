@@ -52,7 +52,7 @@ function History() {
 
   return (
     <>
-      <div className="bg-light-green p-20 mt-32 text-center text-white font-bold roboto">
+      <div className="bg-indigo-400 p-20 mt-32 text-center text-white font-bold roboto">
         <h1 className="text-4xl font-bold text-white ">Order History</h1>
         <p>Home | Order History</p>
       </div>

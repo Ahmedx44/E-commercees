@@ -25,6 +25,10 @@ function Products() {
     fetchProducts();
   }, []);
 
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   const handleViewClick = (productId) => {
     // Redirect to admin product detail page
     navigate(`/admin/productdetail-admin/${productId}`);
@@ -53,6 +57,14 @@ function Products() {
         </Breadcrumb>
       </div>
 
+      <input
+        className="w-68 border-2 border-slate-100 p-2 rounded-lg mb-4"
+        type="text"
+        placeholder="Search product..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
       <div className="overflow-x-auto p-16">
         <table className="table table-zebra p-16 text-2xl  roboto">
           <thead>
@@ -65,7 +77,7 @@ function Products() {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product._id}>
                 <td>{product.name}</td>
                 <td>{product.price} ETB</td>

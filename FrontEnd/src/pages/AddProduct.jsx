@@ -37,7 +37,7 @@ function AddProduct() {
     e.preventDefault();
     try {
       const result = await axios.post(
-        "http://127.0.0.1:3000/api/products/addProduct",
+        "http://127.0.0.1:4000/api/products/addProduct",
         {
           name,
           description,
@@ -69,7 +69,7 @@ function AddProduct() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gray-100 h-screen">
+    <div className="container mx-auto px-4 py-8  h-screen roboto">
       <div className="text-2xl p-10">
         <Breadcrumb aria-label="Default breadcrumb example">
           <Breadcrumb.Item href="#" icon={HiViewBoards}>
@@ -81,7 +81,7 @@ function AddProduct() {
         </Breadcrumb>
       </div>
       <form
-        className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-10 bg-white rounded-xl shadow-lg"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-10  rounded-xl shadow-2xl w-2/3 mx-auto"
         onSubmit={handleSubmit}
       >
         <div className="space-y-8">
@@ -163,16 +163,17 @@ function AddProduct() {
               </label>
               <select
                 id="category"
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="select select-ghost w-full max-w-xs"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
-                <option value="">Select Category</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Fashion">Fashion</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Fashion">Fashion</option>
-                {/* Add more options as needed */}
+                <option disabled selected>
+                  Select Category
+                </option>
+                <option>Electronics</option>
+                <option>Fashion</option>
+                <option>Furniture</option>
+                <option>Fashion</option>
               </select>
             </div>
             <div>

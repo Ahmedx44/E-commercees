@@ -222,7 +222,10 @@ function SignUp() {
           </button>
           <dialog id="my_modal_1" className="modal">
             <div className="modal-box">
-              <h3 className="font-bold text-lg">Select Location</h3>
+              <h3 className="font-bold text-lg text-red-600">
+                Please select ur exact location for the the package to be
+                delivered
+              </h3>
               <LeafletMap onLocationSelected={handleLocationSelected} />
               <div className="modal-action">
                 <form method="dialog">

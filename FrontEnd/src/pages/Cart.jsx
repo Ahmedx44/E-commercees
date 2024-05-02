@@ -85,7 +85,7 @@ const Cart = () => {
                 <td className="px-4 py-2 border-b">
                   <button
                     onClick={() => handleRemoveFromCart(item._id, item.name)} // Ensure item._id is passed
-                    className="bg-indigo-700  text-white py-1 px-2 rounded-lg hover:bg-slate-700"
+                    className="bg-indigo-400  text-white py-1 px-2 rounded-lg hover:bg-slate-700"
                   >
                     <MdDelete />
                   </button>
@@ -99,11 +99,11 @@ const Cart = () => {
             <div className="mr-4 font-bold text-black">
               Total Price:{" "}
               <span className="font-bold text-red-500">
-                $
                 {cartItems.reduce(
                   (total, item) => total + item.price * item.quantity,
                   0
                 )}
+                ETB
               </span>
             </div>
 
@@ -118,7 +118,7 @@ const Cart = () => {
               <Link to="/pay">
                 <Button
                   color="black"
-                  className="text-white bg-indigo-700"
+                  className="text-white bg-indigo-400"
                   name="Proceed to Checkout"
                 >
                   Proceed to Checkout

@@ -90,15 +90,15 @@ const ChatWidget = () => {
   return (
     <div className="fixed bottom-4 right-4 z-50">
       <button
-        className="bg-indigo-700 text-white rounded-full p-3 hover:bg-indigo-400 focus:outline-none"
+        className="bg-indigo-500 text-white rounded-full p-3 hover:bg-indigo-400 focus:outline-none"
         onClick={toggleChat}
       >
         <BsFillChatFill />
       </button>
-      <div className="fixed bottom-16 right-16 z-50 w-64 bg-white border border-gray-300 rounded-lg shadow-lg">
+      <div className="fixed bottom-16 right-16 z-50 w-96 bg-slate-50  rounded-lg shadow-lg">
         {showChat && (
           <>
-            <div className="h-48 overflow-y-auto px-4 py-2">
+            <div className="h-96 overflow-y-auto px-4 py-2">
               {messages.map((message, index) => (
                 <div key={index}>
                   <div

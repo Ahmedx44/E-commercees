@@ -30,6 +30,7 @@ import OrderDetail from "./pages/OrderDetail";
 import RetProduct from "./pages/RetProduct";
 import RetDashboard from "./pages/RetDashboard";
 import AddAssistance from "./pages/AddAssistance";
+import ProductReview from "./pages/ProductReview";
 
 const App = () => {
   return (
@@ -76,7 +77,8 @@ const App = () => {
             <Route path="" element={<Retailers />}>
               <Route index element={<RetDashboard />} />
               <Route path="products" element={<RetProduct />} />
-              <Route path="addproduct" element={<AddProduct />} />{" "}
+              <Route path="addproduct" element={<AddProduct />} />
+              <Route path="productreview/:id" element={<ProductReview />} />
             </Route>
           </Route>
 

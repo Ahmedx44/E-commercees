@@ -1,7 +1,7 @@
 import React from "react";
 
 const sizes = {
-  small: "text-sm px-2 py-1",
+  small: "text-xl font-bold px-5 py-1  h-12",
   medium: "text-base px-3 py-2",
   large: "text-lg px-4 py-3",
 };
@@ -14,13 +14,13 @@ const colors = {
   // Add more colors here as needed
 };
 
-function Button({ name, size = "large", color = "black" }) {
+function Button({ name, size, color = "black" }) {
   const sizeClass = sizes[size];
   const colorClass = colors[color];
 
   return (
     <button
-      className={`rounded-lg ${sizeClass} ${colorClass} bg-indigo-600 hover:bg-indigo-900 `}
+      className={`rounded-lg ${sizeClass} ${colorClass} bg-indigo-400 hover:bg-indigo-600 `}
     >
       {name}
     </button>

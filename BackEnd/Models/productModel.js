@@ -70,7 +70,7 @@ const productSchema = new mongoose.Schema({
   },
   retailer: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Assuming the retailer is also a user
+    ref: "User",
   },
   reviews: [{ rating: Number, comment: String, name: String }],
 });

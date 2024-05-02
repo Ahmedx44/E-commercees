@@ -3,14 +3,15 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../ui/Spinner";
-import { MenuItem } from "@mui/material";
-import { Table } from "flowbite-react";
+import ProductReview from "../pages/ProductReview";
+import { useNavigate } from "react-router-dom";
 
 function RetProduct() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState("");
+  const navigate = useNavigate(); // Add this line
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,7 +25,7 @@ function RetProduct() {
   const fetchProducts = async (userId) => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:3000/api/products/retailer/${userId}`
+        `http://127.0.0.1:4000/api/products/retailer/${userId}`
       );
       setProducts(response.data.data);
       setLoading(false);
@@ -38,64 +39,105 @@ function RetProduct() {
     product.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const handleClick = (orderId) => {
+    navigate(`/retailer/productreview/${orderId}`);
+  };
+
   return (
-    <div className="bg-gray-200 min-h-screen font-sans">
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search by name"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="border-2 border-gray-300 rounded-lg w-3/4 p-3 m-16"
-        />
-      </div>
-      <div className="p-10 overflow-x-auto w-3/4 m-auto">
-        <Link to="/retailer/addproduct">
-          <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg mb-4">
+    <div className="min-h-screen font-sans">
+      <div className="text-4xl font-bold  p-8">Products</div>
+
+      <div className="p-16 mx-auto">
+        <div className="flex justify-between p-10">
+          <input
+            className="border-2 border-gray-300 rounded-lg p-2"
+            type="text"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Link
+            to="/retailer/addproduct"
+            className="bg-indigo-400  text-white font-bold  hover:bg-indigo-600 p-3 text-xl rounded-xl"
+          >
             Add Product
-          </button>
-        </Link>
-        <Table hoverable striped>
-          <Table.Head className="text-lg bg-gray-700 text-white">
-            <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Price</Table.HeadCell>
-            <Table.HeadCell>Stock</Table.HeadCell>
-            <Table.HeadCell>Rating</Table.HeadCell>
-            <Table.HeadCell>Action</Table.HeadCell>
-          </Table.Head>
-          <Table.Body className="divide-y">
-            {loading ? (
+          </Link>
+        </div>
+        <div className="overflow-x-auto roboto">
+          <table className="min-w-full bg-white">
+            <thead className="text-black text-lg">
               <tr>
-                <td colSpan="5" className="text-center">
-                  <Spinner />
-                </td>
+                <th className="px-4 py-2 text-left font-bold uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-4 py-2 text-left font-bold uppercase tracking-wider">
+                  Price
+                </th>
+                <th className="px-4 py-2 text-left font-bold uppercase tracking-wider">
+                  Stock
+                </th>
+                <th className="px-4 py-2 text-left font-bold uppercase tracking-wider">
+                  Rating
+                </th>
+                <th className="px-4 py-2 text-left font-bold uppercase tracking-wider">
+                  Action
+                </th>
               </tr>
-            ) : filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
-                <Table.Row key={product._id} className="text-lg">
-                  <Table.Cell>{product.name}</Table.Cell>
-                  <Table.Cell>${product.price}</Table.Cell>
-                  <Table.Cell>{product.quantity}</Table.Cell>
-                  <Table.Cell>{product.rating}</Table.Cell>
-                  <Table.Cell>
-                    <Link
-                      to={`/product/${product._id}`}
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      View
-                    </Link>
-                  </Table.Cell>
-                </Table.Row>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="text-center">
-                  No products found.
-                </td>
-              </tr>
-            )}
-          </Table.Body>
-        </Table>
+            </thead>
+            <tbody className="divide-gray-200 text-lg">
+              {loading ? (
+                <tr>
+                  <td colSpan="5" className="whitespace-nowrap text-center">
+                    <Spinner />
+                  </td>
+                </tr>
+              ) : filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <tr key={product._id} className="bg-white font-bold">
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      {product.name}
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      ${product.price}
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      {product.quantity}
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      {product.rating}
+                    </td>
+                    <td>
+                      <details className="dropdown">
+                        <summary className="m-1 btn">Action</summary>
+                        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                          <li>
+                            <button onClick={() => handleClick(product._id)}>
+                              Review
+                            </button>
+                          </li>
+                          <li>
+                            <button onClick={() => handleDelete(product._id)}>
+                              Remove
+                            </button>
+                          </li>
+                        </ul>
+                      </details>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="px-4 py-3 whitespace-nowrap text-center"
+                  >
+                    No products found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

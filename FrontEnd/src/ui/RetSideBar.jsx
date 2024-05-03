@@ -37,22 +37,7 @@ function RetSideBar() {
                 </div>
               </Link>
             </li>
-            <li>
-              <Link to="">
-                <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
-                  <HiShoppingBag className="mr-2" />
-                  Orders
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="">
-                <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
-                  <HiChartPie className="mr-2" />
-                  Reviews
-                </div>
-              </Link>
-            </li>
+
             <div
               className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl"
               onClick={handleLogout}

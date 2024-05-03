@@ -5,6 +5,7 @@ import { Breadcrumb } from "flowbite-react";
 import { IoIosAdd } from "react-icons/io";
 import { HiViewBoards } from "react-icons/hi";
 import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
 
 function AddProduct() {
   const [image, setImage] = useState("");
@@ -72,9 +73,11 @@ function AddProduct() {
     <div className="container mx-auto px-4 py-8  h-screen roboto">
       <div className="text-2xl p-10">
         <Breadcrumb aria-label="Default breadcrumb example">
-          <Breadcrumb.Item href="#" icon={HiViewBoards}>
-            <p className="text-4xl font-bold">Product</p>
-          </Breadcrumb.Item>
+          <Link to="/retailer/products">
+            <Breadcrumb.Item href="/" icon={HiViewBoards}>
+              <p className="text-4xl font-bold">Product</p>
+            </Breadcrumb.Item>
+          </Link>
           <Breadcrumb.Item href="#" icon={IoIosAdd}>
             <p className="text-4xl font-bold">Add Product</p>
           </Breadcrumb.Item>

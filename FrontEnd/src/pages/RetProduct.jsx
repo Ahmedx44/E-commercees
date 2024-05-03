@@ -34,6 +34,18 @@ function RetProduct() {
       setLoading(false);
     }
   };
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://127.0.0.1:4000/api/products/${id}`);
+      toast.success("Deleted Successfully");
+      // Refresh products after deletion
+      const updatedProducts = products.filter((product) => product._id !== id);
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.log(error);
+      toast.error("Couldn't Delete");
+    }
+  };
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(search.toLowerCase())

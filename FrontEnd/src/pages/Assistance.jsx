@@ -71,10 +71,16 @@ const CustomerAssistance = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   return (
     <div className="flex h-screen">
-      <div className="w-1/4 bg-gray-200 px-4 py-6">
-        <h2 className="text-lg font-semibold mb-4">Chats</h2>
+      <div className="w-1/4  px-4 py-6 border-r border-gray-300">
+        <h2 className="mb-4 roboto text-3xl font-bold">Chats</h2>
         <ul>
           {chats.map((chat) => (
             <li
@@ -82,15 +88,15 @@ const CustomerAssistance = () => {
               onClick={() => handleChatSelection(chat._id)}
               className="cursor-pointer hover:bg-gray-300 rounded-lg py-2 px-4 mb-2"
             >
-              Chat ID: {chat._id}
+              {chat.name}
             </li>
           ))}
         </ul>
       </div>
-      <div className="flex-1 bg-gray-100 px-4 py-6">
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold mb-4">Messages</h2>
-          <div className="h-64 overflow-y-auto">
+      <div className="flex-1  px-4 py-6 roboto font-bold">
+        <div className="mb-6 ">
+          <h2 className="mb-4 roboto text-3xl font-bold">Messages</h2>
+          <div className="overflow-y-auto h-full">
             {messages.map((message) => (
               <div
                 key={message._id}
@@ -101,8 +107,8 @@ const CustomerAssistance = () => {
                 <div
                   className={`p-2 ${
                     message.sender === userId
-                      ? "bg-green-100 text-green-800"
-                      : "bg-blue-100 text-blue-800"
+                      ? "bg-green-800 text-white"
+                      : "bg-blue-800 text-white"
                   } rounded-lg`}
                 >
                   <p className="break-words">{message.text}</p>
@@ -111,17 +117,18 @@ const CustomerAssistance = () => {
             ))}
           </div>
         </div>
-        <div className="flex">
+        <div className="flex relative bottom-10 py-5">
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
             placeholder="Type your message here..."
-            className="flex-1 border border-gray-300 rounded-l-lg p-2 focus:outline-none"
+            className="flex-1 border border-gray-300 rounded-l-lg roboto p-2 focus:outline-none "
           />
           <button
             onClick={sendMessage}
-            className="bg-blue-500 text-white rounded-r-lg p-2 hover:bg-blue-600"
+            className="bg-indigo-400 text-white rounded-r-lg p-2 hover:bg-indigo-600"
           >
             Send
           </button>

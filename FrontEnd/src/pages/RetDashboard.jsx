@@ -11,7 +11,8 @@ import axios from "axios";
 function RetDashboard() {
   const [totalProducts, setTotalProducts] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
-  const [products, setProducts] = useState();
+  const [totalReview, setTotalReviews] = useState(0);
+  const [products, setProducts] = useState(0);
   const [userId, setUserId] = useState(null); // Define userId state
 
   useEffect(() => {
@@ -47,7 +48,24 @@ function RetDashboard() {
       const response = await axios.get(
         `http://127.0.0.1:4000/api/products/retailer/${userId}`
       );
-      setProducts(response.data.data); // This line sets the products state
+      setProducts(response.data.data);
+      const retailerProducts = response.data.data;
+
+      let totalReviews = 0;
+
+      // Iterate over each product
+      for (const product of retailerProducts) {
+        const productId = product._id; // Assuming product ID is stored in _id field
+        // Fetch product reviews
+        const reviewResponse = await axios.get(
+          `http://127.0.0.1:4000/api/products/${productId}/reviews`
+        );
+        // Increment totalReviews by the number of reviews for this product
+        totalReviews += reviewResponse.data.data.length;
+      }
+
+      // Update state with total reviews
+      setTotalReviews(totalReviews);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -70,23 +88,20 @@ function RetDashboard() {
 
       <div className="flex justify-around">
         <SmallCard
-          name="Total Order"
+          name="Total Reviews"
+          number={totalReview}
           icon={<FaCartArrowDown />}
           color={"red"}
         />
-        {products ? (
-          <SmallCard
-            name="Total Products"
-            number={products.length}
-            icon={<FaProductHunt />}
-            color={"green"}
-          />
-        ) : null}
-
-        <SmallCard name="Total Revenue" icon={<SiCashapp />} color={"indigo"} />
+        <SmallCard
+          name="Total Products"
+          number={products.length}
+          icon={<FaProductHunt />}
+          color={"green"}
+        />
       </div>
       <div className="m-10 p-10 grid grid-cols-2 gap-10">
-        <BasicPie className="col-span-1" />
+        <BasicPie className="col-span-1" retailerId={userId} />
       </div>
     </div>
   );

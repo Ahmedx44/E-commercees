@@ -5,7 +5,7 @@ import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
 import { RiLogoutCircleFill, RiOrganizationChart } from "react-icons/ri";
 import toast from "react-hot-toast";
 
-function RetSideBar() {
+function AssSideBar() {
   const handleLogout = () => {
     // Remove token from localStorage
     localStorage.removeItem("token");
@@ -25,15 +25,7 @@ function RetSideBar() {
               <Link to="">
                 <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
                   <HiChartPie className="mr-2" />
-                  Dashboard
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="products">
-                <div className="flex items-center my-2 cursor-pointer text-3xl roboto p-5 hover:bg-slate-200 rounded-xl">
-                  <HiShoppingBag className="mr-2" />
-                  Products
+                  Chat
                 </div>
               </Link>
             </li>
@@ -52,4 +44,4 @@ function RetSideBar() {
   );
 }
 
-export default RetSideBar;
+export default AssSideBar;

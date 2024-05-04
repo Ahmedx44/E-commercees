@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import Spinner from "../ui/Spinner";
 
 function ProductReview() {
   const [reviews, setReviews] = useState([]);
@@ -39,9 +40,7 @@ function ProductReview() {
       </div>
       <div className="flex ml-32">
         {loading ? (
-          <p className="text-center text-xl font-bold text-gray-800">
-            Loading reviews...
-          </p>
+          <Spinner />
         ) : reviews.length > 0 ? (
           <ul className="divide-y divide-gray-200 w-full max-w-2xl">
             {reviews.map((review, index) => (

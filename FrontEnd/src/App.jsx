@@ -22,6 +22,7 @@ import Reviews from "./pages/Reviews";
 import Users from "./pages/Users";
 import AdminRetailers from "./pages/AdminRetailers";
 import Retailers from "./pages/Retailers";
+import AssLayout from "./ui/AssLayout";
 import UserEdit from "./pages/UserEdit";
 import AdminProductDetail from "./pages/AdminProductDetail";
 import AddProduct from "./pages/AddProduct";
@@ -86,7 +87,9 @@ const App = () => {
             path="/assistance"
             element={<PrivateRoute roles={["customer assitance"]} />}
           >
-            <Route path="" element={<Assistance />} />
+            <Route path="" element={<AssLayout />}>
+              <Route index element={<Assistance />} />
+            </Route>
           </Route>
         </Routes>
       </Router>

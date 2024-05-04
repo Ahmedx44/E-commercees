@@ -110,7 +110,7 @@ function RetProduct() {
                       {product.name}
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
-                      ${product.price}
+                      {product.price} ETB
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       {product.quantity}

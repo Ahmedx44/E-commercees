@@ -6,6 +6,7 @@ import ProductCard from "../ui/ProductCard";
 import Spinner from "../ui/Spinner";
 import Pagination from "../ui/Pagination";
 import { CiSearch } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -59,11 +60,16 @@ function ProductList() {
     );
   });
 
+  const dispatch = useDispatch();
+  const language = useSelector((state) => state.language.language);
+
   return (
     <div className="w-screen">
       <div className="p-32 mt-24 text-center text-white bg-indigo-400 font-bold w-full ">
-        <h1 className="text-4xl font-bold ">Shop</h1>
-        <p>Home | Shop</p>
+        <h1 className="text-4xl font-bold ">
+          {language === "en" ? "Shop" : "ግዛ"}
+        </h1>
+        <p>{language === "en" ? "Home | Shop" : "ቤት| ግዛ"}</p>
       </div>
       <div className="container px-4 mt-15 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 align-center">
@@ -72,7 +78,9 @@ function ProductList() {
               <div className="flex">
                 <input
                   type="text"
-                  placeholder="Search products..."
+                  placeholder={
+                    language === "en" ? "Search products..." : "ምርቶችን ፈልግ..."
+                  }
                   value={searchQuery}
                   onChange={handleSearch}
                   className="border-none bg-indigo-300 rounded-full mb-4 w-3/4 text-2xl roboto focus:border-none focus:outline-none text-white"

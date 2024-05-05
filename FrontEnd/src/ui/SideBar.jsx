@@ -7,7 +7,7 @@ import {
 } from "react-icons/hi";
 import { RiLogoutCircleFill, RiOrganizationChart } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
+import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
 import { FiHome } from "react-icons/fi";
 
 function SideBar() {
@@ -24,7 +24,7 @@ function SideBar() {
     <div className="h-screen fixed top-0 left-0 border-r border-gray-300 text-black w-96 transition duration-300 ease-in-out transform">
       <div className="p-4">
         <div className="text-2xl mb-4 ">
-          <img src={Logo} alt="" className="w-24" />
+          <img src={Logo} alt="" className="w-96" />
         </div>
         <nav className="mt-28">
           <ul>

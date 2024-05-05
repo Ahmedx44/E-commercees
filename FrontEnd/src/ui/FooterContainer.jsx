@@ -1,11 +1,11 @@
-import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
+import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
 
 function FooterContainer() {
   return (
     <div>
       <footer className="footer p-16  text-neutral-content bg-indigo-900">
         <aside>
-          <img src={Logo} alt="" className="w-24 rounded-full" />
+          <img src={Logo} alt="" className="w-96 rounded-full" />
 
           <p>
             ACME Industries Ltd.

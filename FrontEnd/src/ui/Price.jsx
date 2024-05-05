@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Price = ({ onPriceRangeChange }) => {
   const [priceRanges, setPriceRanges] = useState([
@@ -12,10 +13,14 @@ const Price = ({ onPriceRangeChange }) => {
   const handlePriceRangeChange = (value) => {
     onPriceRangeChange(value);
   };
+  const dispatch = useDispatch();
+  const language = useSelector((state) => state.language.language);
 
   return (
     <div className=" p-8 ">
-      <h3 className="text-3xl font-bold mb-4">Price Range</h3>
+      <h3 className="text-3xl font-bold mb-4">
+        {language === "en" ? "Price Range " : "የዋጋ ክልል"}
+      </h3>
       <ul>
         {priceRanges.map((range) => (
           <li key={range.id} className="mb-4">

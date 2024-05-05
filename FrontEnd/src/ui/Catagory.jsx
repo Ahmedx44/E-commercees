@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Category = ({
   onCategoryChange,
@@ -29,6 +30,8 @@ const Category = ({
     setShowPriceBelow(false); // Close the Price dropdown when category changes
   };
 
+  const language = useSelector((state) => state.language.language);
+
   return (
     <div className="dropdown">
       <div
@@ -37,7 +40,9 @@ const Category = ({
         className="flex items-center justify-center btn bg-indigo-400 rounded-full text-gray-700 text-xl roboto px-10 h-10 w-96  text-center"
         onClick={() => setShowPriceBelow(false)}
       >
-        <span className="text-4xl">Category</span>
+        <span className="text-4xl">
+          {language === "en" ? "Category" : "ምድብ"}
+        </span>
       </div>
 
       <ul

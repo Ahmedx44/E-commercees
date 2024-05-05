@@ -13,10 +13,12 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "./../store";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom"; // Import Link component
+import { useSelector } from "react-redux";
 
 export function ProductCard({ product }) {
   const dispatch = useDispatch();
 
+  const language = useSelector((state) => state.language.language);
   const handleAddToCart = () => {
     dispatch(addToCart(product));
     toast.success("Product added to cart!", {
@@ -51,7 +53,7 @@ export function ProductCard({ product }) {
           className="font-normal opacity-75"
         ></Typography>
         <Typography component="legend" className="font-bold">
-          Rating
+          {language === "en" ? "Rating" : "ደረጃ:"}
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
@@ -62,7 +64,10 @@ export function ProductCard({ product }) {
           className="w-full text-white bg-indigo-400 shadow-none hover:bg-indigo-700 hover:shadow-none flex justify-center items-center transition duration-300 delay-100"
         >
           <FaCartArrowDown className="text-white text-lg mr-3 size-6" />
-          <span className="text-lg">Add to Cart</span>
+          <span className="text-lg">
+            {" "}
+            {language === "en" ? "Add to Cart" : "ወደ ግዢው ቅርጫት ጨምር"}
+          </span>
         </Button>
       </CardFooter>
     </Card>

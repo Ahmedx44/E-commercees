@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { HiChartPie, HiShoppingBag } from "react-icons/hi";
-import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
+import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
 import { RiLogoutCircleFill, RiOrganizationChart } from "react-icons/ri";
 import toast from "react-hot-toast";
 
@@ -17,7 +17,7 @@ function RetSideBar() {
     <div className="h-screen w-3/3 text-black border-r border-gray-300">
       <div className="p-4">
         <div className="text-xl mb-4 ml-16 ">
-          <img src={Logo} alt="" className="w-24" />
+          <img src={Logo} alt="" className="w-96" />
         </div>
         <nav className="mt-10">
           <ul>

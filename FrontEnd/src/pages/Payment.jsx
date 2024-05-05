@@ -21,6 +21,8 @@ function Payment() {
   const cartItems = useSelector((state) => state.cart.items);
   const [tx_ref, setTxRef] = useState("");
 
+  const language = useSelector((state) => state.language.language);
+
   const generateUniqueTxRef = () => {
     const timestamp = Date.now(); // Get the current timestamp
     const randomString = Math.random().toString(36).substring(2, 15); // Generate a random string
@@ -109,7 +111,9 @@ function Payment() {
           <TextInput
             id="fname"
             type="text"
-            placeholder="Enter your first name"
+            placeholder={
+              language === "en" ? "Enter your first name" : "የመጀመሪያ ስምህን አስገባ"
+            }
             value={fname}
             disabled
             onChange={(e) => setFname(e.target.value)}
@@ -122,7 +126,9 @@ function Payment() {
           <TextInput
             id="lname"
             type="text"
-            placeholder="Enter your last name"
+            placeholder={
+              language === "en" ? "Enter your last name" : "የአያት ስምህን አስገባ"
+            }
             value={lname}
             disabled
             onChange={(e) => setLname(e.target.value)}
@@ -135,7 +141,7 @@ function Payment() {
           <TextInput
             id="amount"
             type="text"
-            placeholder="Enter the amount"
+            placeholder={language === "en" ? "Enter the amount" : "ገንዘቡን አስገባ"}
             value={cartTotalAmount + shippingCost} // Include shipping cost
             disabled
           />
@@ -148,7 +154,9 @@ function Payment() {
             id="email"
             type="email"
             disabled
-            placeholder="Enter your email"
+            placeholder={
+              language === "en" ? "Enter your email" : "የእርስዎን ኢሜይል ያስገቡ"
+            }
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

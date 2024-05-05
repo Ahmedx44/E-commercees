@@ -15,7 +15,9 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
-  const shippingCost = 150;
+  const shippingCost = 200;
+
+  const language = useSelector((state) => state.language.language);
 
   const handleAddToCart = (product) => {
     if (product) {
@@ -52,17 +54,30 @@ const Cart = () => {
   return (
     <>
       <div className="bg-indigo-400 p-20 mt-32 text-center text-white font-bold">
-        <h1 className="text-4xl font-bold text-white ">Cart</h1>
-        <p>Home | Cart</p>
+        <h1 className="text-4xl font-bold text-white ">
+          {" "}
+          {language === "en" ? "Cart" : "ጋሪ"}
+        </h1>
+        <p>{language === "en" ? "Home | Cart" : "መነሻ | ጋሪ"}</p>
       </div>
       <div className="mt-28 p-8 w-3/4 mx-auto bg-white rounded-md shadow-md">
         <Table className="text-xl">
           <thead>
             <tr>
-              <th className="px-4 py-10">Name</th>
-              <th className="px-4 py-2">Price</th>
-              <th className="px-4 py-2">Quantity</th>
-              <th className="px-4 py-2">Remove</th>
+              <th className="px-4 py-10">
+                {language === "en" ? "Name" : "ስም"}
+              </th>
+              <th className="px-4 py-2">
+                {" "}
+                {language === "en" ? "Price" : "ዋጋ"}
+              </th>
+              <th className="px-4 py-2">
+                {" "}
+                {language === "en" ? "Quantity" : "ብዛት"}
+              </th>
+              <th className="px-4 py-2">
+                {language === "en" ? "Remove" : "አስወግድ"}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -106,13 +121,15 @@ const Cart = () => {
         <div className="mt-4 grid grid-cols-1 mr-10 gap-4">
           <div className="col-start-2">
             <div className="mr-4 font-bold text-black">
-              Shipping Fee:{" "}
-              <span className="font-bold text-red-500">{shippingCost} ETB</span>
+              {language === "en" ? "Shipping Fee:" : "የማጓጓዣ ክፍያ:"}
+              <span className="font-bold text-red-500">
+                {shippingCost} {language === "en" ? "ETB" : "ብር"}
+              </span>
             </div>
             <div className="mr-4 font-bold text-black">
-              Total Price:{" "}
+              {language === "en" ? "Total Price: " : "ጠቅላላ ዋጋ:"}
               <span className="font-bold text-red-500">
-                {getTotalPrice()} ETB
+                {getTotalPrice()} {language === "en" ? "ETB" : "ብር"}
               </span>
             </div>
 
@@ -121,7 +138,7 @@ const Cart = () => {
                 color="black"
                 className="text-white"
                 size="custom"
-                name=" Continue Shopping"
+                name={language === "en" ? "Continue Shopping" : "መግዛቱን ይቀጥሉ"}
               ></Button>
             </Link>
             <div className="mt-4">
@@ -130,7 +147,9 @@ const Cart = () => {
                   color="black"
                   className="text-white bg-indigo-400 text-2xl"
                   size="custom"
-                  name="Proceed to Checkout"
+                  name={
+                    language === "en" ? "Proceed to Checkout" : "ወደ ቼክ-ኣውት ቀጥል"
+                  }
                 >
                   Proceed to Checkout
                 </Button>

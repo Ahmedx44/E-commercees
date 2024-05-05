@@ -3,7 +3,9 @@ import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
+import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
+import Button from "../ui/Button";
+import { useDispatch, useSelector } from "react-redux";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -49,19 +51,25 @@ function Login() {
     }
   };
 
+  const dispatch = useDispatch();
+  const language = useSelector((state) => state.language.language);
+
   return (
     <div className="min-h-screen bg-white flex justify-center items-center">
       <div className="max-w-md w-full bg-white shadow-2xl rounded-md overflow-hidden sm:p-10 p-6">
         <div>
-          <img className="mx-auto h-28 w-28 " src={Logo} alt="Workflow" />
+          <Link to="/">
+            <Button name={language === "en" ? "Home" : "ቤት"} size="medium" />
+          </Link>
+          <img className="mx-auto w-96 " src={Logo} alt="Workflow" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
+            {language === "en" ? "Sign in to your account " : "ወደ መለያዎ ይግቡ"}
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="sr-only">
-              Email address
+              {language === "en" ? " Email address" : "የ ኢሜል አድራሻ"}
             </label>
             <input
               id="email"
@@ -72,12 +80,12 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Email address"
+              placeholder={language === "en" ? " Email address" : "የ ኢሜል አድራሻ"}
             />
           </div>
           <div>
             <label htmlFor="password" className="sr-only">
-              Password
+              {language === "en" ? "Password" : "የይለፍ ቃል"}
             </label>
             <input
               id="password"
@@ -88,7 +96,7 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Password"
+              placeholder={language === "en" ? "Password" : "የይለፍ ቃል"}
             />
           </div>
           <div>
@@ -96,18 +104,19 @@ function Login() {
               type="submit"
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-700 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Sign in
+              {language === "en" ? " Sign in " : "ይግቡ"}
             </button>
           </div>
         </form>
         <div className="text-center">
           <p className=" text-gray-600 text-xl mt-5">
-            Don't have an account?{" "}
+            {" "}
+            {language === "en" ? "Don't have an account?" : "መለያ የለህም?"}
             <Link
               to="/signup"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Sign up
+              {language === "en" ? "Sign up" : "ተመዝገቢ"}
             </Link>
           </p>
         </div>

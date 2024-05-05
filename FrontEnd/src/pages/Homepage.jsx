@@ -3,14 +3,20 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import Chapaintro from "../ui/Chapaintro";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const dispatch = useDispatch();
+  const language = useSelector((state) => state.language.language);
+
   return (
     <div className="bg-white">
       <div className="p-20 bg-indigo-400 mt-24 text-center text-white font-bold">
-        <h1 className="text-4xl font-bold text-white p-5 mt-2">Home</h1>
+        <h1 className="text-4xl font-bold text-white p-5 mt-2">
+          {language === "en" ? "Home" : "ቤት"}
+        </h1>
         <p></p>
       </div>
       <div className="relative isolate px-6 pt-14 lg:px-8">
@@ -30,25 +36,22 @@ export default function Example() {
           <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
           <div className="text-center">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Welcome to Ethio-Bazaar!
+              {language === "en"
+                ? " Welcome to Ethio-Bazaar!"
+                : "እንኳን ወደ ኢትዮ-ባዛር በደህና መጡ!"}
             </h1>
             <p className="mt-6 text-2xl leading-8 text-gray-600">
-              Enjoy secure transactions and reliable delivery, ensuring a
-              seamless shopping experience every time.
+              {language === "en"
+                ? "Enjoy secure transactions and reliable delivery, ensuring a amazing shopping experience every time."
+                : "በሚያስደንቅ የግዢ ተሞክሮ በእያንዳንዱ ጊዜ በማረጋገጥ ደህንነቱ በተጠበቀ ግብይቶች እና አስተማማኝ አቅርቦት ይደሰቱ።"}
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 className="rounded-md bg-indigo-400 px-3.5 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 to="productlist"
               >
-                Start Shopping
+                {language === "en" ? "Start Shopping " : "ግብይት ጀምር"}
               </Link>
-              <a
-                href="#"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Learn more <span aria-hidden="true">→</span>
-              </a>
             </div>
           </div>
         </div>

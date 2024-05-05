@@ -3,6 +3,8 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import LeafletMap from "../ui/LeafletMap";
+import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
+import { useDispatch, useSelector } from "react-redux";
 
 function SignUp() {
   const [userName, setUserName] = useState("");
@@ -19,6 +21,9 @@ function SignUp() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedLocationLat, setSelectedLocationLat] = useState(null);
   const [selectedLocationLng, setSelectedLocationLng] = useState(null);
+
+  const dispatch = useDispatch();
+  const language = useSelector((state) => state.language.language);
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -62,11 +67,15 @@ function SignUp() {
     try {
       await axios.post("http://127.0.0.1:4000/api/users/register", userData);
       console.log("User registered successfully");
-      toast.success("Successfully registered");
+      toast.success(
+        language === "en" ? "Successfully registered" : "በተሳናቸው ተመዝገብን"
+      );
       window.location.href = "/login";
     } catch (error) {
       setError(error.response.data.message);
-      toast.error("Failed to register");
+      toast.error(
+        language === "en" ? "Failed to register" : "አስተያየት ምረጥ፡ አትልቁም"
+      );
     }
   };
 
@@ -75,13 +84,13 @@ function SignUp() {
       <div className="max-w-md w-full bg-white shadow rounded-xl m-10 overflow-hidden sm:p-10 p-6">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign Up for an Account
+            {language === "en" ? "Sign Up for an Account" : "መለያ ለመመዝገብ"}
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="userName" className="sr-only">
-              Username
+              {language === "en" ? "Username" : "መጠቀሚ"}
             </label>
             <input
               id="userName"
@@ -91,13 +100,13 @@ function SignUp() {
               required
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
-              className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Username"
+              className="appearance-none rounded-md  relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder={language === "en" ? "Username" : "መጠቀሚ"}
             />
           </div>
           <div>
             <label htmlFor="firstName" className="sr-only">
-              First Name
+              {language === "en" ? "First Name" : "ስም"}
             </label>
             <input
               id="firstName"
@@ -108,12 +117,12 @@ function SignUp() {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="First Name"
+              placeholder={language === "en" ? "First Name" : "ስም"}
             />
           </div>
           <div>
             <label htmlFor="lastName" className="sr-only">
-              Last Name
+              {language === "en" ? "Last Name" : "የአባት ስም"}
             </label>
             <input
               id="lastName"
@@ -124,12 +133,12 @@ function SignUp() {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Last Name"
+              placeholder={language === "en" ? "Last Name" : "የአባት ስም"}
             />
           </div>
           <div>
             <label htmlFor="email" className="sr-only">
-              Email address
+              {language === "en" ? "Email address" : "ኢሜል አድራሻ"}
             </label>
             <input
               id="email"
@@ -140,12 +149,12 @@ function SignUp() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Email address"
+              placeholder={language === "en" ? "Email address" : "ኢሜል አድራሻ"}
             />
           </div>
           <div>
             <label htmlFor="password" className="sr-only">
-              Password
+              {language === "en" ? "Password" : "የይለፍ ቃል"}
             </label>
             <input
               id="password"
@@ -156,12 +165,12 @@ function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Password"
+              placeholder={language === "en" ? "Password" : "የይለፍ ቃል"}
             />
           </div>
           <div>
             <label htmlFor="passwordConfirm" className="sr-only">
-              Confirm Password
+              {language === "en" ? "Confirm Password" : "የይለፍ ቃል አረጋግጥ"}
             </label>
             <input
               id="passwordConfirm"
@@ -172,12 +181,14 @@ function SignUp() {
               value={passwordConfirm}
               onChange={(e) => setPasswordConfirm(e.target.value)}
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Confirm Password"
+              placeholder={
+                language === "en" ? "Confirm Password" : "የይለፍ ቃል አረጋግጥ"
+              }
             />
           </div>
           <div>
             <label htmlFor="phoneNumber" className="sr-only">
-              Phone Number
+              {language === "en" ? "Phone Number" : "ስልክ ቁጥር"}
             </label>
             <input
               id="phoneNumber"
@@ -188,7 +199,7 @@ function SignUp() {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Phone Number"
+              placeholder={language === "en" ? "Phone Number" : "ስልክ ቁጥር"}
             />
           </div>
           <div>
@@ -196,7 +207,7 @@ function SignUp() {
               htmlFor="photo"
               className="block text-sm font-medium leading-5 text-gray-900"
             >
-              Photo
+              {language === "en" ? "Photo" : "ፎቶ"}
             </label>
             <input
               id="photo"
@@ -213,23 +224,27 @@ function SignUp() {
               />
             )}
           </div>
-          {/* Open the modal using document.getElementById('ID').showModal() method */}
           <button
             className="btn bg-indigo-400 border-none"
             onClick={() => document.getElementById("my_modal_1").showModal()}
           >
-            Choose Location For Delivery
+            {language === "en"
+              ? "Choose Location For Delivery"
+              : "በአገራው የፊት አማራጭ ምረጥ"}
           </button>
           <dialog id="my_modal_1" className="modal">
             <div className="modal-box">
               <h3 className="font-bold text-lg text-red-600">
-                Please select ur exact location for the the package to be
-                delivered
+                {language === "en"
+                  ? "Please select your exact location for delivery"
+                  : "እባክዎን ለማድረስ ትክክለኛ ቦታዎን ይምረጡ"}
               </h3>
               <LeafletMap onLocationSelected={handleLocationSelected} />
               <div className="modal-action">
                 <form method="dialog">
-                  <button className="btn">Close</button>
+                  <button className="btn">
+                    {language === "en" ? "Close" : "ዝጋ"}
+                  </button>
                 </form>
               </div>
             </div>
@@ -239,18 +254,20 @@ function SignUp() {
               type="submit"
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Sign Up
+              {language === "en" ? "Sign Up" : "መመዝገብ"}
             </button>
           </div>
         </form>
         <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Already have an account?{" "}
+          <p className="text-xl text-gray-600 ">
+            {language === "en"
+              ? "Already have an account?"
+              : "እስከዚህ መለያ ይለመዳል?"}{" "}
             <Link
               to="/login"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Sign in
+              {language === "en" ? "Sign in" : "ግባ"}
             </Link>
           </p>
         </div>

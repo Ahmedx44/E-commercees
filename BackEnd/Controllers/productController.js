@@ -68,6 +68,18 @@ exports.createProductReview = async (req, res, next) => {
 
     // Add the new review to the product
     product.reviews.push({ rating, comment, name });
+
+    // Calculate the average rating
+    const totalRatings = product.reviews.reduce(
+      (acc, curr) => acc + curr.rating,
+      0
+    );
+    const averageRating = totalRatings / product.reviews.length;
+
+    // Update the product rating
+    product.rating = averageRating;
+
+    // Save the product
     await product.save();
 
     res.status(201).json({ message: "Review added successfully" });
@@ -76,7 +88,6 @@ exports.createProductReview = async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 exports.updateProductQuantity = catchAsync(async (req, res, next) => {
   try {
     const productId = req.params.id;

@@ -1,7 +1,11 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function Pay({ cartTotalAmount, orderDetails, tx_ref }) {
   const CHAPA_PUBLIC_KEY = "CHAPUBK_TEST-R7plWake1SKHPgWOgmzVXAdkH3eiKhT6";
+
+  const dispatch = useDispatch();
+  const language = useSelector((state) => state.language.language);
 
   console.log(tx_ref);
   const { fname, lname, email } = orderDetails;
@@ -51,7 +55,7 @@ function Pay({ cartTotalAmount, orderDetails, tx_ref }) {
           }`}
           disabled={cartTotalAmount === 0}
         >
-          Pay Now
+          {language === "en" ? " Pay Now" : "አሁን ይክፈሉ"}
         </button>
       </form>
     </div>

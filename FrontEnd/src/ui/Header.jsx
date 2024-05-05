@@ -3,12 +3,20 @@ import { useEffect, useState } from "react";
 import CartIcon from "../ui/CartIcon";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import Logo from "../image/Screenshot from 2024-04-27 08-46-12.png";
+import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLanguage } from "../store";
 
 function Header() {
   const [image, setImage] = useState();
   const [user, setUser] = useState();
   const [role, setRole] = useState();
+  const dispatch = useDispatch();
+  const language = useSelector((state) => state.language.language);
+
+  const handleLanguageChange = (lang) => {
+    dispatch(changeLanguage(lang));
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -81,42 +89,72 @@ function Header() {
             </ul>
           </div>
           <Link to="/">
-            <a className="btn btn-ghost text-2xl">
-              <img src={Logo} alt="" className="w-28 relative " />
-            </a>
+            <img
+              src={Logo}
+              alt=""
+              className=" relative w-96 rounded-2xl bg-white"
+            />
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <Link to="/">
               <li>
-                <a className="text-2xl font-bold roboto">Home</a>
+                <a className="text-2xl font-bold roboto">
+                  {language === "en" ? "Home" : "ቤት"}
+                </a>
               </li>
             </Link>
             <Link to="/productlist">
               <li>
-                <a className="text-2xl font-bold roboto">Shop</a>
+                <a className="text-2xl font-bold roboto">
+                  {language === "en" ? "Shop" : "ግዢ"}
+                </a>
               </li>
             </Link>
             <li>
               <details>
-                <summary className="text-2xl font-bold roboto">Page</summary>
+                <summary className="text-2xl font-bold roboto">
+                  {language === "en" ? "Page" : "ገጽ"}
+                </summary>
                 <ul className="p-2">
                   <li>
                     <Link to="/cart">
-                      <a className="text-2xl font-bold roboto">Cart</a>
+                      <a className="text-2xl font-bold roboto">
+                        {language === "en" ? "Cart" : "ጋሪ"}
+                      </a>
                     </Link>
                   </li>
                   <li>
                     <Link to="/history">
-                      <a className="text-2xl font-bold roboto">Order History</a>
+                      <a className="text-2xl font-bold roboto">
+                        {language === "en" ? "Order History" : "የትዕዛዝ ታሪክ"}
+                      </a>
                     </Link>
                   </li>
                 </ul>
               </details>
             </li>
             <li>
-              <a className="text-2xl font-bold roboto">About</a>
+              <a className="text-2xl font-bold roboto">
+                {language === "en" ? "About" : "ስለ"}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="dropdown">
+          <label tabIndex={0} className="btn m-1">
+            {language === "en" ? "English" : "Amharic"}
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li>
+              <a onClick={() => handleLanguageChange("en")}>English</a>
+            </li>
+            <li>
+              <a onClick={() => handleLanguageChange("am")}>Amharic</a>
             </li>
           </ul>
         </div>
@@ -148,15 +186,17 @@ function Header() {
               >
                 <li>
                   <a className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
+                    <a>{language === "en" ? "PRofile" : "መገለጫ"}</a>
+                    <span className="badge"></span>
                   </a>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <a></a>
                 </li>
                 <li onClick={handleLogout}>
-                  <a>Logout</a>
+                  <a className="text-xl">
+                    {language === "en" ? "Logout" : "ውጣ"}
+                  </a>
                 </li>
               </ul>
             </div>
@@ -165,7 +205,7 @@ function Header() {
           <div className="navbar-end">
             <Link to="/login">
               <a className="btn bg-indigo-400 font-bold roboto text-xl text-white hover:bg-indigo-700">
-                Login
+                {language === "en" ? "Login" : "ግባ"}
               </a>
             </Link>
           </div>

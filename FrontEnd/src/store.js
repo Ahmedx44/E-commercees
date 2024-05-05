@@ -6,6 +6,11 @@ export const addToCart = (product) => ({
   payload: product,
 });
 
+export const changeLanguage = (lang) => ({
+  type: "CHANGE_LANGUAGE",
+  payload: lang,
+});
+
 export const removeFromCart = (productId) => ({
   type: "REMOVE_FROM_CART",
   payload: productId,
@@ -30,7 +35,19 @@ const initialState = {
   items: localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
-  totalAmount: 0,
+  language: "en",
+};
+
+const languageReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "CHANGE_LANGUAGE":
+      return {
+        ...state,
+        language: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -43,7 +60,7 @@ const cartReducer = (state = initialState, action) => {
       let updatedItemsAdd;
 
       if (existingProductIndex !== -1) {
-        updatedItemsAdd = state.items.map(item =>
+        updatedItemsAdd = state.items.map((item) =>
           item._id === action.payload._id
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -62,27 +79,34 @@ const cartReducer = (state = initialState, action) => {
         totalAmount: newTotalAmountAdd,
       };
 
-      case "REMOVE_FROM_CART":
-        const updatedItemsRemove = state.items.filter((item) => item._id !== action.payload);
-      
-        const newTotalAmountRemove = updatedItemsRemove.reduce((total, item) => {
-          return total + item.quantity * item.price;
-        }, 0);
-      
-        return {
-          ...state,
-          items: updatedItemsRemove,
-          totalAmount: newTotalAmountRemove,
-        };
+    case "REMOVE_FROM_CART":
+      const updatedItemsRemove = state.items.filter(
+        (item) => item._id !== action.payload
+      );
+
+      const newTotalAmountRemove = updatedItemsRemove.reduce((total, item) => {
+        return total + item.quantity * item.price;
+      }, 0);
+
+      return {
+        ...state,
+        items: updatedItemsRemove,
+        totalAmount: newTotalAmountRemove,
+      };
 
     case "INCREASE_QUANTITY":
       const updatedItemsIncrease = state.items.map((item) =>
-        item._id === action.payload._id ? { ...item, quantity: item.quantity + 1 } : item
+        item._id === action.payload._id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       );
 
-      const newTotalAmountIncrease = updatedItemsIncrease.reduce((total, item) => {
-        return total + item.quantity * item.price;
-      }, 0);
+      const newTotalAmountIncrease = updatedItemsIncrease.reduce(
+        (total, item) => {
+          return total + item.quantity * item.price;
+        },
+        0
+      );
 
       return {
         ...state,
@@ -90,25 +114,28 @@ const cartReducer = (state = initialState, action) => {
         totalAmount: newTotalAmountIncrease,
       };
 
-      case "DECREASE_QUANTITY":
-        const updatedItemsDecrease = state.items.map((item) => {
-          if (item._id === action.payload._id) {
-            // Ensure quantity doesn't go below 1
-            const newQuantity = item.quantity > 1 ? item.quantity - 1 : 1;
-            return { ...item, quantity: newQuantity };
-          }
-          return item;
-        });
-      
-        const newTotalAmountDecrease = updatedItemsDecrease.reduce((total, item) => {
+    case "DECREASE_QUANTITY":
+      const updatedItemsDecrease = state.items.map((item) => {
+        if (item._id === action.payload._id) {
+          // Ensure quantity doesn't go below 1
+          const newQuantity = item.quantity > 1 ? item.quantity - 1 : 1;
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      });
+
+      const newTotalAmountDecrease = updatedItemsDecrease.reduce(
+        (total, item) => {
           return total + item.quantity * item.price;
-        }, 0);
-      
-        return {
-          ...state,
-          items: updatedItemsDecrease,
-          totalAmount: newTotalAmountDecrease,
-        };
+        },
+        0
+      );
+
+      return {
+        ...state,
+        items: updatedItemsDecrease,
+        totalAmount: newTotalAmountDecrease,
+      };
 
     case "CLEAR_CART":
       return {
@@ -125,6 +152,7 @@ const cartReducer = (state = initialState, action) => {
 // Store
 const rootReducer = combineReducers({
   cart: cartReducer,
+  language: languageReducer,
 });
 
 const store = createStore(

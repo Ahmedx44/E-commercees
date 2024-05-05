@@ -52,9 +52,12 @@ function ProductList() {
     setSearchQuery(event.target.value);
   };
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProducts = products.filter((product) => {
+    return (
+      product.quantity > 0 && // Only show products with quantity > 0
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   return (
     <div className="w-screen">

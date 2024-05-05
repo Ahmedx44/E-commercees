@@ -2,9 +2,12 @@ const Order = require("./../Models/orderModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 
+const Product = require("./../Models/productModel");
+
 exports.createOrder = catchAsync(async (req, res, next) => {
   try {
     const { userId, products, totalAmount, userName, location } = req.body;
+
     const order = new Order({
       userId,
       products,
@@ -12,11 +15,21 @@ exports.createOrder = catchAsync(async (req, res, next) => {
       userName,
       location,
     });
+
     await order.save();
+
+    // Update product quantities
+    products.forEach(async (productId) => {
+      const product = await Product.findById(productId);
+      if (product) {
+        await product.updateOne({ $inc: { quantity: -1 } });
+      }
+    });
+
     res.status(201).json({ message: "Order created successfully", order });
   } catch (error) {
-    console.error("Error creating order:", error);
-    res.status(500).json({ message: "Failed to create order" });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

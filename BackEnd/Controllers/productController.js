@@ -77,6 +77,28 @@ exports.createProductReview = async (req, res, next) => {
   }
 };
 
+exports.updateProductQuantity = catchAsync(async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+    const quantity = req.body.quantity;
+
+    const product = await Product.findByIdAndUpdate(
+      productId,
+      { $inc: { quantity: -quantity } },
+      { new: true }
+    );
+
+    if (!product) {
+      return next(new AppError("Product not found", 404));
+    }
+
+    res.status(200).json({ message: "Product quantity updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 exports.getAllProducts = catchAsync(async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;

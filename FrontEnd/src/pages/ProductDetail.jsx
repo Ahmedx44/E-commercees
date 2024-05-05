@@ -9,12 +9,11 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Typography,
   Rating,
   Button,
+  Badge,
 } from "@material-tailwind/react";
-import Tabss from "../ui/Tabs";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 
@@ -43,7 +42,6 @@ const ProductDetail = () => {
           `http://127.0.0.1:4000/api/products/${id}`
         );
         setProduct(response.data.data);
-
         const reviewsResponse = await axios.get(
           `http://127.0.0.1:4000/api/products/${id}/reviews`
         );
@@ -74,7 +72,7 @@ const ProductDetail = () => {
         comment,
         name,
       });
-      toast.success("succefully added");
+      toast.success("Successfully added");
       // Optionally, you can refresh the product detail page to reflect the updated reviews/ratings
     } catch (error) {
       console.error("Error submitting review:", error);
@@ -83,34 +81,39 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="bg-indigo-400 p-20 mt-24 text-center text-white font-bold  roboto ">
+      <div className="bg-indigo-400 p-20 mt-24 text-center text-white font-bold roboto ">
         <h1 className="text-4xl font-bold text-white mb-3 ">Product Detail</h1>
         <p>Home | Product Detail</p>
       </div>
       <div className="mb-30 bg-gray-100">
-        <div className="w-3/4 width  relative top-9 left-96 flex justify-between justify-center rounded-lg">
+        <div className="w-3/4 width relative top-9 left-96 flex justify-between justify-center rounded-lg">
           <div className="flex items-center ">
             {product ? (
               <>
                 <img
                   src={product.image}
                   alt=""
-                  className="w-96 heightimg object-center mr-9 p-7  pl-24"
+                  className="w-96 heightimg object-center mr-9 p-7 pl-24"
                 />
                 <div className="text-black bold text-4xl">
                   <h2 className="text-3xl font-bold roboto ">
                     {product.name.charAt(0).toUpperCase() +
                       product.name.slice(1)}
                   </h2>
-                  <div className=" flex gap-2 text-2xl font-bold  mt-5">
+                  <div className="flex gap-2 text-2xl font-bold mt-5">
                     <p className="font-bold roboto">Available:</p>
-                    <p className="text-red-500">{product.quantity}</p>
+                    {product.quantity === 0 ? (
+                      <Badge color="red">Out of Stock</Badge>
+                    ) : (
+                      <p className="text-red-500">{product.quantity}</p>
+                    )}
                   </div>
                   <button
                     onClick={handleAddToCart}
+                    disabled={product.quantity === 0}
                     className="text-2xl roboto p-3 bg-indigo-400 text-black rounded-xl transition duration-300 delay-100 mt-10 hover:bg-gray-700 text-white"
                   >
-                    Add to Cart
+                    Add to Cart{" "}
                   </button>
                 </div>
               </>
@@ -125,13 +128,15 @@ const ProductDetail = () => {
           <CardHeader color="blue" contentPosition="none">
             <div className="bg-indigo-400 text-white rounded-t-lg py-2 shadow-xl">
               <h2 className="text-2xl font-bold pl-3 roboto">
-                Product Information
+                {" "}
+                Product Information{" "}
               </h2>
             </div>
           </CardHeader>
           <CardBody>
             <Typography color="gray" className="text-xl font-semibold roboto">
-              {product ? product.description : ""}
+              {" "}
+              {product ? product.description : ""}{" "}
             </Typography>
           </CardBody>
         </Card>
@@ -139,11 +144,11 @@ const ProductDetail = () => {
           <CardHeader color="green" contentPosition="none">
             <div className="bg-indigo-400 text-white rounded-t-lg py-2">
               <h2 className="text-2xl font-bold pl-3 roboto">
-                Product Reviews
+                {" "}
+                Product Reviews{" "}
               </h2>
             </div>
           </CardHeader>
-
           <CardBody>
             <div className="bg-gray-100 rounded-lg p-4 shadow-md">
               <div className="flex justify-center p-4">
@@ -168,7 +173,6 @@ const ProductDetail = () => {
                     </Button>
                   </div>
                 </form>
-
                 <hr className="mt-5 w-1/2 m-auto text-black h-5" />
                 <div className="mt-8">
                   {reviews.map((review) => (

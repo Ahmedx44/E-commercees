@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { Toaster } from "react-hot-toast";
 import Admin from "./pages/Admin";
+import AssOrder from "./pages/AssOrder";
 import Assistance from "./pages/Assistance";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "./pages/Payment";
@@ -89,6 +90,8 @@ const App = () => {
           >
             <Route path="" element={<AssLayout />}>
               <Route index element={<Assistance />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="orderdetail/:id" element={<AssOrder />} />
             </Route>
           </Route>
         </Routes>

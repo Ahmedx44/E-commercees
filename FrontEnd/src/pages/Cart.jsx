@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
+  const shippingCost = 150;
 
   const handleAddToCart = (product) => {
     if (product) {
@@ -38,6 +39,14 @@ const Cart = () => {
   const handleDecreaseQuantity = (product) => {
     dispatch(decreaseQuantity(product));
     toast.success(`decreased the quantity`);
+  };
+
+  const getTotalPrice = () => {
+    const totalPrice = cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    return totalPrice + shippingCost; // Add shipping cost to total
   };
 
   return (
@@ -97,13 +106,13 @@ const Cart = () => {
         <div className="mt-4 grid grid-cols-1 mr-10 gap-4">
           <div className="col-start-2">
             <div className="mr-4 font-bold text-black">
+              Shipping Fee:{" "}
+              <span className="font-bold text-red-500">{shippingCost} ETB</span>
+            </div>
+            <div className="mr-4 font-bold text-black">
               Total Price:{" "}
               <span className="font-bold text-red-500">
-                {cartItems.reduce(
-                  (total, item) => total + item.price * item.quantity,
-                  0
-                )}
-                ETB
+                {getTotalPrice()} ETB
               </span>
             </div>
 
@@ -111,6 +120,7 @@ const Cart = () => {
               <Button
                 color="black"
                 className="text-white"
+                size="custom"
                 name=" Continue Shopping"
               ></Button>
             </Link>
@@ -118,7 +128,8 @@ const Cart = () => {
               <Link to="/pay">
                 <Button
                   color="black"
-                  className="text-white bg-indigo-400"
+                  className="text-white bg-indigo-400 text-2xl"
+                  size="custom"
                   name="Proceed to Checkout"
                 >
                   Proceed to Checkout

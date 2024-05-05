@@ -12,12 +12,14 @@ function Payment() {
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
-  const cartItems = useSelector((state) => state.cart.items);
+  const shippingCost = 150; // Define the shipping cost
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   const [name, setName] = useState();
   const [id, setId] = useState();
   const [location, setLocation] = useState([]);
+  const cartItems = useSelector((state) => state.cart.items);
+  const [tx_ref, setTxRef] = useState("");
 
   const generateUniqueTxRef = () => {
     const timestamp = Date.now(); // Get the current timestamp
@@ -25,14 +27,9 @@ function Payment() {
     return `${timestamp}-${randomString}`;
   };
 
-  const [tx_ref, setTxRef] = useState(String(generateUniqueTxRef()));
   useEffect(() => {
-    // Regenerate tx_ref after a delay
-    const timer = setTimeout(() => {
-      setTxRef(String(generateUniqueTxRef()));
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []); // Run once on component mount to set the initial tx_ref
+    setTxRef(generateUniqueTxRef()); // Set the initial tx_ref
+  }, []); // Run once on component mount
 
   useEffect(() => {
     // Retrieve token from local storage
@@ -51,7 +48,9 @@ function Payment() {
       console.log(name);
     }
   }, [name]); // Run only once on component mount
+
   console.log(tx_ref);
+
   const handlePayNow = async () => {
     // Ensure user data is available
     const token = localStorage.getItem("token");
@@ -75,7 +74,7 @@ function Payment() {
       email: user.email,
       location: location,
       products: cartItems.map((item) => item._id),
-      totalAmount: cartTotalAmount,
+      totalAmount: cartTotalAmount + shippingCost, // Include shipping cost
     };
 
     try {
@@ -102,7 +101,7 @@ function Payment() {
 
   return (
     <div>
-      <form className="flex max-w-md flex-col gap-4mx-auto mt-40 p-4 border rounded-lg shadow-lg bg-white">
+      <form className="flex max-w-md flex-col gap-4 mx-auto mt-40 p-4 border rounded-lg shadow-2xl my-36">
         <div>
           <div className="mb-2 block">
             <Label htmlFor="fname" value="First Name" />
@@ -137,7 +136,7 @@ function Payment() {
             id="amount"
             type="text"
             placeholder="Enter the amount"
-            value={cartTotalAmount}
+            value={cartTotalAmount + shippingCost} // Include shipping cost
             disabled
           />
         </div>
@@ -148,15 +147,13 @@ function Payment() {
           <TextInput
             id="email"
             type="email"
+            disabled
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="flex items-center gap-2">
-          <Checkbox id="remember" />
-          <Label htmlFor="remember">Remember me</Label>
-        </div>
+
         <button onClick={handlePayNow}>
           <Pay
             cartTotalAmount={cartTotalAmount}

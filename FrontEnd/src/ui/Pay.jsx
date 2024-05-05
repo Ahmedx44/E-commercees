@@ -44,7 +44,12 @@ function Pay({ cartTotalAmount, orderDetails, tx_ref }) {
         <input type="hidden" name="meta[Ecommerce]" value="test" />
         <button
           type="submit"
-          className="w-96 bg-black text-white rounded-lg ml-4"
+          className={`w-96 bg-indigo-400 hover:bg-indigo-800 text-white rounded-lg ml-4 ${
+            cartTotalAmount === 0
+              ? "disabled:opacity-50 cursor-not-allowed"
+              : ""
+          }`}
+          disabled={cartTotalAmount === 0}
         >
           Pay Now
         </button>

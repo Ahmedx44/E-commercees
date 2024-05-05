@@ -49,8 +49,8 @@ const ChatWidget = () => {
       const response = await axios.get(
         `http://127.0.0.1:4000/api/chat/messages/${chatId}`
       );
-      setMessages(response.data.chat.messages); // Update messages state with fetched messages
-      console.log(response.data.chat.messages); // Log fetched messages
+      setMessages(response.data.chat.messages);
+      console.log(response.data.chat.messages);
     } catch (error) {
       console.error("Error fetching chat messages:", error);
     }

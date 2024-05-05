@@ -3,7 +3,8 @@ import React from "react";
 const sizes = {
   small: "text-xl font-bold px-5 py-1  h-12",
   medium: "text-base px-3 py-2",
-  large: "text-lg px-4 py-3",
+  large: "text-2xl px-4 py-3",
+  custom: "text-2xl px-4 py-3",
 };
 
 const colors = {

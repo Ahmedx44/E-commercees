@@ -2,6 +2,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import Spinner from "../ui/Spinner";
+import { useNavigate } from "react-router";
 
 function History() {
   const [orders, setOrders] = useState([]);
@@ -9,6 +10,7 @@ function History() {
   const [loading, setLoading] = useState(true); // State for loading indicator
   const token = localStorage.getItem("token");
 
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -44,10 +46,13 @@ function History() {
       case "processing":
         return "orange";
       case "completed":
-        return "green";
+        return "#7ABA78";
       default:
         return "white";
     }
+  };
+  const handleViewClick = (retailerId) => {
+    navigate(`/historydetail/${retailerId}`);
   };
 
   return (
@@ -65,6 +70,7 @@ function History() {
                 <th>Number of Product</th>
                 <th>Total Amount</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -88,12 +94,26 @@ function History() {
                       <span
                         style={{
                           backgroundColor: getStatusColor(order.status),
+                          color: "white",
+                          font: "bold",
                           padding: "5px",
                           borderRadius: "5px",
                         }}
                       >
                         {order.status}
                       </span>
+                    </td>
+                    <td>
+                      <details className="dropdown">
+                        <summary className="m-1 btn">Action</summary>
+                        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                          <li>
+                            <button onClick={() => handleViewClick(order._id)}>
+                              View
+                            </button>
+                          </li>
+                        </ul>
+                      </details>
                     </td>
                   </tr>
                 ))

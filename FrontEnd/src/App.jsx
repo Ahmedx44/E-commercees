@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { Toaster } from "react-hot-toast";
 import Admin from "./pages/Admin";
+import Profile from "./pages/Profile";
 import AssOrder from "./pages/AssOrder";
 import Assistance from "./pages/Assistance";
 import PrivateRoute from "./PrivateRoute";
@@ -33,6 +34,7 @@ import RetProduct from "./pages/RetProduct";
 import RetDashboard from "./pages/RetDashboard";
 import AddAssistance from "./pages/AddAssistance";
 import ProductReview from "./pages/ProductReview";
+import HistroyDetail from "./pages/HistoryDetail";
 
 const App = () => {
   return (
@@ -48,6 +50,8 @@ const App = () => {
             <Route path="/cart" element={<Cart />} />
             <Route path="/pay" element={<Payment />} />
             <Route path="/history" element={<History />} />
+            <Route path="/historydetail/:id" element={<HistroyDetail />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
           <Route path="/login" element={<Login />} />

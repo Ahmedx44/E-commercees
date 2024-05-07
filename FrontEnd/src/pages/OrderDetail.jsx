@@ -181,8 +181,6 @@ function OrderDetail() {
             <OrderLocationMap location={order.location} />
           </DataList.Value>
         </DataList.Item>
-
-        {/* Other order details */}
       </DataList.Root>
     </div>
   );

@@ -12,7 +12,7 @@ function Payment() {
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
-  const shippingCost = 150; // Define the shipping cost
+  const shippingCost = 220; // Define the shipping cost
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   const [name, setName] = useState();
@@ -20,6 +20,7 @@ function Payment() {
   const [location, setLocation] = useState([]);
   const cartItems = useSelector((state) => state.cart.items);
   const [tx_ref, setTxRef] = useState("");
+  const [tokenn, setToken] = useState();
 
   const language = useSelector((state) => state.language.language);
 
@@ -36,6 +37,8 @@ function Payment() {
   useEffect(() => {
     // Retrieve token from local storage
     const token = localStorage.getItem("token");
+    setToken(tokenn);
+    console.log(token);
     if (token) {
       const decodedToken = jwtDecode(token);
       setFname(decodedToken.firstName);
@@ -166,6 +169,7 @@ function Payment() {
           <Pay
             cartTotalAmount={cartTotalAmount}
             tx_ref={tx_ref}
+            disabled={tokenn}
             orderDetails={{ fname, lname, email, amount: cartTotalAmount }}
           />
         </button>

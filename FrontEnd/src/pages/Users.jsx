@@ -56,8 +56,8 @@ function Users() {
             <tr className="text-2xl text-black roboto">
               <th>Name</th>
               <th>Email</th>
-              <th>Orders</th>
               <th>Number</th>
+              <th>Role</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -80,12 +80,7 @@ function Users() {
                       <summary className="m-1 btn">Action</summary>
                       <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                         <li>
-                          <Link to="useredit">Edit</Link>
-                        </li>
-                        <li>
-                          <button onClick={() => handleDelete(user._id)}>
-                            Delete
-                          </button>
+                          <Link to="useredit">View</Link>
                         </li>
                       </ul>
                     </details>

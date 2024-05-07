@@ -16,7 +16,8 @@ function Retailers() {
     const fetchRetailers = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:4000/api/users");
-        setRetailers(response.data.data);
+        setRetailers(response);
+        console.log(retailers);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching retailers:", error);

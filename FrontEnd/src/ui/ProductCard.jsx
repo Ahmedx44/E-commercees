@@ -31,9 +31,9 @@ export function ProductCard({ product }) {
     product.name.charAt(0).toUpperCase() + product.name.slice(1);
 
   return (
-    <Card className="w-96 border-gray-300 shadow-2xl transition-shadow duration-300 bg-gray-50">
+    <Card className="sm:h-10 2xl:w-full w-72 lg:w-full xl:w-full md:w- border-gray-300 shadow-2xl transition-shadow duration-300 bg-gray-50 ">
       <CardHeader shadow={false} floated={false} className="h-80">
-        <img src={product.image} alt="card-image" className="h-full w-full " />
+        <img src={product.image} alt="card-image" className="h-full  " />
       </CardHeader>
       <CardBody className="px-4 py-2">
         <div className="mb-2 flex items-center justify-between">

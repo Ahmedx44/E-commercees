@@ -1,4 +1,4 @@
-import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
+import Logo from "../image/Screenshot from 2024-05-07 14-20-48.png";
 
 function FooterContainer() {
   return (

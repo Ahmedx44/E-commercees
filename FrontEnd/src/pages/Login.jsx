@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
+import Logo from "../image/Screenshot from 2024-05-07 14-20-48.png";
 import Button from "../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
 

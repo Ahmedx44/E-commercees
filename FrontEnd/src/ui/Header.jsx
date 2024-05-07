@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import CartIcon from "../ui/CartIcon";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
+import Logo from "../image/Screenshot from 2024-05-07 14-20-48.png";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLanguage } from "../store";
 
@@ -63,28 +63,29 @@ function Header() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="text-xl">Home</a>
+                <a className="text-xl">{language === "en" ? "Home" : "ቤት"}</a>
               </li>
+              <Link to="/productlist">
+                <li>
+                  <a className="text-xl">
+                    {" "}
+                    {language === "en" ? "Shop" : "ግዢ"}
+                  </a>
+                </li>
+              </Link>
               <li>
-                <a className="text-xl">Shop</a>
-              </li>
-              <li>
-                <a>Page</a>
                 <ul className="p-2">
                   <li>
                     <Link to="/cart">
-                      <a>Cart</a>
+                      <a> {language === "en" ? "Cart" : "ግዢ"}</a>
                     </Link>
                   </li>
                   <li>
                     <Link to="/history">
-                      <a>Order History</a>
+                      <a>{language === "en" ? "OrderHistory" : "የትዕዛዝ ታሪክ"}</a>
                     </Link>
                   </li>
                 </ul>
-              </li>
-              <li>
-                <a>Contact</a>
               </li>
             </ul>
           </div>
@@ -92,7 +93,7 @@ function Header() {
             <img
               src={Logo}
               alt=""
-              className=" relative w-96 rounded-2xl bg-white"
+              className="w-64 relative rounded-2xl bg-white"
             />
           </Link>
         </div>

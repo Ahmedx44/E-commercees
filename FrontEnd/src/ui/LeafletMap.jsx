@@ -5,8 +5,10 @@ import "leaflet/dist/leaflet.css";
 const LeafletMap = ({ onLocationSelected }) => {
   const mapRef = useRef(null);
   const markerRef = useRef(null);
-  const [markerPosition, setMarkerPosition] = useState([0, 0]);
-  const [initialZoom, setInitialZoom] = useState(2); // Initial zoom level
+  const [markerPosition, setMarkerPosition] = useState([
+    7.670844000784806, 36.83750152587891,
+  ]);
+  const [initialZoom, setInitialZoom] = useState(15); // Initial zoom level
 
   useEffect(() => {
     if (!mapRef.current) {

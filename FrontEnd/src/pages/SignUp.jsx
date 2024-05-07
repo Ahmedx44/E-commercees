@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import LeafletMap from "../ui/LeafletMap";
-import Logo from "../image/Screenshot from 2024-05-05 17-06-11.png";
+import Logo from "../image/Screenshot from 2024-05-07 14-20-48.png";
 import { useDispatch, useSelector } from "react-redux";
 
 function SignUp() {
@@ -82,6 +82,12 @@ function SignUp() {
   return (
     <div className="min-h-screen bg-white flex justify-center items-center">
       <div className="max-w-md w-full bg-white shadow rounded-xl m-10 overflow-hidden sm:p-10 p-6">
+        <Link to="/">
+          <button className="btn bg-indigo-500 hover:bg-indigo-800 text-white">
+            {language === "en" ? "Home" : "ቤት"}
+          </button>
+        </Link>
+        <img src={Logo} alt="" />
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             {language === "en" ? "Sign Up for an Account" : "መለያ ለመመዝገብ"}
@@ -225,7 +231,7 @@ function SignUp() {
             )}
           </div>
           <button
-            className="btn bg-indigo-400 border-none"
+            className="btn bg-indigo-400 border-none text-white text-xl"
             onClick={() => document.getElementById("my_modal_1").showModal()}
           >
             {language === "en"
@@ -242,7 +248,7 @@ function SignUp() {
               <LeafletMap onLocationSelected={handleLocationSelected} />
               <div className="modal-action">
                 <form method="dialog">
-                  <button className="btn">
+                  <button className="btn bg-indigo-500 hover:bg-indigo-800 text-white">
                     {language === "en" ? "Close" : "ዝጋ"}
                   </button>
                 </form>

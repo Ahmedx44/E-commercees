@@ -123,7 +123,7 @@ function ProductList() {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-20 mt-10">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 grid-col-4 gap-10 mt-10">
                 {Array.isArray(filteredProducts) &&
                   filteredProducts.map((product) => (
                     <ProductCard key={product._id} product={product} />

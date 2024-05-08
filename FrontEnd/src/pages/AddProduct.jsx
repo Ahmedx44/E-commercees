@@ -173,10 +173,11 @@ function AddProduct() {
                 <option disabled selected>
                   Select Category
                 </option>
-                <option>Electronics</option>
+                <option>Electronic</option>
                 <option>Fashion</option>
                 <option>Furniture</option>
                 <option>Fashion</option>
+                <option>Mobile Phones</option>
               </select>
             </div>
             <div>

@@ -21,6 +21,7 @@ const productSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["pending", "confirmed"],
+    default: "pending",
   },
   rating: {
     type: Number,
@@ -29,7 +30,7 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     enum: [
-      "Electronics",
+      "Electronic",
       "Fashion",
       "Home & Kitchen",
       "Sports",

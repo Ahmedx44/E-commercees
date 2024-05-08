@@ -18,6 +18,10 @@ const productSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  status: {
+    type: String,
+    enum: ["pending", "confirmed"],
+  },
   rating: {
     type: Number,
     default: 0,

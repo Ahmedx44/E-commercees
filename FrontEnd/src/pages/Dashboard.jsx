@@ -9,10 +9,13 @@ import { FiHome } from "react-icons/fi";
 import BasicPie from "../ui/BasicPie";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
+import axios from "axios";
 
 function Dashboard() {
   const [totalProducts, setTotalProducts] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
+  const [combinedTotal, setCombinedTotal] = useState(0);
+  const [OrderCount, setOrderCount] = useState(0);
 
   const fetchTotalProducts = async () => {
     try {
@@ -38,9 +41,37 @@ function Dashboard() {
       console.error("Error fetching total users:", error);
     }
   };
+
+  const fetchOrdersAndCalculateTotal = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:4000/api/orders");
+      const orders = response.data.data.orders;
+      let total = 0;
+      orders.forEach((order) => {
+        // Sum up the totalAmount of each order
+        total += order.totalAmount;
+      });
+      // Set the combined total
+      setCombinedTotal(total);
+      console.log(total);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+  const totalOrder = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:4000/api/orders");
+      const orders = response.data.data.orders;
+      const count = orders.length;
+      setOrderCount(count);
+    } catch {}
+  };
+
   useEffect(() => {
     fetchTotalProducts();
     fetchTotalUsers(); // Corrected function name to 'fetchTotalUsers'
+    fetchOrdersAndCalculateTotal();
+    totalOrder();
   }, []);
 
   return (
@@ -57,6 +88,7 @@ function Dashboard() {
         <SmallCard
           name="Total Order"
           icon={<FaCartArrowDown />}
+          number={OrderCount}
           color={"red"}
         />
         <SmallCard
@@ -71,7 +103,13 @@ function Dashboard() {
           icon={<FaRegUser />}
           color={"yellow"}
         />
-        <SmallCard name="Total Revenue" icon={<SiCashapp />} color={"indigo"} />
+        <SmallCard
+          name="Total Revenue"
+          icon={<SiCashapp />}
+          number={`${combinedTotal} Birr`}
+          color={"indigo"}
+          className="text-sm"
+        />
       </div>
       <div className="m-10 p-10  grid grid-cols-2 gap-10">
         <BasicPie className="col-span-1" />

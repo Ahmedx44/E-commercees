@@ -39,7 +39,6 @@ function Retailers() {
     try {
       await axios.delete(`http://127.0.0.1:4000/api/users/${id}`);
       toast.success("Retailer deleted successfully");
-      // Refresh retailers after deletion
       const updatedRetailers = retailers.filter(
         (retailer) => retailer._id !== id
       );
@@ -61,6 +60,21 @@ function Retailers() {
       </div>
 
       <div className="overflow-x-auto p-16">
+        <div className="flex justify-between">
+          <input
+            className="w-68 border-2 border-slate-100 p-2 rounded-lg mb-4"
+            type="text"
+            placeholder="Search retailers..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Link
+            to="/admin/addretailer"
+            className="btn bg-indigo-600 font-bold text-white text-2xl hover:bg-indigo-800 right"
+          >
+            Add Retailer
+          </Link>
+        </div>
         <table className="table table-zebra p-16 text-2xl roboto">
           <thead>
             <tr className="text-2xl text-black roboto">

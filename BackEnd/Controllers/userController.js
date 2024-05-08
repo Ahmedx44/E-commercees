@@ -97,3 +97,15 @@ exports.getUserChatId = catchAsync(async (req, res, next) => {
     });
   }
 });
+
+exports.getRetailers = catchAsync(async (req, res, next) => {
+  const role = req.query.role || "retailer"; // Default to "retailer" if role is not provided in the query
+  const retailers = await User.find({ role });
+  res.status(200).json({
+    status: "success",
+    total: retailers.length,
+    data: {
+      retailers,
+    },
+  });
+});

@@ -24,6 +24,7 @@ import Reviews from "./pages/Reviews";
 import Users from "./pages/Users";
 import AdminRetailers from "./pages/AdminRetailers";
 import Retailers from "./pages/Retailers";
+import RetailerDetail from "./pages/RetailerDetail";
 import AssLayout from "./ui/AssLayout";
 import UserEdit from "./pages/UserEdit";
 import AdminProductDetail from "./pages/AdminProductDetail";
@@ -68,6 +69,7 @@ const App = () => {
               <Route path="useredit" element={<UserEdit />} />
               <Route path="addassistance" element={<AddAssistance />} />
               <Route path="addretailer" element={<AddRetailer />} />
+              <Route path="retailerdetail/:id" element={<RetailerDetail />} />
               <Route
                 path="productdetail-admin/:id"
                 element={<AdminProductDetail />}

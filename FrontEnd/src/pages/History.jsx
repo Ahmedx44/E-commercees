@@ -51,6 +51,7 @@ function History() {
         return "white";
     }
   };
+
   const handleViewClick = (retailerId) => {
     navigate(`/historydetail/${retailerId}`);
   };
@@ -62,35 +63,37 @@ function History() {
         <p>Home | Order History</p>
       </div>
       <div className="flex justify-center items-center h-screen -mt-60">
-        <div className="p-16 overflow-x-auto">
-          <table className="table table-zebra p-16 text-2xlroboto">
+        <div className="p-4 overflow-x-auto">
+          <table className="table-fixed w-full text-center">
             <thead>
               <tr className="text-black text-2xl roboto">
-                <th>Order Id</th>
-                <th>Number of Product</th>
-                <th>Total Amount</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th className="w-1/6 text-sm lg:text-2xl">Order Id</th>
+                <th className="w-1/6 text-sm lg:text-2xl">Number of Product</th>
+                <th className="w-1/6 text-sm lg:text-2xl">Total Amount</th>
+                <th className="w-1/6 text-sm lg:text-2xl">Status</th>
+                <th className="w-1/6 text-sm lg:text-2xl">Action</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="4" className="text-center">
+                  <td colSpan="5" className="text-center">
                     <Spinner />
                   </td>
                 </tr>
               ) : (
                 orders.map((order, index) => (
                   <tr key={order._id}>
-                    <td className="text-2xl  mb:text-sm">{order._id}</td>
-                    <td className="text-xl sm:text-base">
+                    <td className="w-1/6 text-sm xl:text-2xl lg:text-2xl">
+                      {order._id}
+                    </td>
+                    <td className="w-1/6 text-sm xl:text-2xl lg:text-2xl">
                       {order.products.length}
                     </td>
-                    <td className="text-xl sm:text-base">
+                    <td className="w-1/6 text-sm xl:text-2xl lg:text-2xl">
                       {order.totalAmount} ETB
                     </td>
-                    <td>
+                    <td className="w-1/6 text-sm xl:text-2xl lg:text-2xl">
                       <span
                         style={{
                           backgroundColor: getStatusColor(order.status),
@@ -103,17 +106,13 @@ function History() {
                         {order.status}
                       </span>
                     </td>
-                    <td>
-                      <details className="dropdown">
-                        <summary className="m-1 btn">Action</summary>
-                        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                          <li>
-                            <button onClick={() => handleViewClick(order._id)}>
-                              View
-                            </button>
-                          </li>
-                        </ul>
-                      </details>
+                    <td className="w-1/6">
+                      <button
+                        onClick={() => handleViewClick(order._id)}
+                        className="btn"
+                      >
+                        View
+                      </button>
                     </td>
                   </tr>
                 ))

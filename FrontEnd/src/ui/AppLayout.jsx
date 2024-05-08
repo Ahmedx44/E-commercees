@@ -9,7 +9,9 @@ function AppLayout() {
       <Header />
       <ChatWidget /> {/* Add the ChatWidget here */}
       <Outlet />
-      <FooterContainer />
+      <div className="mt-auto">
+        <FooterContainer />
+      </div>
     </div>
   );
 }

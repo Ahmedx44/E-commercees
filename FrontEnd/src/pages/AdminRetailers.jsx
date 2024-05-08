@@ -8,23 +8,27 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Retailers() {
   const [retailers, setRetailers] = useState([]);
+  const [user, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchRetailers = async () => {
+    const fetchRetailer = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:4000/api/users");
-        setRetailers(response);
-        console.log(retailers);
-        setLoading(false);
+        const usersWithRoleCustomer = response.data.data.users.filter(
+          (user) => user.role === "retailer"
+        );
+        console.log(usersWithRoleCustomer);
+        setUsers(usersWithRoleCustomer);
+        setLoading(false); // Set loading to false after fetching
       } catch (error) {
-        console.error("Error fetching retailers:", error);
+        console.error("Error fetching users:", error);
       }
     };
 
-    fetchRetailers();
+    fetchRetailer();
   }, []);
 
   const handleViewClick = (retailerId) => {
@@ -67,22 +71,22 @@ function Retailers() {
             </tr>
           </thead>
           <tbody>
-            {retailers.map((retailer) => (
-              <tr key={retailer._id}>
-                <td>{retailer.userName}</td>
-                <td>{retailer.email}</td>
-                <td>{retailer.role}</td>
+            {user.map((user) => (
+              <tr key={user._id}>
+                <td>{user.userName}</td>
+                <td>{user.email}</td>
+                <td>{user.role}</td>
                 <td>
                   <details className="dropdown">
                     <summary className="m-1 btn">Action</summary>
                     <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                       <li>
-                        <button onClick={() => handleViewClick(retailer._id)}>
+                        <button onClick={() => handleViewClick(user._id)}>
                           View
                         </button>
                       </li>
                       <li>
-                        <button onClick={() => handleDelete(retailer._id)}>
+                        <button onClick={() => handleDelete(user._id)}>
                           Delete
                         </button>
                       </li>

@@ -119,8 +119,8 @@ function OrderDetail() {
           onChange={(e) => setStatus(e.target.value)}
         >
           <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="completed">Completed</option>
+          <option value="Delivering">Delivering</option>
+          <option value="Delivered">Delivered</option>
         </select>
         <button
           onClick={handleStatusChange}

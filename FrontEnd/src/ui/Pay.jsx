@@ -40,11 +40,7 @@ function Pay({ cartTotalAmount, orderDetails, tx_ref }) {
           name="callback_url"
           value="https://example.com/callbackurl"
         />
-        <input
-          type="hidden"
-          name="return_url"
-          value="http://localhost:5173/cart"
-        />
+        <input type="hidden" name="return_url" value="" />
         <input type="hidden" name="meta[Ecommerce]" value="test" />
         <button
           type="submit"

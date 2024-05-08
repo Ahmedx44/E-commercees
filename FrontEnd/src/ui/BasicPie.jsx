@@ -5,18 +5,13 @@ import axios from "axios";
 export default function BasicPie({ retailerId }) {
   const [categoryDistribution, setCategoryDistribution] = useState([]);
 
-  console.log(retailerId);
   useEffect(() => {
-    if (retailerId) {
-      fetchCategoryDistribution(retailerId);
-    }
-  }, [retailerId]);
+    fetchCategoryDistribution();
+  }, []);
 
-  const fetchCategoryDistribution = async (retailerId) => {
+  const fetchCategoryDistribution = async () => {
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:4000/api/products/retailer/${retailerId}`
-      );
+      const response = await axios.get(`http://127.0.0.1:4000/api/products`);
       const products = response.data.data;
 
       // Calculate category distribution
@@ -24,9 +19,9 @@ export default function BasicPie({ retailerId }) {
       products.forEach((product) => {
         const category = product.category;
         if (category in categoryCount) {
-          categoryCount[category]++;
+          categoryCount[category] += product.quantity;
         } else {
-          categoryCount[category] = 1;
+          categoryCount[category] = product.quantity;
         }
       });
 
@@ -45,7 +40,7 @@ export default function BasicPie({ retailerId }) {
 
   return (
     <>
-      <div className="font-bold shadow-xl bg-white rounded-xl  ">
+      <div className="font-bold shadow-xl bg-white rounded-xl">
         <h1 className="p-5 text-center">Product Category Distribution</h1>
         <PieChart
           series={[

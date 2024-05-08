@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode"; // Import jwtDecode
 import SmallCard from "../ui/SmallCard";
 import { FaCartArrowDown, FaProductHunt, FaRegUser } from "react-icons/fa";
 import { SiCashapp } from "react-icons/si";
-import BasicPie from "../ui/BasicPie";
+import RetBasicPie from "../ui/RetBasicPie";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import axios from "axios";
@@ -101,7 +101,7 @@ function RetDashboard() {
         />
       </div>
       <div className="m-10 p-10 grid grid-cols-2 gap-10">
-        <BasicPie className="col-span-1" retailerId={userId} />
+        <RetBasicPie className="col-span-1" retailerId={userId} />
       </div>
     </div>
   );

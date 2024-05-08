@@ -24,8 +24,14 @@ function ProductList() {
         const response = await axios.get(
           `http://127.0.0.1:4000/api/products?page=${currentPage}&category=${selectedCategory}&price=${selectedPriceRange}`
         );
-        setProducts(response.data.data);
-        setTotalPages(Math.ceil(response.data.total / response.data.limit));
+        const allProducts = response.data.data;
+        const confirmedProducts = allProducts.filter(
+          (product) => product.status === "confirmed"
+        );
+        setProducts(confirmedProducts);
+        setTotalPages(
+          Math.ceil(confirmedProducts.length / response.data.limit)
+        );
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);

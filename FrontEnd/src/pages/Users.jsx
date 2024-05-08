@@ -58,7 +58,7 @@ function Users() {
               <th>Email</th>
               <th>Number</th>
               <th>Role</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
           <tbody>
@@ -75,7 +75,7 @@ function Users() {
                   <td>{user.email}</td>
                   <td>{user.phoneNumber}</td>
                   <td>{user.role}</td>
-                  <td>
+                  {/* <td>
                     <details className="dropdown">
                       <summary className="m-1 btn">Action</summary>
                       <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
@@ -84,7 +84,7 @@ function Users() {
                         </li>
                       </ul>
                     </details>
-                  </td>
+                  </td> */}
                 </tr>
               ))
             )}

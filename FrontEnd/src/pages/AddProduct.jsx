@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Breadcrumb } from "flowbite-react";
@@ -227,7 +228,7 @@ function AddProduct() {
             type="submit"
             className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Add Product
+            Add Products
           </button>
         </div>
       </form>

@@ -6,11 +6,10 @@ import {
   increaseQuantity,
   decreaseQuantity,
 } from "./../store";
-import Button from "../ui/Button";
+import Button from "./../ui/Button";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-hot-toast";
 import { Table } from "flowbite-react";
-import { Link } from "react-router-dom";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -132,28 +131,23 @@ const Cart = () => {
                 {getTotalPrice()} {language === "en" ? "ETB" : "ብር"}
               </span>
             </div>
-
-            <Link to="/productlist">
+            <Button
+              color="black"
+              className="text-white"
+              size="custom"
+              name={language === "en" ? "Continue Shopping" : "መግዛቱን ይቀጥሉ"}
+            ></Button>
+            <div className="mt-4">
               <Button
                 color="black"
-                className="text-white"
+                className="text-white bg-indigo-400 text-2xl"
                 size="custom"
-                name={language === "en" ? "Continue Shopping" : "መግዛቱን ይቀጥሉ"}
-              ></Button>
-            </Link>
-            <div className="mt-4">
-              <Link to="/pay">
-                <Button
-                  color="black"
-                  className="text-white bg-indigo-400 text-2xl"
-                  size="custom"
-                  name={
-                    language === "en" ? "Proceed to Checkout" : "ወደ ቼክ-ኣውት ቀጥል"
-                  }
-                >
-                  Proceed to Checkout
-                </Button>
-              </Link>
+                name={
+                  language === "en" ? "Proceed to Checkout" : "ወደ ቼክ-ኣውት ቀጥል"
+                }
+              >
+                Proceed to Checkout
+              </Button>
             </div>
           </div>
         </div>

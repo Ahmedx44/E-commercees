@@ -1,4 +1,5 @@
 import axios from "axios";
+import React from "react";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
@@ -69,7 +70,7 @@ function Login() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="sr-only">
-              {language === "en" ? " Email address" : "የ ኢሜል አድራሻ"}
+              email address
             </label>
             <input
               id="email"
@@ -85,7 +86,7 @@ function Login() {
           </div>
           <div>
             <label htmlFor="password" className="sr-only">
-              {language === "en" ? "Password" : "የይለፍ ቃል"}
+              password
             </label>
             <input
               id="password"
@@ -104,7 +105,7 @@ function Login() {
               type="submit"
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-700 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              {language === "en" ? " Sign in " : "ይግቡ"}
+              {language === "en" ? " Sign in " : "ይግቡቡ"}
             </button>
           </div>
         </form>

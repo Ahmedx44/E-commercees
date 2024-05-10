@@ -12,6 +12,38 @@ exports.getUsers = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateUser = catchAsync(async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updatedUserData = req.body;
+
+    // Update user in the database
+    const updatedUser = await User.findByIdAndUpdate(id, updatedUserData, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        status: "fail",
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        user: updatedUser,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to update user",
+    });
+  }
+});
+
 exports.getUserById = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.params.id);
   if (!user) {

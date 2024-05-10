@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import React from "react";
 import axios from "axios";
 import Catagory from "../ui/Catagory";
 import Price from "../ui/Price";
@@ -49,7 +48,7 @@ function ProductList() {
   const handleCategoryChange = (category) => {
     const newCategory = category === "All" ? "" : category;
     setSelectedCategory(newCategory);
-    setShowPriceBelow(false); // Close the Price dropdown when category changes
+    setShowPriceBelow(false);
   };
 
   const handlePriceRangeChange = (priceRange) => {
@@ -62,6 +61,7 @@ function ProductList() {
 
   const filteredProducts = products.filter((product) => {
     return (
+      product.status === "confirmed" && // Only show products with status "confirmed"
       product.quantity > 0 && // Only show products with quantity > 0
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -131,10 +131,9 @@ function ProductList() {
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 grid-col-4 gap-10 mt-10">
-                {Array.isArray(filteredProducts) &&
-                  filteredProducts.map((product) => (
-                    <ProductCard key={product._id} product={product} />
-                  ))}
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
               </div>
             )}
             <Pagination

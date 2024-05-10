@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addToCart,
   removeFromCart,
@@ -131,23 +132,27 @@ const Cart = () => {
                 {getTotalPrice()} {language === "en" ? "ETB" : "ብር"}
               </span>
             </div>
-            <Button
-              color="black"
-              className="text-white"
-              size="custom"
-              name={language === "en" ? "Continue Shopping" : "መግዛቱን ይቀጥሉ"}
-            ></Button>
-            <div className="mt-4">
+            <Link to="/productlist">
               <Button
                 color="black"
-                className="text-white bg-indigo-400 text-2xl"
+                className="text-white"
                 size="custom"
-                name={
-                  language === "en" ? "Proceed to Checkout" : "ወደ ቼክ-ኣውት ቀጥል"
-                }
-              >
-                Proceed to Checkout
-              </Button>
+                name={language === "en" ? "Continue Shopping" : "መግዛቱን ይቀጥሉ"}
+              ></Button>
+            </Link>
+            <div className="mt-4">
+              <Link to="/pay">
+                <Button
+                  color="black"
+                  className="text-white bg-indigo-400 text-2xl"
+                  size="custom"
+                  name={
+                    language === "en" ? "Proceed to Checkout" : "ወደ ቼክ-ኣውት ቀጥል"
+                  }
+                >
+                  Proceed to Checkout
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -117,7 +117,7 @@ const CustomerAssistance = () => {
             ))}
           </div>
         </div>
-        <div className="flex relative bottom-10 py-5">
+        <div className="flex relative bottom-10 py-5 mt-96">
           <input
             type="text"
             value={inputValue}

@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../app"); // Assuming your Express app is exported from app.js
+const app = require("../app");
 
 describe("GET /api/users", () => {
   let server;

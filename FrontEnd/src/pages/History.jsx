@@ -65,7 +65,7 @@ function History() {
       </div>
       <div className="flex justify-center items-center h-screen -mt-60">
         <div className="p-4 overflow-x-auto">
-          <table className="table-fixed w-full text-center">
+          <table className="table-fixed w-full text-center mt-48">
             <thead>
               <tr className="text-black text-2xl roboto">
                 <th className="w-1/6 text-sm lg:text-2xl">Order Id</th>

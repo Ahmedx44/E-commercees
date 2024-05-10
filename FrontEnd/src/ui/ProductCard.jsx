@@ -44,7 +44,7 @@ export function ProductCard({ product }) {
             {capitalizedProductName} {/* Use the capitalized product name */}
           </Link>
           <Typography color="blue-gray" className="text-lg font-bold">
-            ${product.price}
+            {product.price} ETB
           </Typography>
         </div>
         <Typography

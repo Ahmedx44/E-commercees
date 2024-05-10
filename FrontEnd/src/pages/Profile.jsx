@@ -2,8 +2,20 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Label, TextInput } from "flowbite-react";
+import { jwtDecode } from "jwt-decode";
+import toast from "react-hot-toast";
 
 function Profile() {
+  const [userP, setUserP] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserP(decodedToken.id);
+    }
+  }, []);
+
   const [user, setUser] = useState({
     userName: "",
     firstName: "",
@@ -18,7 +30,9 @@ function Profile() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:4000/api/user{", {});
+        const response = await axios.get(
+          `http://127.0.0.1:4000/api/users/${userP}`
+        );
         setUser(response.data.data.user);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -43,7 +57,7 @@ function Profile() {
       alert("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile. Please try again.");
+      toast.failed("Failed to update profile. Please try again.");
     }
   };
 
@@ -125,7 +139,12 @@ function Profile() {
             onChange={handleChange}
           />
         </div>
-        <button type="submit">Update Profile</button>
+        <button
+          type="submit"
+          className="btn bg-indigo-500 hover:bg-indigo-800 text-white"
+        >
+          Update Profile
+        </button>
       </form>
     </div>
   );

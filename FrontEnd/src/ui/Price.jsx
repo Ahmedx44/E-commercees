@@ -26,11 +26,8 @@ const Price = ({ onPriceRangeChange }) => {
 
   return (
     <div className="p-8">
-      <h3 className="text-3xl font-bold mb-4">
-        {language === "en" ? "Price Range " : "የዋጋ ክልል"}
-      </h3>
       <select
-        className="border border-gray-300 p-2 rounded-md"
+        className="border border-gray-300  bg-indigo-300  font-bold rounded-full"
         value={selectedPriceRange}
         onChange={handlePriceRangeChange}
       >

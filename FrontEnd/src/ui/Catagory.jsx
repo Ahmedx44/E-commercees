@@ -37,7 +37,7 @@ const Category = ({
       <div
         tabIndex={0}
         role="button"
-        className="flex items-center justify-center btn bg-indigo-400 rounded-full text-gray-700 text-xl roboto px-10 h-10 w-96  text-center"
+        className="flex items-center justify-center btn bg-indigo-300 rounded-full text-gray-700 text-xl roboto px-10 h-10 w-96  text-center"
         onClick={() => setShowPriceBelow(false)}
       >
         <span className="text-4xl">

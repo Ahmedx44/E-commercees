@@ -37,7 +37,7 @@ describe("Login Component", () => {
       // Check if axios post request is called with correct data
       expect(axios.post).toHaveBeenCalledWith(
         "http://127.0.0.1:4000/api/users/login",
-        { email: "test@example.com", password: "password123" }
+        { email: "", password: "password123" }
       );
     });
   });

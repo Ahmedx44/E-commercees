@@ -143,8 +143,8 @@ function Header() {
             </li>
           </ul>
         </div>
-        <div className="dropdown">
-          <label tabIndex={0} className="btn m-1">
+        <div className="dropdown" >
+          <label tabIndex={0} className="btn bg-indigo-400  text-white font-bold hover:bg-indigo-700 m-1">
             {language === "en" ? "English" : "Amharic"}
           </label>
           <ul

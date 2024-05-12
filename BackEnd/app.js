@@ -28,7 +28,11 @@ const io = socketIo(server, {
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-app.use(cors());
+app.use(cors({
+origin: "http://https://e-commercees-eight.vercel.app",
+    methods: ["GET", "POST"],
+    Credential: true,
+}));
 app.use(cookieParser());
 
 // Set a larger size limit for request bodies (e.g., 50MB)

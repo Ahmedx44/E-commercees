@@ -31,10 +31,9 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(
   cors({
     origin: "https://e-commercees-eight.vercel.app",
-    methods: ["GET", "POST"],
-    Credential: true,
   })
 );
+
 app.use(cookieParser());
 
 // Set a larger size limit for request bodies (e.g., 50MB)

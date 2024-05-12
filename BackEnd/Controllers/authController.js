@@ -13,12 +13,24 @@ const signToken = (
   firstName,
   lastName,
   email,
+  sex,
   image,
   chats,
   location
 ) => {
   return jwt.sign(
-    { id, role, userName, firstName, lastName, email, image, chats, location },
+    {
+      id,
+      role,
+      userName,
+      firstName,
+      lastName,
+      email,
+      image,
+      sex,
+      chats,
+      location,
+    },
     process.env.JWT_SECRET
   );
 };
@@ -30,6 +42,7 @@ const createSendToken = (user, statusCode, res) => {
     user.userName,
     user.firstName,
     user.lastName,
+    user.sex,
     user.email,
     user.image,
     user.chats,
@@ -62,6 +75,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role,
     phoneNumber: req.body.phoneNumber,
+    sex: req.body.sex,
     image: req.body.image,
     location: req.body.location,
   });

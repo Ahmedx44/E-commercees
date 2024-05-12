@@ -109,7 +109,6 @@ function Dashboard() {
       </div>
 
       <div>
-        <h2>Pending Orders</h2>
         <ul>
           {pendingOrders.map((order) => (
             <li key={order._id}>

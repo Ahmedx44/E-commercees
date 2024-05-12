@@ -191,9 +191,8 @@ function Header() {
                   </a>
 
                   <Link to="/profile">
-                    <a className="justify-between">
-                      <a>{language === "en" ? "Profile" : "መገለጫ"}</a>
-                      <span className="badge"></span>
+                    <a className="text-xl font-bold">
+                      {language === "en" ? "Profile" : "መገለጫ"}
                     </a>
                   </Link>
                 </li>
@@ -201,7 +200,7 @@ function Header() {
                   <a></a>
                 </li>
                 <li onClick={handleLogout}>
-                  <a className="text-xl">
+                  <a className="text-xl font-bold">
                     {language === "en" ? "Logout" : "ውጣ"}
                   </a>
                 </li>

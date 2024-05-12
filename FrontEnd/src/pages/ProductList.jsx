@@ -79,7 +79,7 @@ function ProductList() {
         </h1>
         <p>{language === "en" ? "Home | Shop" : "ቤት| ግዛ"}</p>
       </div>
-      <div className="container px-4 mt-15 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32">
+      <div className="container px-4 mt-15 py-16 md:px-8 md:py-24 lg:px-16 lg:py-32 w-screen">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 align-center">
           <div className="md:col-span-2">
             <div className="mb-8 md:mb-0 mt-10">

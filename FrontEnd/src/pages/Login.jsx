@@ -31,7 +31,7 @@ function Login() {
   const loginUser = async () => {
     try {
       const response = await axios.post(
-        "https://vercel.com/ahmedx44s-projects/backendecommerce/8Qy4iW7hzfvynXQXqDHVREbZSz2G/api/users/login",
+        "https://backendecommerce-iota.vercel.app/api/users/login",
         { email, password }
       );
       const token = response.data.token;

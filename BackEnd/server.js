@@ -15,7 +15,7 @@ mongoose
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "",
+    origin: "e-commercees-eight.vercel.app",
     method: ["POST", "GET", "PUT", "DELETE"],
     Credential: true,
   },

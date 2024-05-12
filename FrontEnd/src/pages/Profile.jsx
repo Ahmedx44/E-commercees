@@ -1,46 +1,42 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { Label, TextInput } from "flowbite-react";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 
 function Profile() {
   const [userP, setUserP] = useState("");
+  const [user, setUser] = useState({
+    userName: "",
+    firstName: "",
+    lastName: "",
+    image: "",
+    email: "",
+    sex: "",
+    phoneNumber: "",
+    location: [],
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserP(decodedToken.id);
+      // Set initial user data from token
+      setUser({
+        id: decodedToken.id, // Set the id here
+        userName: decodedToken.userName,
+        firstName: decodedToken.firstName,
+        lastName: decodedToken.lastName,
+        image: decodedToken.image,
+        email: decodedToken.email,
+        sex: decodedToken.sex,
+        phoneNumber: decodedToken.phoneNumber,
+        location: decodedToken.location,
+      });
+      console.log(user);
     }
   }, []);
-
-  const [user, setUser] = useState({
-    userName: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    sex: "",
-    image: "",
-    phoneNumber: "",
-    location: [],
-  });
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:4000/api/users/${userP}`
-        );
-        setUser(response.data.data.user);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,13 +49,18 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://127.0.0.1:4000/api/profile", user, {});
-      alert("Profile updated successfully!");
+      await axios.put(
+        `http://127.0.0.1:4000/api/users/profile/${user.id}`,
+        user,
+        {}
+      );
+      toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      toast.failed("Failed to update profile. Please try again.");
+      toast.error("Failed to update profile. Please try again.");
     }
   };
+  const handleimage = () => {};
 
   return (
     <div>
@@ -68,6 +69,19 @@ function Profile() {
         className="flex max-w-md flex-col gap-4 mx-auto mt-40 p-4 border rounded-lg shadow-2xl my-36"
       >
         <div>
+          <div>
+            <img
+              src={user.image}
+              alt="profile"
+              className="rounded-full border"
+            />
+            <button
+              className="relative bottom-12  left-64 text-5xl font-bold text-indigo-400"
+              onClick={handleimage}
+            >
+              +
+            </button>
+          </div>
           <div className="mb-2 block">
             <Label htmlFor="userName" value="Username" />
           </div>

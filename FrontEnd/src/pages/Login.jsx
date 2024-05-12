@@ -14,6 +14,21 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    toast.promise(loginUser(), {
+      loading: "Logging in...",
+      success: (data) => {
+        return (
+          <>
+            {toast.success(`Successfully Logged in`)}
+            {handleRedirect(data.role)}
+          </>
+        );
+      },
+      error: (err) => toast.error("Email and Password incorrect"),
+    });
+  };
+
+  const loginUser = async () => {
     try {
       const response = await axios.post(
         "http://127.0.0.1:4000/api/users/login",
@@ -23,12 +38,9 @@ function Login() {
       localStorage.setItem("token", token);
 
       const decodedToken = jwtDecode(token);
-      const role = decodedToken.role;
-      console.log(decodedToken.role);
-      handleRedirect(role);
-      toast.success(`Successfully Logged in`);
+      return decodedToken;
     } catch (err) {
-      toast.error("Failed to login");
+      throw err;
     }
   };
 
@@ -47,7 +59,6 @@ function Login() {
         window.location.href = "/assistance";
         break;
       default:
-        // Handle default case or unexpected role
         break;
     }
   };

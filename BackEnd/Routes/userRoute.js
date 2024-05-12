@@ -13,6 +13,6 @@ router.route("/login").post(authController.login);
 router.route("/register").post(authController.signup);
 router.route("/logout").get(authController.logout);
 router.route("/profile").post();
-router.route("/profile").put(userController.updateUser);
+router.route("/profile/:id").put(userController.updateUser);
 
 module.exports = router;

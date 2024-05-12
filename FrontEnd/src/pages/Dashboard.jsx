@@ -1,4 +1,3 @@
-// Dashboard.js
 import { useState, useEffect } from "react";
 import SmallCard from "../ui/SmallCard";
 import { FaCartArrowDown } from "react-icons/fa";
@@ -16,6 +15,7 @@ function Dashboard() {
   const [totalUsers, setTotalUsers] = useState(0);
   const [combinedTotal, setCombinedTotal] = useState(0);
   const [OrderCount, setOrderCount] = useState(0);
+  const [pendingOrders, setPendingOrders] = useState([]);
 
   const fetchTotalProducts = async () => {
     try {
@@ -30,12 +30,11 @@ function Dashboard() {
   };
 
   const fetchTotalUsers = async () => {
-    // Corrected function name to 'fetchTotalUsers'
     try {
       const response = await fetch("http://127.0.0.1:4000/api/users");
       const data = await response.json();
       if (data && data.total) {
-        setTotalUsers(data.total); // Corrected state name to 'totalUsers'
+        setTotalUsers(data.total);
       }
     } catch (error) {
       console.error("Error fetching total users:", error);
@@ -47,31 +46,25 @@ function Dashboard() {
       const response = await axios.get("http://127.0.0.1:4000/api/orders");
       const orders = response.data.data.orders;
       let total = 0;
+      let pending = [];
       orders.forEach((order) => {
-        // Sum up the totalAmount of each order
         total += order.totalAmount;
+        if (order.status === "Pending") {
+          pending.push(order);
+        }
       });
-      // Set the combined total
       setCombinedTotal(total);
-      console.log(total);
+      setPendingOrders(pending);
+      setOrderCount(pending.length);
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
   };
-  const totalOrder = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:4000/api/orders");
-      const orders = response.data.data.orders;
-      const count = orders.length;
-      setOrderCount(count);
-    } catch {}
-  };
 
   useEffect(() => {
     fetchTotalProducts();
-    fetchTotalUsers(); // Corrected function name to 'fetchTotalUsers'
+    fetchTotalUsers();
     fetchOrdersAndCalculateTotal();
-    totalOrder();
   }, []);
 
   return (
@@ -113,6 +106,17 @@ function Dashboard() {
       </div>
       <div className="m-10 p-10  grid grid-cols-2 gap-10">
         <BasicPie className="col-span-1" />
+      </div>
+
+      <div>
+        <h2>Pending Orders</h2>
+        <ul>
+          {pendingOrders.map((order) => (
+            <li key={order._id}>
+              Order ID: {order._id}, Total Amount: {order.totalAmount}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

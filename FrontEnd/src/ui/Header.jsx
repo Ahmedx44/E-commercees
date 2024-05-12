@@ -136,15 +136,13 @@ function Header() {
                 </ul>
               </details>
             </li>
-            <li>
-              <a className="text-2xl font-bold roboto">
-                {language === "en" ? "About" : "ስለ"}
-              </a>
-            </li>
           </ul>
         </div>
-        <div className="dropdown" >
-          <label tabIndex={0} className="btn bg-indigo-400  text-white font-bold hover:bg-indigo-700 m-1">
+        <div className="dropdown">
+          <label
+            tabIndex={0}
+            className="btn bg-indigo-400  text-white font-bold hover:bg-indigo-700 m-1"
+          >
             {language === "en" ? "English" : "Amharic"}
           </label>
           <ul
@@ -177,7 +175,7 @@ function Header() {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-10 rounded-full">
+                <div className=" rounded-full">
                   <img alt="Profile" src={image} />
                 </div>
               </div>

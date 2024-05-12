@@ -86,7 +86,7 @@ const CustomerAssistance = () => {
             <li
               key={chat._id}
               onClick={() => handleChatSelection(chat._id)}
-              className="cursor-pointer hover:bg-gray-300 rounded-lg py-2 px-4 mb-2"
+              className="cursor-pointer hover:bg-gray-300 rounded-lg py-2 px-4 mb-2 font-bold active:bg-gray-300"
             >
               {chat.name}
             </li>
@@ -94,9 +94,9 @@ const CustomerAssistance = () => {
         </ul>
       </div>
       <div className="flex-1  px-4 py-6 roboto font-bold">
-        <div className="mb-6 ">
+        <div className="w ">
           <h2 className="mb-4 roboto text-3xl font-bold">Messages</h2>
-          <div className="overflow-y-auto h-full">
+          <div className="overflow-y-auto h-4/5">
             {messages.map((message) => (
               <div
                 key={message._id}
@@ -110,14 +110,12 @@ const CustomerAssistance = () => {
                       ? "bg-green-800 text-white"
                       : "bg-blue-800 text-white"
                   } rounded-lg`}
-                >
-                  <p className="break-words">{message.text}</p>
-                </div>
+                ></div>
               </div>
             ))}
           </div>
         </div>
-        <div className="flex relative bottom-10 py-5 mt-96">
+        <div className="flex relative top-3/4  py-5  ">
           <input
             type="text"
             value={inputValue}

@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { DataList } from "@radix-ui/themes";
+import { Breadcrumb } from "flowbite-react";
+import { HiViewBoards } from "react-icons/hi";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import Spinner from "../ui/Spinner";
 
 function RetailerDetail() {
   const { id } = useParams();
@@ -25,7 +29,7 @@ function RetailerDetail() {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (!user) {
@@ -33,9 +37,22 @@ function RetailerDetail() {
   }
 
   return (
-    <div className=" h-fullroboto mt-36">
+    <div className=" h-fullroboto mt-10">
+      <div className="text-2xl p-10 mt-16">
+        <Breadcrumb aria-label="Default breadcrumb example">
+          <Link to="/admin/retailers">
+            <Breadcrumb.Item icon={HiViewBoards}>
+              <p className="text-4xl font-bold">Retailer</p>
+            </Breadcrumb.Item>
+          </Link>
+          <Breadcrumb.Item icon={HiViewBoards}>
+            <p className="text-4xl font-bold">{user.userName}</p>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+
       <div>
-        <DataList.Root className=" py-10 px-5  rounded-xl m-5 gap-5">
+        <DataList.Root className="px-5  rounded-xl gap-5">
           <DataList.Item align="center">
             <DataList.Label className="font-bold">Name:</DataList.Label>
             <DataList.Value>

@@ -18,8 +18,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:5173", // Replace with your client-side app's origin
+    origin: "",
     methods: ["GET", "POST"],
+    Credential: true,
   },
 });
 

@@ -15,7 +15,9 @@ mongoose
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "*", // Adjust this according to your CORS policy
+    origin: "",
+    method: ["POST", "GET", "PUT", "DELETE"],
+    Credential: true,
   },
 });
 

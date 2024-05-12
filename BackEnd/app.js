@@ -18,7 +18,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "e-commercees-eight.vercel.app",
+    origin: "https://e-commercees-eight.vercel.app",
     methods: ["GET", "POST"],
     Credential: true,
   },

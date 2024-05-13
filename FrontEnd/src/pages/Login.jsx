@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +31,7 @@ function Login() {
   const loginUser = async () => {
     try {
       const response = await axios.post(
-        "https://backendecommerce-iota.vercel.app/api/users/login",
+        "http://127.0.0.1:4000/api/users/login",
         { email, password }
       );
       const token = response.data.token;

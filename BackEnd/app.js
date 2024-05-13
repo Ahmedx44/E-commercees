@@ -18,7 +18,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "https://e-commercees-eight.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true, // Correcting typo in 'credentials'
   },
@@ -29,13 +29,13 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 // Use cors middleware to set CORS headers
-app.use(
-  cors({
-    origin: "https://e-commercees-eight.vercel.app",
-  })
-);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 app.use(cookieParser());
+app.use(cors());
 
 // Set a larger size limit for request bodies (e.g., 50MB)
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -67,7 +67,6 @@ io.on("connection", (socket) => {
           messages: [],
         });
       }
-
       // Save the message to the database
       const message = new Message({
         sender: messageData.sender,

@@ -111,8 +111,8 @@ exports.updateProductQuantity = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
-  const page = parseInt(req.query.page) || 2;
-  const limit = parseInt(req.query.limit) || 5;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
   const category = req.query.category;
   const price = req.query.price;

@@ -24,7 +24,7 @@ function Orders() {
   }, []);
 
   const handleClick = (orderId) => {
-    navigate(`/assistance/orderdetail/${orderId}`); // Redirect to order detail page with order ID
+    navigate(`/admin/orderdetail/${orderId}`); // Redirect to order detail page with order ID
   };
   //
   // Filter orders based on userName

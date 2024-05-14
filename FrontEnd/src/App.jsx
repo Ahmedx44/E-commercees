@@ -36,6 +36,7 @@ import RetDashboard from "./pages/RetDashboard";
 import AddAssistance from "./pages/AddAssistance";
 import ProductReview from "./pages/ProductReview";
 import HistroyDetail from "./pages/HistoryDetail";
+import AssistanceOrder from "./pages/AssistanceOrder";
 
 const App = () => {
   return (
@@ -96,7 +97,7 @@ const App = () => {
           >
             <Route path="" element={<AssLayout />}>
               <Route index element={<Assistance />} />
-              <Route path="orders" element={<Orders />} />
+              <Route path="orders" element={<AssistanceOrder />} />
               <Route path="orderdetail/:id" element={<AssOrder />} />
             </Route>
           </Route>

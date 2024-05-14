@@ -188,6 +188,21 @@ const ProductDetail = () => {
               <div className="flex justify-center p-4"></div>
               <div className="px-4 pb-4">
                 <form onSubmit={handleSubmitReview}>
+                  <div className="mt-4 flex justify-center">
+                    <label className="mr-2">Select Rating:</label>
+                    <select
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                      className="p-2 rounded-lg border-gray-300 border"
+                    >
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
                   <div className="mt-4">
                     <textarea
                       value={comment}

@@ -17,6 +17,7 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [file, setFile] = useState("");
   const [userId, setUserId] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -64,6 +65,19 @@ function AddProduct() {
     }
   };
 
+  const handleChangee = (e) => {
+    setDescription(e.target.value);
+    validateDescription(e.target.value);
+  };
+
+  const validateDescription = (text) => {
+    const wordCount = text.trim().split(/\s+/).length;
+    if (wordCount < 30) {
+      setError("Description must contain at least 50 words.");
+    } else {
+      setError("");
+    }
+  };
   const handleChange = (e) => {
     const file = e.target.files[0];
     setFile(file);
@@ -140,8 +154,9 @@ function AddProduct() {
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 rows="3"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={handleChangee}
               />
+              {error && <p className="text-red-500">{error}</p>}
             </div>
             <div>
               <label
@@ -174,7 +189,19 @@ function AddProduct() {
                 <option disabled selected>
                   Select Category
                 </option>
-                <option>Electronic</option>
+                <option>Monitors</option>
+                <option>Furniture</option>
+                <option>Toys</option>
+                <option>Sports</option>
+                <option>Home & Kitchen</option>
+                <option>Jewelry</option>
+                <option>Watches</option>
+                <option>Shoes</option>
+                <option>Electronics</option>
+                <option>Tablets</option>
+                <option>Musical Instruments</option>
+                <option>Handbags</option>
+                <option>Accessories</option>
                 <option>Fashion</option>
                 <option>Furniture</option>
                 <option>Fashion</option>

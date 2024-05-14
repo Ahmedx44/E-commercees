@@ -104,7 +104,7 @@ function AdminProductDetail() {
               <DataList.Value>
                 <span className="text-green-500">{product.retailer}</span>
               </DataList.Value>
-              <DataList.Label className="font-bold">Price:</DataList.Label>
+              <DataList.Label className="font-bold">Image:</DataList.Label>
               <DataList.Value>
                 <span className="text-green-500">
                   <img src={product.image} alt="" />

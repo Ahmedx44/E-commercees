@@ -157,7 +157,7 @@ function Profile() {
           type="submit"
           className="btn bg-indigo-500 hover:bg-indigo-800 text-white"
         >
-          Update Profile
+          Update Profilee
         </button>
       </form>
     </div>
